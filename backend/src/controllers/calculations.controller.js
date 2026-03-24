@@ -6,7 +6,7 @@ export const calculateCO2 = (car_km, flights, diet, kwh) => {
   const car    = (car_km * 52 * 0.21) / 1000
   const air    = flights * 0.255
   const food   = dietValues[diet] ?? 2.5
-  const energy = (kwh * 12 * 0.233) / 1000
+  const energy = (kwh * 12 * 0.25) / 1000
   return Math.round((car + air + food + energy) * 100) / 100
 }
 
@@ -88,8 +88,8 @@ export const compare = async (req, res) => {
 
   res.json({
     user_total: data?.total_co2 ?? null,
-    pt_average: 5.8,
+    pt_average: 5.1,
     eu_average: 8.4,
-    source: 'Eurostat 2022'
+    source: 'APA 2025 / DGEG Energia em Números 2025'
   })
 }
