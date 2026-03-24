@@ -1,0 +1,35 @@
+name: CI — EcoPT Backend
+
+on:
+  push:
+    branches: [main, develop, feature/*]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lint-and-test:
+    name: Lint e Testes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Instalar dependências
+        run: npm install
+        working-directory: backend
+
+      - name: Correr ESLint
+        run: npm run lint
+        working-directory: backend
+
+      - name: Correr testes
+        run: npm test
+        working-directory: backend
