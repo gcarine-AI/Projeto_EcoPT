@@ -1,4 +1,6 @@
 # EcoPT — Backend API
+![CI](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ci.yml/badge.svg)
+
 
 ![CI](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ci.yml/badge.svg)
 
