@@ -175,8 +175,8 @@ FRONTEND_URL=http://localhost:4200
 A maioria das calculadoras de CO₂ usa fatores de emissão genéricos europeus. 
 O EcoPT usa dados específicos de Portugal:
 
-- **Energia:** 0.233 kgCO₂/kWh (mix energético português — DGEG 2023)
+- **Energia:** 0.25 kgCO₂/kWh (mix energético português — DGEG 2025)
 - **Transporte:** 0.21 kgCO₂/km (média do parque automóvel português)
-- **Comparador:** média portuguesa de 5.8 tonCO₂/ano vs média europeia de 8.4 tonCO₂/ano
+- **Comparador:** média portuguesa de 5.1 tonCO₂/ano vs média europeia de 9.0 tonCO₂/ano
 
 Esta escolha torna os resultados mais precisos e relevantes para utilizadores portugueses.
