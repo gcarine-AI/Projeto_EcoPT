@@ -88,8 +88,8 @@ export const compare = async (req, res) => {
 
   res.json({
     user_total: data?.total_co2 ?? null,
-    pt_average: 5.1,
-    eu_average: 8.4,
-    source: 'APA 2025 / DGEG Energia em Números 2025'
-  })
+    pt_average: 5.1,   // DGEG, Energia em Números 2025
+    eu_average: 9.0,   // Eurostat, pegada de consumo 2023 (publicado fev 2026)
+    source: 'DGEG 2025 / Eurostat 2023'
+    })
 }
