@@ -6,6 +6,7 @@
 
 
 
+
 API REST para a aplicação EcoPT, uma calculadora de pegada carbónica pensada para o contexto português.
 
 Ligada ao **ODS 13 — Ação Climática** das Nações Unidas.
