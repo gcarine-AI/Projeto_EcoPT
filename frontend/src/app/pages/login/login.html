@@ -33,9 +33,11 @@
         }
       </mat-form-field>
 
-      <div class="error-message" *ngIf="errorMessage">
-        {{ errorMessage }}
-      </div>
+        @if (error) {
+          <div class="error-message">
+            {{ error }}
+          </div>
+        }
 
       <div class="buttons">
         <button mat-raised-button color="primary"

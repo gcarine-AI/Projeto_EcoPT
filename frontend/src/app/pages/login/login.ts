@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
@@ -25,20 +25,20 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
 
-  loginForm: FormGroup;
-  errorMessage = '';
-  isLoading = false;
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    this.loginForm = this.fb.group({
+  loginForm: FormGroup;
+    error = '';
+    isLoading = false;
+
+    constructor() {
+      this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-  }
+    }
 
   loginAs(role: string): void {
     if (this.loginForm.invalid) {
@@ -47,7 +47,7 @@ export class LoginComponent {
     }
 
     this.isLoading = true;
-    this.errorMessage = '';
+    this.error = '';
 
     const { email, password } = this.loginForm.value;
 
@@ -55,9 +55,9 @@ export class LoginComponent {
       next: () => {
         this.router.navigate(['/dashboard']);
       },
-      error: (err) => {
+      error: () => {
         this.isLoading = false;
-        this.errorMessage = 'Email ou password incorretos. Tenta novamente.';
+        this.error = 'Email ou password incorretos. Tenta novamente.';
       }
     });
   }
