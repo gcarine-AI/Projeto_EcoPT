@@ -53,6 +53,11 @@ export const getOne = async (req, res) => {
 
 export const update = async (req, res) => {
   const { car_km, flights, diet, kwh } = req.body
+
+    if (car_km == null || flights == null || !diet || kwh == null) {
+    return res.status(400).json({ error: 'Todos os campos são obrigatórios' })
+  }
+  
   const total_co2 = calculateCO2(car_km, flights, diet, kwh)
 
   const { data, error } = await supabase
