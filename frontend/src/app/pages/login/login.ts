@@ -18,27 +18,26 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrl: './login.css',
 })
 export class LoginComponent {
-
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
 
   loginForm: FormGroup;
-    error = '';
-    isLoading = false;
+  error = '';
+  isLoading = false;
 
-    constructor() {
-      this.loginForm = this.fb.group({
+  constructor() {
+    this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
-    }
+  }
 
   loginAs(role: string): void {
     if (this.loginForm.invalid) {
@@ -58,7 +57,7 @@ export class LoginComponent {
       error: () => {
         this.isLoading = false;
         this.error = 'Email ou password incorretos. Tenta novamente.';
-      }
+      },
     });
   }
 }

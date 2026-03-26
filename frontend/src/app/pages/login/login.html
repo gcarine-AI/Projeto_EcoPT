@@ -1,7 +1,5 @@
 <div class="login-container">
-
   <div class="login-card">
-
     <div class="logo">
       <span class="logo-icon">🌿</span>
       <h1>EcoPT</h1>
@@ -9,22 +7,20 @@
     </div>
 
     <form [formGroup]="loginForm">
-
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email" placeholder="o-teu@email.com">
+        <input matInput formControlName="email" type="email" placeholder="o-teu@email.com" />
         @if (loginForm.get('email')?.hasError('required')) {
-        <mat-error>Email é obrigatório</mat-error>
+          <mat-error>Email é obrigatório</mat-error>
         }
         @if (loginForm.get('email')?.hasError('email')) {
           <mat-error>Email inválido</mat-error>
         }
       </mat-form-field>
 
-
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password" placeholder="••••••">
+        <input matInput formControlName="password" type="password" placeholder="••••••" />
         @if (loginForm.get('password')?.hasError('required')) {
           <mat-error>Password é obrigatória</mat-error>
         }
@@ -33,35 +29,38 @@
         }
       </mat-form-field>
 
-        @if (error) {
-          <div class="error-message">
-            {{ error }}
-          </div>
-        }
+      @if (error) {
+        <div class="error-message">
+          {{ error }}
+        </div>
+      }
 
       <div class="buttons">
-        <button mat-raised-button color="primary"
+        <button
+          mat-raised-button
+          color="primary"
           (click)="loginAs('personal')"
           [disabled]="isLoading"
-          class="full-width">
+          class="full-width"
+        >
           🌱 Acesso Pessoal
         </button>
 
-        <button mat-stroked-button color="primary"
+        <button
+          mat-stroked-button
+          color="primary"
           (click)="loginAs('company')"
           [disabled]="isLoading"
-          class="full-width">
+          class="full-width"
+        >
           🏢 Acesso Empresarial
         </button>
       </div>
-
     </form>
 
     <div class="register-link">
       Não tens conta?
       <a routerLink="/register">Regista-te aqui</a>
     </div>
-
   </div>
-
 </div>

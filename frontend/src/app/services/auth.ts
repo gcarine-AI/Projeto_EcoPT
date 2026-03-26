@@ -12,7 +12,7 @@ interface AuthResponse {
   };
 }
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
@@ -20,23 +20,28 @@ export class AuthService {
 
   private apiUrl = environment.apiUrl;
 
-
   register(email: string, password: string, name: string, role: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, {
-      email, password, name, role
+      email,
+      password,
+      name,
+      role,
     });
   }
 
   login(email: string, password: string, role: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, {
-      email, password
-    }).pipe(
-      tap((response) => {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('role', role);
-        localStorage.setItem('email', email);
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/auth/login`, {
+        email,
+        password,
       })
-    );
+      .pipe(
+        tap((response) => {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('role', role);
+          localStorage.setItem('email', email);
+        }),
+      );
   }
 
   logout(): void {

@@ -16,32 +16,32 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'calculator',
     component: CalculatorComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'history',
     component: HistoryComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'tips',
     component: TipsComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'carsharing',
     component: CarsharingComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'faq',
     component: FaqComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/login' },
 ];
