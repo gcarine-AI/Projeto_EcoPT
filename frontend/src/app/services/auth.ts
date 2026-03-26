@@ -1,29 +1,37 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
+interface AuthResponse {
+  token: string;
+  user?: {
+    id: string;
+    email: string;
+  };
+}
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private http = inject(HttpClient);
+  private router = inject(Router);
 
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router: Router) {}
 
-  register(email: string, password: string, name: string, role: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/register`, {
+  register(email: string, password: string, name: string, role: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, {
       email, password, name, role
     });
   }
 
-  login(email: string, password: string, role: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/login`, {
+  login(email: string, password: string, role: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, {
       email, password
     }).pipe(
-      tap((response: any) => {
+      tap((response) => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('role', role);
         localStorage.setItem('email', email);
