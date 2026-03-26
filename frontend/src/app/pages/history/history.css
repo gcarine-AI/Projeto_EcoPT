@@ -1,0 +1,20 @@
+.history-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.mat-column-actions {
+  width: 80px;
+  text-align: center;
+}
+
+.mat-header-cell {
+  font-weight: bold;
+  color: #2e7d32;
+}
