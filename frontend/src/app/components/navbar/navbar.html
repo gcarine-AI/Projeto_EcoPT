@@ -1,0 +1,21 @@
+@if (shouldShowNavbar()) {
+  <mat-toolbar color="primary" class="main-navbar">
+    <span class="logo" routerLink="/dashboard">EcoPT 🌿</span>
+
+    <div class="nav-links">
+      <button mat-button routerLink="/dashboard" routerLinkActive="active-link">Dashboard</button>
+      <button mat-button routerLink="/calculator" routerLinkActive="active-link">Calculadora</button>
+      <button mat-button routerLink="/history" routerLinkActive="active-link">Histórico</button>
+      <button mat-button routerLink="/tips" routerLinkActive="active-link">Dicas</button>
+    </div>
+
+    <span class="spacer"></span>
+
+    <div class="user-info">
+      <span class="email-display">{{ getUserEmail() }}</span>
+      <button mat-icon-button (click)="logout()" title="Sair">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+}

@@ -9,6 +9,7 @@ import { CarsharingComponent } from './pages/carsharing/carsharing';
 import { FaqComponent } from './pages/faq/faq';
 import { authGuard } from './guards/auth-guard';
 
+
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -20,6 +21,11 @@ export const routes: Routes = [
   },
   {
     path: 'calculator',
+    component: CalculatorComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'calculator/:id',
     component: CalculatorComponent,
     canActivate: [authGuard],
   },
