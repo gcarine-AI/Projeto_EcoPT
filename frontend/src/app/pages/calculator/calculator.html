@@ -1,1 +1,88 @@
-<p>calculator works!</p>
+<div class="calculator-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Calculadora de Pegada Carbónica 🌍</mat-card-title>
+      <mat-card-subtitle>Descobre o teu impacto ambiental em poucos passos</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-stepper linear #stepper>
+
+        <form [formGroup]="calcForm">
+
+          <mat-step [stepControl]="calcForm">
+            <ng-template matStepLabel>Transporte</ng-template>
+            <div class="step-content">
+              <p>Quantos quilómetros percorres de carro por semana?</p>
+              <mat-form-field appearance="outline">
+                <mat-label>KM por semana</mat-label>
+                <input matInput type="number" formControlName="car_km" placeholder="Ex: 150">
+                <mat-icon matSuffix>directions_car</mat-icon>
+              </mat-form-field>
+
+              <p>Quantos voos (ida e volta) fizeste no último ano?</p>
+              <mat-form-field appearance="outline">
+                <mat-label>Número de voos</mat-label>
+                <input matInput type="number" formControlName="flights" placeholder="Ex: 2">
+                <mat-icon matSuffix>flight</mat-icon>
+              </mat-form-field>
+
+              <div class="actions">
+                <button mat-raised-button color="primary" matStepperNext>Próximo</button>
+              </div>
+            </div>
+          </mat-step>
+
+          <mat-step [stepControl]="calcForm">
+            <ng-template matStepLabel>Estilo de Vida</ng-template>
+            <div class="step-content">
+              <p>Qual é o teu tipo de dieta?</p>
+              <mat-form-field appearance="outline">
+                <mat-label>Dieta</mat-label>
+                <mat-select formControlName="diet">
+                  <mat-option value="vegan">Vegan</mat-option>
+                  <mat-option value="vegetariana">Vegetariana</mat-option>
+                  <mat-option value="omnivora">Omnívora (Pouca carne)</mat-option>
+                  <mat-option value="carnivora">Carnívora (Muita carne)</mat-option>
+                </mat-select>
+                <mat-icon matSuffix>restaurant</mat-icon>
+              </mat-form-field>
+
+              <p>Qual o consumo médio mensal de eletricidade (kWh)?</p>
+              <mat-form-field appearance="outline">
+                <mat-label>Consumo kWh</mat-label>
+                <input matInput type="number" formControlName="kwh" placeholder="Ex: 200">
+                <mat-icon matSuffix>bolt</mat-icon>
+              </mat-form-field>
+
+              <div class="actions">
+                <button mat-button matStepperPrevious>Voltar</button>
+                <button mat-raised-button color="primary" matStepperNext>Revisão</button>
+              </div>
+            </div>
+          </mat-step>
+
+          <mat-step>
+            <ng-template matStepLabel>Finalizar</ng-template>
+            <div class="final-step">
+              <h3>Tudo pronto!</h3>
+              <p>Clique no botão abaixo para calcular a sua pegada de $CO_2$.</p>
+
+              <div class="summary-box">
+                <p><strong>Resumo:</strong> {{ calcForm.value.car_km }} km/semana | Dieta {{ calcForm.value.diet }}</p>
+              </div>
+
+              <div class="actions">
+                <button mat-button matStepperPrevious>Voltar</button>
+                <button mat-raised-button color="accent" (click)="submit()" [disabled]="calcForm.invalid">
+                  CALCULAR AGORA 🚀
+                </button>
+              </div>
+            </div>
+          </mat-step>
+
+        </form>
+      </mat-stepper>
+    </mat-card-content>
+  </mat-card>
+</div>
