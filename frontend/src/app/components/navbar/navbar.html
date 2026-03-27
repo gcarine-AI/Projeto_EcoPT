@@ -6,7 +6,22 @@
       <button mat-button routerLink="/dashboard" routerLinkActive="active-link">Dashboard</button>
       <button mat-button routerLink="/calculator" routerLinkActive="active-link">Calculadora</button>
       <button mat-button routerLink="/history" routerLinkActive="active-link">Histórico</button>
-      <button mat-button routerLink="/tips" routerLinkActive="active-link">Dicas</button>
+      <button mat-button [matMenuTriggerFor]="menu">Mais <mat-icon>arrow_drop_down</mat-icon></button>
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/tips">
+          <mat-icon>lightbulb</mat-icon>
+          <span>Dicas Eco</span>
+        </button>
+        <button mat-menu-item routerLink="/carsharing">
+          <mat-icon>directions_car</mat-icon>
+          <span>Carsharing</span>
+        </button>
+        <button mat-menu-item routerLink="/faq">
+          <mat-icon>help</mat-icon>
+          <span>FAQ</span>
+        </button>
+      </mat-menu>
     </div>
 
     <span class="spacer"></span>
