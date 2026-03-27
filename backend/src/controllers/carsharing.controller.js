@@ -89,7 +89,7 @@ export const bookRide = async (req, res) => {
     } else {
       res.status(400).json({ error: "Sem lugares disponíveis" });
     }
-  } catch (err) {
+  } catch {
     res.status(500).json({ error: "Erro ao atualizar reserva" });
   }
 };
