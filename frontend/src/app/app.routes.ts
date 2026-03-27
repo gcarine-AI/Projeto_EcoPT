@@ -6,7 +6,7 @@ import { CalculatorComponent } from './pages/calculator/calculator';
 import { HistoryComponent } from './pages/history/history';
 import { TipsComponent } from './pages/tips/tips';
 import { CarsharingComponent } from './pages/carsharing/carsharing';
-import { FaqComponent } from './pages/faq/faq';
+import { FAQComponent } from './pages/faq/faq';
 import { authGuard } from './guards/auth-guard';
 
 
@@ -46,7 +46,7 @@ export const routes: Routes = [
   },
   {
     path: 'faq',
-    component: FaqComponent,
+    component: FAQComponent,
     canActivate: [authGuard],
   },
   { path: '**', redirectTo: '/login' },
