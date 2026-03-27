@@ -1,1 +1,28 @@
-<p>tips works!</p>
+<div class="tips-container">
+  <mat-card class="header-card">
+    <mat-card-header>
+      <mat-card-title>Manual de Ação Climática 🌍</mat-card-title>
+      <mat-card-subtitle>8 passos essenciais para reduzir a tua pegada ecológica em Portugal.</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+
+  <mat-accordion multi="true">
+    @for (tip of tips; track tip.title) {
+      <mat-expansion-panel class="eco-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="tip-icon">{{ tip.icon }}</mat-icon>
+            <strong>{{ tip.title }}</strong>
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ tip.category }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="panel-content">
+          <p>{{ tip.description }}</p>
+        </div>
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+</div>
