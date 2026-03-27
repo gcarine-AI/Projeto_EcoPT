@@ -1,1 +1,58 @@
-<p>carsharing works!</p>
+<div class="carsharing-container">
+  <header class="page-header">
+    <h1>Comunidade de Carsharing EcoPT 🚗💨</h1>
+    <p>Partilha viagens, reduz custos e protege o planeta.</p>
+  </header>
+
+  <div class="rides-grid">
+    @for (ride of rides; track ride.id) {
+      <mat-card class="ride-card">
+        <mat-card-header>
+          <div mat-card-avatar class="driver-icon">
+            <mat-icon>account_circle</mat-icon>
+          </div>
+          <mat-card-title>{{ ride.driver }}</mat-card-title>
+          <mat-card-subtitle>{{ ride.date | date:'dd/MM/yyyy' }} às {{ ride.time }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="route">
+            <div class="location">
+              <mat-icon color="primary">location_on</mat-icon>
+              <span>{{ ride.origin }}</span>
+            </div>
+            <mat-icon class="arrow">trending_flat</mat-icon>
+            <div class="location">
+              <mat-icon color="warn">place</mat-icon>
+              <span>{{ ride.destination }}</span>
+            </div>
+          </div>
+
+          <div class="details">
+            <mat-chip-set>
+              <mat-chip>
+                <mat-icon matChipAvatar>event_seat</mat-icon>
+                {{ ride.seats }} lugares livres
+              </mat-chip>
+              <mat-chip-option
+                [selected]="ride.cost === 0"
+                [selectable]="false"
+                color="accent">
+              {{ ride.cost === 0 ? 'Grátis' : (ride.cost | currency:'EUR') }}
+              </mat-chip-option>
+            </mat-chip-set>
+          </div>
+
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-raised-button color="primary"
+                  [disabled]="ride.seats === 0"
+                  (click)="bookSeat(ride.id)">
+            {{ ride.seats > 0 ? 'RESERVAR LUGAR' : 'ESGOTADO' }}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
+</div>
