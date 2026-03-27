@@ -1,7 +1,11 @@
 .main-navbar {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky; /* Upgrade: A barra fica fixa no topo ao fazer scroll */
+  top: 0;
+  z-index: 1000;
 }
 
 .logo {
@@ -9,11 +13,7 @@
   cursor: pointer;
   font-size: 1.5rem;
   margin-right: 20px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 10px;
+  letter-spacing: 0.5px;
 }
 
 .spacer {
@@ -25,14 +25,21 @@
   align-items: center;
   gap: 15px;
   font-size: 0.9rem;
+  margin-left: 20px;
+}
+
+.user-display {
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  padding-right: 15px;
 }
 
 .active-link {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2) !important;
   border-bottom: 3px solid white;
+  border-radius: 4px 4px 0 0;
 }
 
-.email-display {
-  font-style: italic;
-  opacity: 0.9;
+/* Estilo para o ícone de logout */
+[mat-icon-button] mat-icon {
+  vertical-align: middle;
 }
