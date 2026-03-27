@@ -11,17 +11,26 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nome Completo</mat-label>
           <input matInput formControlName="name" placeholder="Ex: João Silva">
+          @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+            <mat-error>O nome deve ter pelo menos 3 letras</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
           <input matInput type="email" formControlName="email" placeholder="email@exemplo.pt">
+          @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+            <mat-error>Introduz um email válido</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Password</mat-label>
           <input matInput type="password" formControlName="password">
           <mat-hint>Mínimo 7 caracteres</mat-hint>
+          @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+            <mat-error>Password demasiado curta</mat-error>
+          }
         </mat-form-field>
 
         @if (error) {

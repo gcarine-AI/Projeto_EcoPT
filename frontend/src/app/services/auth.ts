@@ -6,9 +6,11 @@ import { environment } from '../../environments/environment';
 
 interface AuthResponse {
   token: string;
-  user?: {
+  user: {
     id: string;
     email: string;
+    name?: string;
+    role?: string;
   };
 }
 @Injectable({
@@ -17,7 +19,6 @@ interface AuthResponse {
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-
   private apiUrl = environment.apiUrl;
 
   register(email: string, password: string, name: string, role: string): Observable<AuthResponse> {
@@ -38,32 +39,22 @@ export class AuthService {
       .pipe(
         tap((response) => {
           localStorage.setItem('token', response.token);
-          localStorage.setItem('role', role);
-          localStorage.setItem('email', email);
+          localStorage.setItem('role', response.user.role || role);
+          localStorage.setItem('email', response.user.email);
+          if (response.user.name) {
+            localStorage.setItem('name', response.user.name);
+          }
         }),
       );
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    localStorage.removeItem('email');
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
-
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-
-  getRole(): string | null {
-    return localStorage.getItem('role');
-  }
-
-  getEmail(): string | null {
-    return localStorage.getItem('email');
-  }
+  getName(): string | null {return localStorage.getItem('name');}
+  getRole(): string | null { return localStorage.getItem('role'); }
+  getEmail(): string | null { return localStorage.getItem('email'); }
+  getToken(): string | null { return localStorage.getItem('token'); }
+  isLoggedIn(): boolean {return !!localStorage.getItem('token');}
 }

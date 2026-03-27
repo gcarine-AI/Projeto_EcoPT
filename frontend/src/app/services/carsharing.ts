@@ -26,7 +26,7 @@ export class CarsharingService {
   }
 
   // PATCH: Faz o update no endpoint /api/carsharing/book/:id
-  
+
   bookSeat(id: number): Observable<{message: string}> {
     return this.http.patch<{message: string}>(`${this.apiUrl}/book/${id}`, {});
   }
