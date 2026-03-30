@@ -1,11 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth';
 
 export interface Calculation {
   id: string;
@@ -40,6 +41,7 @@ export interface ComparisonData {
 })
 export class DashboardComponent implements OnInit {
   private http = inject(HttpClient);
+  private authService = inject(AuthService)
 
   lastCalculation: Calculation | null = null;
   readonly avgPortugal = 5.1; // Toneladas de CO2 por pessoa/ano em PT
@@ -51,8 +53,10 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchData(): void {
-    // Endpoint que criámos no TP1 para buscar o último cálculo
-    this.http.get<Calculation[]>('http://localhost:3000/api/calculations').subscribe({
+    const headers = new HttpHeaders()
+    headers.set('Authorization', `Bearer ${this.authService.getToken()}`)
+    this.http.get<Calculation[]>('http://localhost:3000/calculations',
+      {headers: {'Authorization': `Bearer ${this.authService.getToken()}`}}).subscribe({
       next: (data) => {
         if (data && data.length > 0) {
           this.lastCalculation = data[0]; // Assume que o mais recente vem primeiro

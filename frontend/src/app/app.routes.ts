@@ -7,7 +7,7 @@ import { HistoryComponent } from './pages/history/history';
 import { TipsComponent } from './pages/tips/tips';
 import { CarsharingComponent } from './pages/carsharing/carsharing';
 import { FAQComponent } from './pages/faq/faq';
-import { authGuard } from './guards/auth-guard';
+//import { authGuard } from './guards/auth-guard';
 
 
 export const routes: Routes = [
@@ -17,37 +17,38 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
   {
     path: 'calculator',
     component: CalculatorComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
   {
     path: 'calculator/:id',
     component: CalculatorComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
   {
     path: 'history',
     component: HistoryComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
   {
     path: 'tips',
     component: TipsComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
   {
     path: 'carsharing',
     component: CarsharingComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
   {
     path: 'faq',
     component: FAQComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
+
   { path: '**', redirectTo: '/login' },
 ];

@@ -63,7 +63,7 @@ export class CalculatorComponent implements OnInit {
 
   submit(): void {
     if (this.calcForm.valid) {
-      const url = 'http://localhost:3000/api/calculations';
+      const url = 'http://localhost:3000/calculations';
 
       // Se tivermos editId, usamos PUT. Caso contrário, POST.
       const request$ = this.editId
