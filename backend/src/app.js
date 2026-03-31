@@ -45,10 +45,5 @@ app.use((err, req, res, _next) => {
   res.status(500).json({ error: "Erro interno do servidor" });
 });
 
-app.listen(3000, () => {
-  console.log('CORS-enabled web server listening on port 3000', cors.FRONTEND_URL)
-  console.log("SUPABASE CREDENTIALS: ", cors.SUPABASE_URL)
-})
-
 
 export default app;

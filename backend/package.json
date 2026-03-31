@@ -4,7 +4,7 @@
   "description": "API backend para EcoPT, Calculadora de Pegada Carbónica Portuguesa ",
   "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon src/server.js",
+    "dev": "nodemon --exec node -r dotenv/config src/server.js",
     "start": "node src/server.js",
     "test": "node --experimental-vm-modules node_modules/.bin/jest",
     "lint": "eslint src/"
