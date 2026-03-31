@@ -7,6 +7,9 @@ export const register = async (req, res) => {
     return res.status(400).json({ error: 'Email e password são obrigatórios' })
   }
 
+  console.log("Registro: ", await register.email);
+
+  
   const { data, error } = await supabase.auth.signUp({ email, password })
 
   if (error) return res.status(400).json({ error: error.message })
@@ -26,17 +29,35 @@ export const login = async (req, res) => {
 
   if (!email || !password) {
     return res.status(400).json({ error: 'Email e password são obrigatórios' })
+  } else {
+    await supabase.auth.signInWithPassword(req.body)
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  //const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
-  if (error) return res.status(401).json({ error: 'Credenciais inválidas' })
 
-  res.json({
+  /*res.json({
     token: data.session.access_token,
     user: {
       id: data.user.id,
       email: data.user.email
     }
-  })
+  }) 
+  */
+
+
+  /* console.log("resposta: ", res.json({
+    token: data.session.access_token,
+    user: {
+      id: data.user.id,
+      email: data.user.email
+    }
+  })) */
+
+  
+
+  //if (error) return res.status(401).json({ error: 'Credenciais inválidas' })
+
+  
+  
 }

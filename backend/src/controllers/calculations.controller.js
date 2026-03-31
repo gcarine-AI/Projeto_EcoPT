@@ -83,18 +83,19 @@ export const remove = async (req, res) => {
 }
 
 export const compare = async (req, res) => {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('calculations')
     .select('total_co2')
     .eq('user_id', req.user.id)
     .order('created_at', { ascending: false })
     .limit(1)
-    .single()
+    .maybeSingle()
 
   res.json({
-    user_total: data?.total_co2 ?? null,
+    user_total: data?.total_co2 || 0,
     pt_average: 5.1,   // DGEG, Energia em Números 2025
     eu_average: 9.0,   // Eurostat, pegada de consumo 2023 (publicado fev 2026)
-    source: 'DGEG 2025 / Eurostat 2023'
-    })
+    status: data ? 'sucess' : 'no_data',
+    source: 'DGEG 2025 / Eurostat 2023',
+    });
 }

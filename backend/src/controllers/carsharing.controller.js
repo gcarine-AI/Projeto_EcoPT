@@ -1,9 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY,
-);
+import supabase from '../config/supabase.js'
 
 // Emissões por km por tipo de carro (kgCO2/km)
 const emissionFactors = {
