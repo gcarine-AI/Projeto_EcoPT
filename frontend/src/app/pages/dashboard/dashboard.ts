@@ -1,5 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -7,8 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
+import { Calculation } from '../../models/calculation.model';
+import { CalculationService } from '../../services/calculation';
 
-export interface Calculation {
+
+/* export interface Calculation {
   id: string;
   user_id: string;
   car_km: number;
@@ -24,7 +26,7 @@ export interface ComparisonData {
   last_calculation: Calculation;
   average_pt: number;
   average_eu: number;
-}
+} */
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -40,38 +42,68 @@ export interface ComparisonData {
   styleUrl: './dashboard.css',
 })
 export class DashboardComponent implements OnInit {
-  private http = inject(HttpClient);
-  private authService = inject(AuthService)
+  private calcService = inject(CalculationService);
+  private authService = inject(AuthService);
 
-  lastCalculation: Calculation | null = null;
-  readonly avgPortugal = 5.1; // Toneladas de CO2 por pessoa/ano em PT
-  percentage = 0;
-  statusMessage = 'A carregar dados...';
+  public lastCalculation: Calculation | null = null;
+  public readonly avgPortugal = 5.1; // Toneladas de CO2 por pessoa/ano em PT
+  public percentage = 0;
+  public statusMessage = 'A carregar dados...';
+  public loading = true;
 
   ngOnInit(): void {
-    this.fetchData();
+    if (this.authService.isLoggedIn()) {
+      this.fetchData();
+    } else {
+      this.statusMessage = 'Sessão expirada. Por favor, faz login novamente';
+      this.loading = false;
+    }
   }
 
   fetchData(): void {
-    const headers = new HttpHeaders()
-    headers.set('Authorization', `Bearer ${this.authService.getToken()}`)
-    this.http.get<Calculation[]>('http://localhost:3000/calculations',
-      {headers: {'Authorization': `Bearer ${this.authService.getToken()}`}}).subscribe({
-      next: (data) => {
+    this.loading = true;
+
+    this.calcService.list().subscribe({
+      next: (data: Calculation[]) => {
         if (data && data.length > 0) {
-          this.lastCalculation = data[0]; // Assume que o mais recente vem primeiro
+          this.lastCalculation = data [0];
           this.calculateImpact();
         } else {
           this.statusMessage = 'Ainda não tens cálculos realizados.';
         }
+        this.loading = false;
       },
-      error: () => (this.statusMessage = 'Erro ao ligar ao servidor.'),
+      error: (err: Error) => {
+        console.error(err);
+        this.statusMessage = 'Erro ao ligar o servidor';
+        this.loading = false;
+      },
     });
   }
 
+
+    /* const headers = new HttpHeaders();
+    headers.set('Authorization', `Bearer ${this.authService.getToken()}`);
+    this.http
+      .get<
+        Calculation[]
+      >('http://localhost:3000/calculations', { headers: { Authorization: `Bearer ${this.authService.getToken()}` } })
+      .subscribe({
+        next: (data) => {
+          if (data && data.length > 0) {
+            this.lastCalculation = data[0]; // Assume que o mais recente vem primeiro
+            this.calculateImpact();
+          } else {
+            this.statusMessage = 'Ainda não tens cálculos realizados.';
+          }
+        },
+        error: () => (this.statusMessage = 'Erro ao ligar ao servidor.'),
+      });
+  }
+ */
   calculateImpact(): void {
     // Regra de três simples para a barra de progresso (máximo 10 toneladas para escala)
-    if (this.lastCalculation) {
+    if (this.lastCalculation?.total_co2) {
       // Limitar a 100% para a barra não transbordar visualmente
       const rawPercentage = (this.lastCalculation.total_co2 / 10) * 100;
       this.percentage = Math.min(rawPercentage, 100);
@@ -79,7 +111,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getProgressBarColor(): 'primary' | 'warn' {
-    if (!this.lastCalculation) return 'primary';
+    if (!this.lastCalculation?.total_co2) return 'primary';
     return this.lastCalculation.total_co2 <= this.avgPortugal ? 'primary' : 'warn';
   }
 }
