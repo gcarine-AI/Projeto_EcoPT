@@ -5,7 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { Calculation } from './../dashboard/dashboard';
+import { Calculation } from '../../models/calculation.model';
 import { RouterLink } from "@angular/router";
 
 @Component({
@@ -29,7 +29,7 @@ export class HistoryComponent implements OnInit {
   }
 
   loadHistory(): void {
-    this.http.get<Calculation[]>('http://localhost:3000/api/calculations').subscribe({
+    this.http.get<Calculation[]>('http://localhost:3000/calculations').subscribe({
       next: (data) => {
         this.dataSource = data;
       },

@@ -22,6 +22,9 @@ export class NavbarComponent {
   getUserEmail(): string | null {
     return this.authService.getEmail();
   }
+  getUserName():string | null {
+    return this.authService.getName();
+  }
 
   logout(): void {
     this.authService.logout();
