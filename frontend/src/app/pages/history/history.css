@@ -1,7 +1,12 @@
 .history-container {
-  padding: 20px;
+  padding: 0 20px;
   max-width: 900px;
-  margin: 0 auto;
+  margin: 40px auto;
+}
+
+.history-card {
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 table {
@@ -9,9 +14,26 @@ table {
   margin-top: 15px;
 }
 
-.mat-column-actions {
-  width: 80px;
+.empty-history {
   text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.empty-history mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 10px;
+}
+
+.mat-column-actions {
+  width: 100px;
+  text-align: right;
+}
+
+.mat-column-total_co2 strong {
+  color: #2e7d32;
 }
 
 .mat-header-cell {

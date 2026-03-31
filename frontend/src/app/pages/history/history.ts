@@ -32,21 +32,33 @@ export class HistoryComponent implements OnInit {
 
   loadHistory(): void {
     this.loading = true;
-    this.
+    this.calcService.list().subscribe({
+      next: (data: Calculation[]) => {
+        this.dataSource = data;
+        this.loading = false;
       },
-      error: () => alert('Erro ao carregar o histórico.')
+      error: (err: Error) => {
+        console.error(err);
+        alert('Erro ao carregar o histórico.');
+        this.loading = false;
+      }
     });
   }
 
   deleteCalculation(id: string): void {
     if (confirm('Tem a certeza que deseja eliminar este registo?')) {
-      this.http.delete(`http://localhost:3000/api/calculations/${id}`).subscribe({
+      this.loading = true;
+      this.calcService.delete(id).subscribe({
         next: () => {
-          // Filtramos a lista localmente para atualizar a UI sem novo GET
           this.dataSource = this.dataSource.filter(item => item.id !== id);
+          this.loading = false;
         },
-        error: () => alert('Erro ao eliminar.')
-      });
+        error: (err: Error) => {
+          console.error(err);
+          alert('Erro ao eliminar o registo.');
+          this.loading = false;
+        }
+      })
     }
   }
 }
