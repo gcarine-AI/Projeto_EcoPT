@@ -39,8 +39,6 @@ export class LoginComponent {
     });
   }
 
-  
-
   async loginAs() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -52,17 +50,17 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm.value;
 
-    const login = await this.authService.login(email, password)
-    console.log(login)
+    const login = await this.authService.login(email, password);
+    console.log(login);
 
     try {
-      const login = await this.authService.login(email, password)
-      if (!login) throw Error
+      const login = await this.authService.login(email, password);
+      if (!login) throw Error;
       this.router.navigate(['/dashboard']);
     } catch (error) {
-      console.log(error)
-        this.isLoading = false;
-        this.error = 'Credenciais inválidas ou utilizador não registado.';
+      console.log(error);
+      this.isLoading = false;
+      this.error = 'Credenciais inválidas ou utilizador não registado.';
     }
 
     /* this.authService.login(email, password, role).({

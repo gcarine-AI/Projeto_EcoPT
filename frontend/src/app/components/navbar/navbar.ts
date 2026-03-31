@@ -10,9 +10,17 @@ import { MatMenuModule } from '@angular/material/menu';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, MatToolbarModule, MatButtonModule, MatIconModule, MatMenuModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+  ],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css'
+  styleUrl: './navbar.css',
 })
 export class NavbarComponent {
   public authService = inject(AuthService);
@@ -22,7 +30,7 @@ export class NavbarComponent {
   getUserEmail(): string | null {
     return this.authService.getEmail();
   }
-  getUserName():string | null {
+  getUserName(): string | null {
     return this.authService.getName();
   }
 

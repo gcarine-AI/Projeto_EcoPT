@@ -9,7 +9,6 @@ import { AuthService } from '../../services/auth';
 import { Calculation } from '../../models/calculation.model';
 import { CalculationService } from '../../services/calculation';
 
-
 /* export interface Calculation {
   id: string;
   user_id: string;
@@ -66,7 +65,7 @@ export class DashboardComponent implements OnInit {
     this.calcService.list().subscribe({
       next: (data: Calculation[]) => {
         if (data && data.length > 0) {
-          this.lastCalculation = data [0];
+          this.lastCalculation = data[0];
           this.calculateImpact();
         } else {
           this.statusMessage = 'Ainda não tens cálculos realizados.';
@@ -81,8 +80,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-
-    /* const headers = new HttpHeaders();
+  /* const headers = new HttpHeaders();
     headers.set('Authorization', `Bearer ${this.authService.getToken()}`);
     this.http
       .get<

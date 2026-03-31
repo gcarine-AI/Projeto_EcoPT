@@ -20,10 +20,10 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   templateUrl: './register.html',
-  styleUrl: './register.css'
+  styleUrl: './register.css',
 })
 export class RegisterComponent {
   private fb = inject(FormBuilder);
@@ -34,7 +34,7 @@ export class RegisterComponent {
     name: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(7)]],
-    role: ['user', Validators.required] // 'user' por defeito
+    role: ['user', Validators.required], // 'user' por defeito
   });
 
   error = '';
@@ -47,7 +47,7 @@ export class RegisterComponent {
     this.error = '';
 
     const { email, password, name, role } = this.registerForm.value;
-    console.log("Register Front: ", this.registerForm.value)
+    console.log('Register Front: ', this.registerForm.value);
 
     this.authService.register(email, password, name, role).subscribe({
       next: () => {
@@ -57,7 +57,7 @@ export class RegisterComponent {
       error: (err) => {
         this.isLoading = false;
         this.error = err.error?.message || 'Erro ao criar conta. Tenta outro email.';
-      }
+      },
     });
   }
 }
