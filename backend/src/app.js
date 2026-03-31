@@ -10,7 +10,7 @@ import carsharingRoutes from "./routes/carsharing.routes.js";
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:3000', "http://localhost:4200"],
+  origin: "http://localhost:4200",
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true

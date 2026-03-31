@@ -18,7 +18,7 @@ export class CarsharingService {
   private http = inject(HttpClient);
 
   // Ajustado para coincidir com o Router: app.use('/api/carsharing', ...)
-  private apiUrl = 'http://localhost:3000/api/carsharing';
+  private apiUrl = 'http://localhost:3000/carsharing';
 
   // GET: Vai buscar a lista ao endpoint /api/carsharing/available
   getRides(): Observable<AvailableRide[]> {

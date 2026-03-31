@@ -79,7 +79,7 @@ export class CalculatorComponent implements OnInit {
 
       request$.subscribe({
         next: () => {
-          alert(this.editId ? 'Cálculo atualizado! ☘️' : 'Pegada calculada com sucesso!!');
+          //alert(this.editId ? 'Cálculo atualizado! ☘️' : 'Pegada calculada com sucesso!!');
           this.router.navigate(['/history']); // Redireciona para o histórico
         },
         error: (err: Error) => {
