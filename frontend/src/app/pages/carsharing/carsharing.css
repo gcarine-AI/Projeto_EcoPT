@@ -1,7 +1,7 @@
 .carsharing-container {
   max-width: 1000px;
-  margin: 40px auto;
-  padding: 0 20px;
+  margin: 20px auto;
+  padding: 0 15px;
 }
 
 .page-header {
@@ -13,6 +13,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
+  margin-top: 20px;
 }
 
 .ride-card {
@@ -25,13 +26,14 @@
   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
+
 .route {
   display: flex;
   align-items: center;
   justify-content: space-around;
   margin: 20px 0;
-  padding: 15px;
-  background: #f5f5f5;
+  padding: 10px;
+  background: #f8f9fa;
   border-radius: 8px;
 }
 
@@ -39,15 +41,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 0.9rem;
 }
 
 .arrow {
-  color: #888;
+  color: #bdbdbd;
 }
 
 .details {
-  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .driver-icon mat-icon {
@@ -55,4 +61,38 @@
   height: 40px;
   width: 40px;
   color: #666;
+}
+
+.cost-ship {
+  font-weight: bold;
+}
+
+.cost-chip.free {
+  background-color: #e8f5e9 !important;
+  color: #2e7d32 !important
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  grid-column: 1 / -1;
+  color: #757575;
+}
+
+.offer-form-card {
+  margin-bottom: 30px;
+  border-left: 5px solid #ff4081; /* Dá uma cor de destaque à borda */
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding-top: 10px;
+}
+
+.actions-header {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
 }

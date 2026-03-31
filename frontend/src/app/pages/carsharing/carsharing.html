@@ -4,6 +4,46 @@
     <p>Partilha viagens, reduz custos e protege o planeta.</p>
   </header>
 
+  <div class="actions-header">
+    <button mat-raised-button color="accent" (click)="showForm = !showForm">
+      <mat-icon>{{ showForm ? 'close' : 'add' }}</mat-icon>
+      {{ showForm ? 'CANCELAR' : 'OFERECER BOLEIA' }}
+    </button>
+  </div>
+
+  @if (showForm) {
+    <mat-card class="offer-form-card">
+      <form [formGroup]="offerForm" (ngSubmit)="createOffer()">
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Origem</mat-label>
+            <input matInput formControlName="origin" placeholder="Ex: Lisboa">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Destino</mat-label>
+            <input matInput formControlName="destination" placeholder="Ex: Porto">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Lugares</mat-label>
+            <input matInput type="number" formControlName="seats">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Custo (€)</mat-label>
+            <input matInput type="number" formControlName="cost">
+          </mat-form-field>
+        </div>
+        <button mat-flat-button color="primary" [disabled]="offerForm.invalid">PUBLICAR</button>
+      </form>
+    </mat-card>
+  }
+
+  @if (loading) {
+    <mat-progress-bar mode="query" class="loader"></mat-progress-bar>
+  }
+
   <div class="rides-grid">
     @for (ride of rides; track ride.id) {
       <mat-card class="ride-card">
@@ -12,9 +52,9 @@
             <mat-icon>account_circle</mat-icon>
           </div>
           <mat-card-title>{{ ride.driver }}</mat-card-title>
-          <mat-card-subtitle
-            >{{ ride.date | date: 'dd/MM/yyyy' }} às {{ ride.time }}</mat-card-subtitle
-          >
+          <mat-card-subtitle>
+            {{ ride.date | date: 'dd/MM/yyyy' }} às {{ ride.time }}
+          </mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
@@ -47,13 +87,20 @@
           <button
             mat-raised-button
             color="primary"
-            [disabled]="ride.seats === 0"
+            [disabled]="ride.seats === 0 || loading"
             (click)="bookSeat(ride.id)"
           >
             {{ ride.seats > 0 ? 'RESERVAR LUGAR' : 'ESGOTADO' }}
           </button>
         </mat-card-actions>
       </mat-card>
+    } @empty {
+      @if (!loading) {
+        <div class="empty-state">
+          <mat-icon>search_off</mat-icon>
+          <p>Ainda não há boleias disponíveis. Volta mais tarde! 🌱</p>
+        </div>
+      }
     }
   </div>
 </div>
