@@ -1,16 +1,21 @@
 <div class="calculator-container">
-  <mat-card>
+  <mat-card class = "calc-card">
+
+    @if (loading) {
+      <mat-progress-bar mode ="indeterminate"></mat-progress-bar>
+    }
+
     <mat-card-header>
-      <mat-card-title>Calculadora de Pegada Carbónica 🌍</mat-card-title>
+      <mat-card-title>
+        {{ editId ? 'Editar Cálculo' : 'Calculadora de Pegada Carbónica 🌍' }}</mat-card-title>
       <mat-card-subtitle>Descobre o teu impacto ambiental em poucos passos</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
       <mat-stepper linear #stepper>
 
-        <form [formGroup]="calcForm">
-
           <mat-step [stepControl]="calcForm">
+            <form [formGroup]="calcForm">
             <ng-template matStepLabel>Transporte</ng-template>
             <div class="step-content">
               <p>Quantos quilómetros percorres de carro por semana?</p>
@@ -28,12 +33,14 @@
               </mat-form-field>
 
               <div class="actions">
-                <button mat-raised-button color="primary" matStepperNext>Próximo</button>
+                <button mat-raised-button color="primary" matStepperNext="button">Próximo</button>
               </div>
             </div>
+            </form>
           </mat-step>
 
           <mat-step [stepControl]="calcForm">
+            <form [formGroup]="calcForm">
             <ng-template matStepLabel>Estilo de Vida</ng-template>
             <div class="step-content">
               <p>Qual é o teu tipo de dieta?</p>
@@ -56,10 +63,11 @@
               </mat-form-field>
 
               <div class="actions">
-                <button mat-button matStepperPrevious>Voltar</button>
-                <button mat-raised-button color="primary" matStepperNext>Revisão</button>
+                <button mat-button matStepperPrevious type="button">Voltar</button>
+                <button mat-raised-button color="primary" matStepperNex type="button">Revisão</button>
               </div>
             </div>
+            </form>
           </mat-step>
 
           <mat-step>
@@ -69,19 +77,20 @@
               <p>Clique no botão abaixo para calcular a sua pegada de $CO_2$.</p>
 
               <div class="summary-box">
-                <p><strong>Resumo:</strong> {{ calcForm.value.car_km }} km/semana | Dieta {{ calcForm.value.diet }}</p>
+                <p><strong>Resumo:</strong>
+                  {{ calcForm.value.car_km }} km/semana | Dieta {{ calcForm.value.diet }}</p>
               </div>
 
               <div class="actions">
-                <button mat-button matStepperPrevious>Voltar</button>
-                <button mat-raised-button color="accent" (click)="submit()" [disabled]="calcForm.invalid">
-                  CALCULAR AGORA 🚀
+                <button mat-button matStepperPrevious [disabled]="loading">Voltar</button>
+                <button mat-raised-button color="accent" (click)="submit()" [disabled]="calcForm.invalid || loading">
+                  {{ editId ? 'ATUALIZAR DADOS 🔄' : 'CALCULAR AGORA 🚀' }}
                 </button>
               </div>
             </div>
           </mat-step>
 
-        </form>
+        
       </mat-stepper>
     </mat-card-content>
   </mat-card>
