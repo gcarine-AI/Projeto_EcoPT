@@ -39,6 +39,8 @@ export class LoginComponent {
     });
   }
 
+  
+
   async loginAs() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -60,7 +62,7 @@ export class LoginComponent {
     } catch (error) {
       console.log(error)
         this.isLoading = false;
-        this.error = 'Email ou password incorretos. Tenta novamente.';
+        this.error = 'Credenciais inválidas ou utilizador não registado.';
     }
 
     /* this.authService.login(email, password, role).({
