@@ -47,6 +47,7 @@ export class RegisterComponent {
     this.error = '';
 
     const { email, password, name, role } = this.registerForm.value;
+    console.log("Register Front: ", this.registerForm.value)
 
     this.authService.register(email, password, name, role).subscribe({
       next: () => {

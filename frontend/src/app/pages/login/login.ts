@@ -39,7 +39,7 @@ export class LoginComponent {
     });
   }
 
-  loginAs(role: string): void {
+  async loginAs() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -50,7 +50,20 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm.value;
 
-    this.authService.login(email, password, role).subscribe({
+    const login = await this.authService.login(email, password)
+    console.log(login)
+
+    try {
+      const login = await this.authService.login(email, password)
+      if (!login) throw Error
+      this.router.navigate(['/dashboard']);
+    } catch (error) {
+      console.log(error)
+        this.isLoading = false;
+        this.error = 'Email ou password incorretos. Tenta novamente.';
+    }
+
+    /* this.authService.login(email, password, role).({
       next: () => {
         this.router.navigate(['/dashboard']);
       },
@@ -58,6 +71,6 @@ export class LoginComponent {
         this.isLoading = false;
         this.error = 'Email ou password incorretos. Tenta novamente.';
       },
-    });
+    }); */
   }
 }

@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router'; // Importar ActivatedRoute
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -9,7 +8,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
-import { Calculation } from './../dashboard/dashboard'; // Importar a interface
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { Calculation } from '../../models/calculation.model'
+import { CalculationService } from '../../services/calculation';
 
 @Component({
   selector: 'app-calculator',
@@ -22,28 +23,29 @@ import { Calculation } from './../dashboard/dashboard'; // Importar a interface
     MatButtonModule,
     MatCardModule,
     MatStepperModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressBarModule
   ],
   templateUrl: './calculator.html',
   styleUrl: './calculator.css'
 })
 export class CalculatorComponent implements OnInit {
+  private calcService = inject(CalculationService)
   private fb = inject(FormBuilder);
-  private http = inject(HttpClient);
   private router = inject(Router);
   private route = inject(ActivatedRoute); // Injetar a rota ativa
 
-  calcForm: FormGroup = this.fb.group({
+  public calcForm: FormGroup = this.fb.group({
     car_km: [0, [Validators.required, Validators.min(0)]],
     flights: [0, [Validators.required, Validators.min(0)]],
     diet: ['omnivora', Validators.required],
     kwh: [0, [Validators.required, Validators.min(0)]]
   });
 
-  editId: string | null = null; // Guardar o ID se estivermos em modo edição
+  public editId: string | null = null;
+  public loading = false;
 
   ngOnInit(): void {
-    // Verificar se existe um ID na URL (ex: /calculator/123)
     this.editId = this.route.snapshot.paramMap.get('id');
 
     if (this.editId) {
@@ -52,30 +54,39 @@ export class CalculatorComponent implements OnInit {
   }
 
   private loadCalculationData(id: string): void {
-    this.http.get<Calculation>(`http://localhost:3000/api/calculations/${id}`).subscribe({
-      next: (data) => {
-        // patchValue preenche o formulário com os dados que vêm da API
+    this.loading = true;
+    this.calcService.getById(id).subscribe({
+      next: (data: Calculation) => {
         this.calcForm.patchValue(data);
+        this.loading = false;
       },
-      error: () => alert('Erro ao carregar dados do cálculo.')
+      error: (err: Error) =>{
+        console.error('Erro ao carregar dados: ', err);
+        alert('Não foi possivel carregar o cálculo.');
+        this.loading = false;
+      }
     });
   }
 
   submit(): void {
     if (this.calcForm.valid) {
-      const url = 'http://localhost:3000/api/calculations';
+      this.loading = true;
+      const formData: Calculation = this.calcForm.value;
 
-      // Se tivermos editId, usamos PUT. Caso contrário, POST.
       const request$ = this.editId
-        ? this.http.put(`${url}/${this.editId}`, this.calcForm.value)
-        : this.http.post(url, this.calcForm.value);
+        ? this.calcService.update(this.editId, formData)
+        : this.calcService.create(formData);
 
       request$.subscribe({
         next: () => {
-          alert(this.editId ? 'Cálculo atualizado!' : 'Cálculo guardado!');
+          alert(this.editId ? 'Cálculo atualizado! ☘️' : 'Pegada calculada com sucesso!!');
           this.router.navigate(['/history']); // Redireciona para o histórico
         },
-        error: () => alert('Erro ao processar o cálculo.')
+        error: (err: Error) => {
+          console.error ('Erro no servidor:', err);
+          alert('Erro ao processar o cálculo.');
+          this.loading = false;
+        }
       });
     }
   }

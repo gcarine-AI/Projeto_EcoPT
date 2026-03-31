@@ -1,13 +1,18 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http'; // Necessário para o inject(HttpClient)
+import { AuthService } from './auth'; // Garantir que o nome bate com o export do teu service
 
-import { Auth } from './auth';
-
-describe('Auth', () => {
-  let service: Auth;
+describe('AuthService', () => {
+  let service: AuthService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Auth);
+    TestBed.configureTestingModule({
+      providers: [
+        AuthService,
+        provideHttpClient() // Adicionamos isto para o teste não crashar ao ver o HttpClient
+      ]
+    });
+    service = TestBed.inject(AuthService);
   });
 
   it('should be created', () => {

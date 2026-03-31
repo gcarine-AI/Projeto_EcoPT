@@ -1,14 +1,17 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { Observable} from 'rxjs';
 import { environment } from '../../environments/environment';
+import { createClient, SupabaseClient} from '@supabase/supabase-js'
 
 interface AuthResponse {
   token: string;
-  user?: {
+  user: {
     id: string;
     email: string;
+    name?: string;
+    role?: string;
   };
 }
 @Injectable({
@@ -17,8 +20,14 @@ interface AuthResponse {
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-
   private apiUrl = environment.apiUrl;
+  private supabase: SupabaseClient;
+  public token = ''
+
+  constructor() {
+    this.supabase = createClient(environment.apiUrl, environment.SUPABASE_ANON_KEY)
+  }
+
 
   register(email: string, password: string, name: string, role: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, {
@@ -28,42 +37,40 @@ export class AuthService {
       role,
     });
   }
+async login (email:string, password:string) {
+  try {
+  const {data, error} = await this.supabase.auth.signInWithPassword({ email, password})
+  if (error) throw error
+  this.token = data.session?.access_token || '';
+      // Guardamos no localStorage para o Dashboard conseguir ler mesmo após refresh
+      localStorage.setItem('token', this.token);
+      localStorage.setItem('email', data.user?.email || '');
+  return true}
 
-  login(email: string, password: string, role: string): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.apiUrl}/auth/login`, {
-        email,
-        password,
-      })
-      .pipe(
-        tap((response) => {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('role', role);
-          localStorage.setItem('email', email);
-        }),
-      );
+  catch (error) {
+    console.log(error)
+    return false
   }
+}
 
-  logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    localStorage.removeItem('email');
-    this.router.navigate(['/login']);
-  }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
-  }
+  async logout(){
+    try {
+      const {error} = await this.supabase.auth.signOut()
+      if (error) throw error
+      this.token = '';
+      localStorage.clear();
+      this.router.navigate(['/login']);
+      return true}
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
+    catch (error) {
+      console.log(error)
+      return false
+    }
   }
-
-  getRole(): string | null {
-    return localStorage.getItem('role');
-  }
-
-  getEmail(): string | null {
-    return localStorage.getItem('email');
-  }
+  getName(): string | null {return localStorage.getItem('name');}
+  getRole(): string | null { return localStorage.getItem('role'); }
+  getEmail(): string | null { return localStorage.getItem('email'); }
+  getToken(): string | null { return localStorage.getItem('token') || this.token; }
+  isLoggedIn(): boolean {return !! this.getToken()}
 }
