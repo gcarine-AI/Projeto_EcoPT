@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { calculate, getAvailableRides, bookRide } from '../controllers/carsharing.controller.js'
+import { calculate, getAvailableRides, bookRide, createRide } from '../controllers/carsharing.controller.js'
 import auth from '../middleware/auth.js'
 
 const router = Router()
@@ -12,5 +12,7 @@ router.get('/available', auth, getAvailableRides)
 
 // Rota para reservar (PATCH) - :id é o parâmetro que passamos do Angular
 router.patch('/book/:id', auth, bookRide)
+
+router.post('create', auth, createRide);
 
 export default router

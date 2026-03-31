@@ -51,7 +51,12 @@ export const getAvailableRides = async (req, res) => {
       .order("date", { ascending: true });
 
     if (error) throw error;
-    return res.status(200).json(data);
+    const formattedData = data.map(ride => ({
+      ...ride,
+      time: ride.time ? ride.time.substring(0, 5) : '--:--' 
+    }));
+
+    return res.status(200).json(formattedData);
   } catch (error) {
     return res
       .status(500)
@@ -86,5 +91,21 @@ export const bookRide = async (req, res) => {
     }
   } catch {
     res.status(500).json({ error: "Erro ao atualizar reserva" });
+  }
+};
+
+export const createRide = async (req, res) => {
+  const { origin, destination, seats, cost, date, time } = req.body;
+  const driver = req.user.name || "Utilizador Eco"; // Vem do token
+
+  try {
+    const { data, error } = await supabase
+      .from("Available_rides")
+      .insert([{ driver, origin, destination, seats, cost, date, time }]);
+
+    if (error) throw error;
+    res.status(201).json({ message: "Boleia criada com sucesso!" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
