@@ -62,7 +62,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-
   calculateImpact(): void {
     // Regra de três simples para a barra de progresso (máximo 10 toneladas para escala)
     if (this.lastCalculation?.total_co2) {
