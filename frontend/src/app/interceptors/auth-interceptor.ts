@@ -17,6 +17,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(authReq);
   }
 
-  if (!token) console.warn('Atenção: Nenhum token encontrado no localStorage!');
+  //if (!token) console.warn('Atenção: Nenhum token encontrado no localStorage!');
   return next(req);
 };

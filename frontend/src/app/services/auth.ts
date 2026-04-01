@@ -23,22 +23,29 @@ export class AuthService {
   private apiUrl = environment.apiUrl;
   private supabase: SupabaseClient;
   public token = '';
+  public logUser = {};
 
   constructor() {
     this.supabase = createClient(environment.apiUrl, environment.SUPABASE_ANON_KEY);
   }
 
-  register(email: string, password: string, name: string, role: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, {
+ register(email: string, password: string, name: string, role: string): Observable<AuthResponse> {
+  return this.http.post<AuthResponse>(`http://localhost:3000/auth/register`, {
       email,
       password,
       name,
       role,
     });
   }
-  async login(email: string, password: string) {
-    try {
-      const { data, error } = await this.supabase.auth.signInWithPassword({ email, password });
+
+  login(email: string, password: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`http://localhost:3000/auth/login`, {
+      email,
+      password,
+    })
+    
+      /* const { data, error } = await this.supabase.auth.signInWithPassword({ email, password })
+      console.log(data);
       if (error) throw error;
       this.token = data.session?.access_token || '';
       // Guardamos no localStorage para o Dashboard conseguir ler mesmo após refresh
@@ -48,7 +55,7 @@ export class AuthService {
     } catch (error) {
       console.log(error);
       return false;
-    }
+    } */
   }
 
   async logout() {

@@ -5,10 +5,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { CarsharingService, AvailableRide } from '../../services/carsharing';
+import { CarsharingService, AvailableRide, CreateRide, RideResponse } from '../../services/carsharing';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router'
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-carsharing',
@@ -22,18 +25,23 @@ import { MatInputModule } from '@angular/material/input';
     MatProgressBarModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    MatSnackBarModule,
+    ReactiveFormsModule,
+
   ],
   templateUrl: './carsharing.html',
   styleUrl: './carsharing.css',
 })
 export class CarsharingComponent implements OnInit {
   private rideService = inject(CarsharingService);
-  private fb = inject(FormBuilder)
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private snackBar = inject(MatSnackBar)
   public rides: AvailableRide[] = [];
   public loading = false;
   public showForm = false;
   public offerForm: FormGroup;
+
 
   constructor() {
     this.offerForm = this.fb.group({
@@ -51,6 +59,15 @@ export class CarsharingComponent implements OnInit {
     this.loadRides();
   }
 
+  private showMessage(msg: string, isError = false) {
+    this.snackBar.open(msg, 'Fechar', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: isError ? ['error-snackbar'] : ['success-snackbar']
+    });
+  }
+
   loadRides(): void {
     this.loading = true;
     this.rideService.getRides().subscribe({
@@ -66,15 +83,18 @@ export class CarsharingComponent implements OnInit {
   }
 
   bookSeat(rideId: number): void {
+    console.log('Botao clicando!')
     this.loading = true;
     this.rideService.bookSeat(rideId).subscribe({
-      next: (res) => {
-        alert(res.message);
-        this.loadRides(); // Recarrega a lista para mostrar menos 1 lugar
-      },
-      error: (err) => {
-        console.error('Erro ao reservar', err);
+      next: (res: RideResponse) => {
         this.loading = false;
+
+        alert(res.message || 'Lugar reservado com sucesso! 🌱');
+        this.router.navigate(['/history']);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.loading = false;
+        console.error('Não foi possível reservar: ', err.error.message);
       }
     });
   }
@@ -82,14 +102,22 @@ export class CarsharingComponent implements OnInit {
   createOffer(): void {
   if (this.offerForm.valid) {
     this.loading = true;
-    this.rideService.createRide(this.offerForm.value).subscribe({
-      next: () => {
+
+    const rideData: CreateRide = this.offerForm.value;
+
+    this.rideService.createRide(rideData).subscribe({
+      next: (res: RideResponse) => {
+        alert(res.message);
+        this.loading = false;
         this.showForm = false;
-        this.offerForm.reset({ seats: 1, cost: 0 });
+        this.offerForm.reset({
+          seats: 1, cost: 0, date: new Date().toISOString().split('T')[0], time: '12:00'});
+
         this.loadRides(); // Recarrega a lista para mostrar a nova boleia
+        this.showMessage('Boleia publicada com sucesso! 🚙');
       },
-      error: (err) => {
-        console.error('Erro ao criar oferta', err);
+      error: (err: HttpErrorResponse) => {
+        this.showMessage('Erro ao criar oferta', (err.error?.message || 'Servidor Offline'));
         this.loading = false;
       }
     });
