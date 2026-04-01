@@ -29,8 +29,8 @@ export class AuthService {
     this.supabase = createClient(environment.apiUrl, environment.SUPABASE_ANON_KEY);
   }
 
- register(email: string, password: string, name: string, role: string): Observable<AuthResponse> {
-  return this.http.post<AuthResponse>(`http://localhost:3000/auth/register`, {
+  register(email: string, password: string, name: string, role: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`http://localhost:3000/auth/register`, {
       email,
       password,
       name,
@@ -42,9 +42,9 @@ export class AuthService {
     return this.http.post<AuthResponse>(`http://localhost:3000/auth/login`, {
       email,
       password,
-    })
-    
-      /* const { data, error } = await this.supabase.auth.signInWithPassword({ email, password })
+    });
+
+    /* const { data, error } = await this.supabase.auth.signInWithPassword({ email, password })
       console.log(data);
       if (error) throw error;
       this.token = data.session?.access_token || '';

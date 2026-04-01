@@ -43,9 +43,7 @@ export class CarsharingService {
     return this.http.patch<{ message: string }>(`${this.apiUrl}/book/${id}`, {});
   }
 
-
   createRide(rideData: CreateRide): Observable<RideResponse> {
-  return this.http.post<RideResponse>(`${this.apiUrl}/create`, rideData);
-}
-
+    return this.http.post<RideResponse>(`${this.apiUrl}/create`, rideData);
+  }
 }
