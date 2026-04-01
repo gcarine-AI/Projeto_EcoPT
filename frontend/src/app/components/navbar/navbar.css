@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: sticky; /* Upgrade: A barra fica fixa no topo ao fazer scroll */
   top: 0;
   z-index: 1000;
