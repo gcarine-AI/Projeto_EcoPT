@@ -1,8 +1,6 @@
-import '@angular/core/testing';
-import { getTestBed } from '@angular/core/testing';
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
+import { beforeAll } from 'vitest';
+import { ɵresolveComponentResources as resolveComponentResources } from '@angular/core';
 
-getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
+beforeAll(async () => {
+  await resolveComponentResources((url: string) => fetch(url));
+});
