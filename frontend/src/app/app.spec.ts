@@ -5,9 +5,7 @@ import { provideRouter } from '@angular/router';
 beforeEach(async () => {
   await TestBed.configureTestingModule({
     imports: [AppComponent],
-    providers: [
-      provideRouter([])
-    ]
+    providers: [provideRouter([])],
   }).compileComponents();
 });
 
@@ -23,5 +21,4 @@ describe('App', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-
 });

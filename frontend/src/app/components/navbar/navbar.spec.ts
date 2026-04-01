@@ -8,22 +8,19 @@ describe('Navbar', () => {
   let fixture: ComponentFixture<NavbarComponent>;
 
   beforeEach(async () => {
-
     Object.defineProperty(window, 'localStorage', {
-  value: {
-    getItem: vi.fn(() => null),
-    setItem: vi.fn(),
-    removeItem: vi.fn(),
-    clear: vi.fn()
-  },
-  writable: true
-  });
+      value: {
+        getItem: vi.fn(() => null),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        clear: vi.fn(),
+      },
+      writable: true,
+    });
 
     await TestBed.configureTestingModule({
       imports: [NavbarComponent],
-      providers: [
-        provideRouter([])
-      ]
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarComponent);
