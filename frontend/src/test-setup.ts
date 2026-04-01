@@ -13,7 +13,7 @@ beforeAll(async () => {
   const cssFiles = globSync('src/**/*.css', { cwd: process.cwd() });
 
   const fileMap = new Map<string, string>();
-  [...htmlFiles, ...cssFiles].forEach(f => {
+  [...htmlFiles, ...cssFiles].forEach((f) => {
     const filename = f.split('/').pop()!;
     fileMap.set(filename, resolve(process.cwd(), f));
   });
