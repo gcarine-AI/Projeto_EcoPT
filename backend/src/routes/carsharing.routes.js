@@ -13,6 +13,6 @@ router.get('/available', auth, getAvailableRides)
 // Rota para reservar (PATCH) - :id é o parâmetro que passamos do Angular
 router.patch('/book/:id', auth, bookRide)
 
-router.post('create', auth, createRide);
+router.post('/create', auth, createRide);
 
 export default router
