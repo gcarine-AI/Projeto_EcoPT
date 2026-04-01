@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --exec node -r dotenv/config src/server.js",
     "start": "node src/server.js",
-    "test": "vitest run src/",
+    "test": "vitest run --printConsoleTrace=true --silent=true src/",
     "lint": "eslint src/"
   },
   "jest": {
