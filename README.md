@@ -2,6 +2,8 @@
 
 [![CI/CD — EcoPT Frontend](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ciFrontend.yml/badge.svg)](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ciFrontend.yml)
 
+[![CI/CD — EcoPT Backend](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ciBackend.yml/badge.svg)](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ciBackend.yml)
+
 A primeira calculadora de pegada carbónica pensada especificamente para Portugal.
 Usa fatores de emissão portugueses (APA 2025 / DGEG Energia em Números 2025) para resultados mais precisos e relevantes.
 
