@@ -16,9 +16,14 @@ export const calculate = async (req, res) => {
       .status(400)
       .json({ error: "km, passengers e car_type são obrigatórios" });
   }
+  if (km <= 0 || passengers <= 0) {
+  return res.status(400).json({ error: "km e passengers devem ser maiores que 0" });
+  }
 
   const factor = emissionFactors[car_type] ?? 0.21;
-
+  if (!emissionFactors[car_type]) {
+  return res.status(400).json({ error: "car_type inválido. Use: gasolina, diesel, hibrido ou eletrico" });
+}
   const co2_alone = Math.round(km * factor * 100) / 100;
   const co2_shared = Math.round(((km * factor) / passengers) * 100) / 100;
   const saved_co2 = Math.round((co2_alone - co2_shared) * 100) / 100;
@@ -44,10 +49,12 @@ export const calculate = async (req, res) => {
 
 export const getAvailableRides = async (req, res) => {
   try {
+    const today = new Date().toISOString().split("T")[0];
     const { data, error } = await supabase
       .from("Available_rides")
       .select("*")
-      .gt("seats", 0) // Apenas com lugares disponíveis
+      .gt("seats", 0)
+      .gte("date", today)
       .order("date", { ascending: true });
 
     if (error) throw error;
@@ -88,7 +95,8 @@ export const bookRide = async (req, res) => {
     const { error: updateError } = await supabase
       .from("Available_rides")
       .update({ seats: ride.seats - 1 }) // <--- O DECREMENTO ACONTECE AQUI
-      .eq("id", id);
+      .eq("id", id)
+      .gt("seats", 0);
 
     if (updateError) throw updateError;
 
@@ -101,47 +109,27 @@ export const bookRide = async (req, res) => {
   }
 };
 
-/* export const bookRide = async (req, res) => {
-  const { id } = req.params;
 
-  try {
-    // 1. Buscar a boleia atual
-    const { data: ride, error: fetchError } = await supabase
-      .from("Available_rides")
-      .select("seats")
-      .eq("id", id)
-      .single();
-
-    if (fetchError || !ride)
-      return res.status(404).json({ message: "Boleia não encontrada" });
-
-    if (ride.seats > 0) {
-      const { error: updateError } = await supabase
-        .from("Available_rides")
-        .update({ seats: ride.seats - 1 })
-        .eq("id", id);
-
-      if (updateError) throw updateError;
-      res.status(200).json({ message: "Lugar reservado com sucesso!" });
-    } else {
-      res.status(400).json({ error: "Sem lugares disponíveis" });
-    }
-  } catch {
-    res.status(500).json({ error: "Erro ao atualizar reserva" });
-  }
-}; */
 
 export const createRide = async (req, res) => {
   const { origin, destination, seats, cost, date, time } = req.body;
-  const driver = req.user.name || "Utilizador Eco"; // Vem do token
+
+  if (!origin || !destination || !seats || !cost || !date || !time) {
+    return res.status(400).json({ error: "Todos os campos são obrigatórios." });
+  }
+
+  const driver = req.user?.name || "Utilizador Eco";
 
   try {
     const { data, error } = await supabase
       .from("Available_rides")
-      .insert([{ driver, origin, destination, seats, cost, date, time }]);
+      .insert([{ driver, origin, destination, seats, cost, date, time }])
+      .select()
+      .single();
 
     if (error) throw error;
-    res.status(201).json({ message: "Boleia criada com sucesso!" });
+
+    res.status(201).json({ message: "Boleia criada com sucesso!", ride: data });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -8,16 +8,14 @@ const authMiddleware = async (req, res, next) => {
   }
 
   const token = authHeader.split(' ')[1]
-  console.log("Token: ", token)
 
   const { data: { user }, error } = await supabase.auth.getUser(token)
-  console.log(user);
 
-  /* if (error || !user) {
+  if (error || !user) {
     return res.status(401).json({ error: 'Token inválido ou expirado' })
-  } */
+  }
 
-  req.user = user  // disponível em todos os controllers
+  req.user = user  
   next()
 }
 
