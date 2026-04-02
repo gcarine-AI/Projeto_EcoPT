@@ -85,18 +85,17 @@ export class CarsharingComponent implements OnInit {
   }
 
   bookSeat(rideId: number): void {
-    console.log('Botao clicando!');
     this.loading = true;
     this.rideService.bookSeat(rideId).subscribe({
-      next: (res: RideResponse) => {
+      next: () => {
         this.loading = false;
 
-        alert(res.message || 'Lugar reservado com sucesso! 🌱');
+        this.showMessage('Lugar reservado com sucesso! 🌱');
         this.router.navigate(['/history']);
       },
       error: (err: HttpErrorResponse) => {
         this.loading = false;
-        console.error('Não foi possível reservar: ', err.error.message);
+        this.showMessage(err.error?.message || 'Erro ao reservar lugar', true);
       },
     });
   }
@@ -109,7 +108,6 @@ export class CarsharingComponent implements OnInit {
 
       this.rideService.createRide(rideData).subscribe({
         next: (res: RideResponse) => {
-          alert(res.message);
           this.loading = false;
           this.showForm = false;
           this.offerForm.reset({
@@ -118,12 +116,11 @@ export class CarsharingComponent implements OnInit {
             date: new Date().toISOString().split('T')[0],
             time: '12:00',
           });
-
-          this.loadRides(); // Recarrega a lista para mostrar a nova boleia
+          if (res.ride) this.rides = [...this.rides, res.ride];
           this.showMessage('Boleia publicada com sucesso! 🚙');
         },
         error: (err: HttpErrorResponse) => {
-          this.showMessage('Erro ao criar oferta', err.error?.message || 'Servidor Offline');
+          this.showMessage(err.error?.message || 'Erro ao criar oferta', true);
           this.loading = false;
         },
       });
