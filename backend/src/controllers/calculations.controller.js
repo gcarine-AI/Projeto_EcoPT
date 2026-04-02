@@ -1,101 +1,118 @@
-import supabase from '../config/supabase.js'
+import supabase from "../config/supabase.js";
 
 // Fórmula com fatores portugueses (DGEG 2023)
 export const calculateCO2 = (car_km, flights, diet, kwh) => {
-  const dietValues = { vegan: 0.5, vegetariana: 1.7, omnivora: 2.5, carnivora: 3.3 }
-  const car    = (car_km * 52 * 0.21) / 1000
-  const air    = flights * 0.255
-  const food   = dietValues[diet] ?? 2.5
-  const energy = (kwh * 12 * 0.25) / 1000
-  return Math.round((car + air + food + energy) * 100) / 100
-}
+  const dietValues = {
+    vegan: 0.5,
+    vegetariana: 1.7,
+    omnivora: 2.5,
+    carnivora: 3.3,
+  };
+  const car = (car_km * 52 * 0.21) / 1000;
+  const air = flights * 0.255;
+  const food = dietValues[diet] ?? 2.5;
+  const energy = (kwh * 12 * 0.25) / 1000;
+  return Math.round((car + air + food + energy) * 100) / 100;
+};
 
 export const create = async (req, res) => {
-  const { car_km, flights, diet, kwh } = req.body
+  const { car_km, flights, diet, kwh } = req.body;
 
   if (car_km == null || flights == null || !diet || kwh == null) {
-    return res.status(400).json({ error: 'Todos os campos são obrigatórios' })
+    return res.status(400).json({ error: "Todos os campos são obrigatórios" });
   }
 
-  const total_co2 = calculateCO2(car_km, flights, diet, kwh)
+  const total_co2 = calculateCO2(car_km, flights, diet, kwh);
 
-  const { data, error } = await supabase.from('calculations').insert({
-    user_id: req.user.id, car_km, flights, diet, kwh, total_co2
-  }).select().single()
+  const { data, error } = await supabase
+    .from("calculations")
+    .insert({
+      user_id: req.user.id,
+      car_km,
+      flights,
+      diet,
+      kwh,
+      total_co2,
+    })
+    .select()
+    .single();
 
-  if (error) return res.status(500).json({ error: error.message })
+  if (error) return res.status(500).json({ error: error.message });
 
-  res.status(201).json(data)
-}
+  res.status(201).json(data);
+};
 
 export const list = async (req, res) => {
   const { data, error } = await supabase
-    .from('calculations')
-    .select('*')
-    .eq('user_id', req.user.id)
-    .order('created_at', { ascending: false })
+    .from("calculations")
+    .select("*")
+    .eq("user_id", req.user.id)
+    .order("created_at", { ascending: false });
 
-  if (error) return res.status(500).json({ error: error.message })
-  res.json(data)
-}
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+};
 
 export const getOne = async (req, res) => {
   const { data, error } = await supabase
-    .from('calculations')
-    .select('*')
-    .eq('id', req.params.id)
-    .eq('user_id', req.user.id)
-    .single()
+    .from("calculations")
+    .select("*")
+    .eq("id", req.params.id)
+    .eq("user_id", req.user.id)
+    .single();
 
-  if (error || !data) return res.status(404).json({ error: 'Cálculo não encontrado' })
-  res.json(data)
-}
+  if (error || !data)
+    return res.status(404).json({ error: "Cálculo não encontrado" });
+  res.json(data);
+};
 
 export const update = async (req, res) => {
-  const { car_km, flights, diet, kwh } = req.body
+  const { car_km, flights, diet, kwh } = req.body;
 
-    if (car_km == null || flights == null || !diet || kwh == null) {
-    return res.status(400).json({ error: 'Todos os campos são obrigatórios' })
+  if (car_km == null || flights == null || !diet || kwh == null) {
+    return res.status(400).json({ error: "Todos os campos são obrigatórios" });
   }
 
-  const total_co2 = calculateCO2(car_km, flights, diet, kwh)
+  const total_co2 = calculateCO2(car_km, flights, diet, kwh);
 
   const { data, error } = await supabase
-    .from('calculations')
+    .from("calculations")
     .update({ car_km, flights, diet, kwh, total_co2 })
-    .eq('id', req.params.id)
-    .eq('user_id', req.user.id)  // ← segurança: só o dono pode editar
-    .select().single()
+    .eq("id", req.params.id)
+    .eq("user_id", req.user.id) // ← segurança: só o dono pode editar
+    .select()
+    .single();
 
-  if (error || !data) return res.status(404).json({ error: 'Cálculo não encontrado' })
-  res.json(data)
-}
+  if (error || !data)
+    return res.status(404).json({ error: "Cálculo não encontrado" });
+  res.json(data);
+};
 
 export const remove = async (req, res) => {
   const { error } = await supabase
-    .from('calculations')
+    .from("calculations")
     .delete()
-    .eq('id', req.params.id)
-    .eq('user_id', req.user.id)  // ← segurança: só o dono pode eliminar
+    .eq("id", req.params.id)
+    .eq("user_id", req.user.id); // ← segurança: só o dono pode eliminar
 
-  if (error) return res.status(404).json({ error: 'Cálculo não encontrado' })
-  res.status(204).send()
-}
+  if (error) return res.status(404).json({ error: "Cálculo não encontrado" });
+  res.status(204).send();
+};
 
 export const compare = async (req, res) => {
   const { data, error } = await supabase
-    .from('calculations')
-    .select('total_co2')
-    .eq('user_id', req.user.id)
-    .order('created_at', { ascending: false })
+    .from("calculations")
+    .select("total_co2")
+    .eq("user_id", req.user.id)
+    .order("created_at", { ascending: false })
     .limit(1)
-    .maybeSingle()
+    .maybeSingle();
 
   res.json({
     user_total: data?.total_co2 || 0,
-    pt_average: 5.1,   // DGEG, Energia em Números 2025
-    eu_average: 9.0,   // Eurostat, pegada de consumo 2023 (publicado fev 2026)
-    status: data ? 'sucess' : 'no_data',
-    source: 'DGEG 2025 / Eurostat 2023',
-    });
-}
+    pt_average: 5.1, // DGEG, Energia em Números 2025
+    eu_average: 9.0, // Eurostat, pegada de consumo 2023 (publicado fev 2026)
+    status: data ? "sucess" : "no_data",
+    source: "DGEG 2025 / Eurostat 2023",
+  });
+};

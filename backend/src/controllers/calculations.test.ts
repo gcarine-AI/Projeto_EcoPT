@@ -1,19 +1,19 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import request from 'supertest';
-import supabase from '../config/supabase.js';
-import app from '../app.js';
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import request from "supertest";
+import supabase from "../config/supabase.js";
+import app from "../app.js";
 
-vi.mock('../config/supabase.js', () => ({
+vi.mock("../config/supabase.js", () => ({
   default: {
     from: vi.fn(),
-  
-  auth:{signInWithPassword: vi.fn()}
+
+    auth: { signInWithPassword: vi.fn() },
   },
 }));
 
-vi.mock('../middleware/auth.js', () => ({
+vi.mock("../middleware/auth.js", () => ({
   default: (req, res, next) => {
-    req.user = { id: '123', name: 'Test User' };
+    req.user = { id: "123", name: "Test User" };
     next();
   },
 }));
@@ -36,59 +36,64 @@ const mockChain = (overrides: Record<string, any> = {}) => {
   return chain;
 };
 
-describe('calculations - get', () => {
-
+describe("calculations - get", () => {
   beforeEach(() => {
-    vi.clearAllMocks(); 
+    vi.clearAllMocks();
     vi.mocked(supabase.auth.signInWithPassword).mockResolvedValue({
-      data: {user: 'ola'},
-      error: null
-    }as any)
+      data: { user: "ola" },
+      error: null,
+    } as any);
   });
 
-  it('Deve retornar a lista de cálculos de produção de CO2', async () => {
-    const mockCalculations = [{ car_km: '100', flights: '4', diet: 'vegan', kwh: '50' }];
-    
-     vi.mocked(supabase.auth.signInWithPassword).mockResolvedValue({
-      data: {user: 'ola'},
-      error: null
-    }as any)
-    
+  it("Deve retornar a lista de cálculos de produção de CO2", async () => {
+    const mockCalculations = [
+      { car_km: "100", flights: "4", diet: "vegan", kwh: "50" },
+    ];
+
+    vi.mocked(supabase.auth.signInWithPassword).mockResolvedValue({
+      data: { user: "ola" },
+      error: null,
+    } as any);
+
     mockChain({
       select: vi.fn().mockReturnThis(),
       eq: vi.fn().mockReturnThis(),
-      order: vi.fn().mockResolvedValue({ data: mockCalculations, error: null })
+      order: vi.fn().mockResolvedValue({ data: mockCalculations, error: null }),
     });
 
     const response = await request(app)
-      .get('/calculations')
-      .set('Authorization', 'Bearer token');
+      .get("/calculations")
+      .set("Authorization", "Bearer token");
 
     expect(response.status).toEqual(200);
     expect(response.body).toEqual(mockCalculations);
   });
 
+  describe("calculations - insert", () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
 
-describe('calculations - insert', () => {
+    it("Deve retornar o erro ", async () => {
+      const mockCalculations = [
+        { car_km: "100", flights: "4", diet: "vegan", kwh: "50" },
+      ];
 
-  beforeEach(() => {
-    vi.clearAllMocks();
+      mockChain({
+        insert: vi
+          .fn()
+          .mockResolvedValue({ data: mockCalculations, error: null }),
+      });
+
+      const response = await request(app)
+        .post("/calculations")
+        .send({})
+        .set("Authorization", "Bearer token");
+
+      expect(response.status).toEqual(400);
+      expect(response.body).toEqual({
+        error: "Todos os campos são obrigatórios",
+      });
+    });
   });
-
-  it('Deve retornar o erro ', async () => {
-    const mockCalculations = [{ car_km: '100', flights: '4', diet: 'vegan', kwh: '50' }];
-    
-
-    mockChain({
-      insert: vi.fn().mockResolvedValue({ data: mockCalculations, error: null }),
-    });
-
-    const response = await request(app).post('/calculations').send({}).set('Authorization', 'Bearer token')
-
-    expect(response.status).toEqual(400);
-    expect(response.body).toEqual({ error: 'Todos os campos são obrigatórios' });
-    });
-})
-})
-
-  
+});

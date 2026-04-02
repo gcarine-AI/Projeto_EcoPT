@@ -1,4 +1,7 @@
 <div class="faq-container">
+  @if (loading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
   <mat-card class="header-card">
     <mat-card-header>
       <mat-card-title>Perguntas Frequentes (FAQ) ❓</mat-card-title>

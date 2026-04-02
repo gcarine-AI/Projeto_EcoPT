@@ -1,8 +1,8 @@
-import { Router } from 'express'
-import { list } from '../controllers/faq.controller.js'
+import { Router } from "express";
+import { list } from "../controllers/faq.controller.js";
 
-const router = Router()
+const router = Router();
 
-router.get('/', list)
+router.get("/", list);
 
-export default router
+export default router;
