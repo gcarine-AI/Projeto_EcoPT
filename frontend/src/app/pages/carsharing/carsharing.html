@@ -25,7 +25,7 @@
             <input matInput formControlName="destination" placeholder="Ex: Porto" />
           </mat-form-field>
 
-           <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline">
             <mat-label>Data da Viagem</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="date" />
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -97,8 +97,8 @@
                   {{ ride.km }} km
                 </mat-chip>
                 <mat-chip color="accent">
-                <mat-icon matChipAvatar>eco</mat-icon>
-                Poupa {{ ride.km * 0.21 | number: '1.1-1' }} kg CO₂
+                  <mat-icon matChipAvatar>eco</mat-icon>
+                  Poupa {{ ride.km * 0.21 | number: '1.1-1' }} kg CO₂
                 </mat-chip>
               }
             </mat-chip-set>
@@ -112,7 +112,13 @@
             [disabled]="+ride.seats === 0 || loading || ride.driver_id === currentUserId"
             (click)="bookSeat(ride.id, ride.seats)"
           >
-            {{ +ride.seats === 0 ? 'ESGOTADO': ride.driver_id === currentUserId ? 'A TUA BOLEIA' : 'RESERVAR LUGAR' }}
+            {{
+              +ride.seats === 0
+                ? 'ESGOTADO'
+                : ride.driver_id === currentUserId
+                  ? 'A TUA BOLEIA'
+                  : 'RESERVAR LUGAR'
+            }}
           </button>
         </mat-card-actions>
       </mat-card>
