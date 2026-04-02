@@ -54,12 +54,10 @@ export class LoginComponent {
     console.log(login); */
     this.authService.login(email, password).subscribe({
       next: (data) => {
-        console.log(data);
-        //this.token = data.token || '';
         localStorage.setItem('token', data.token);
         localStorage.setItem('email', data.user?.email || '');
         localStorage.setItem('name', data.user?.name || '');
-
+        localStorage.setItem('id', data.user?.id || '')
         this.router.navigate(['/dashboard']);
 
         //this.logUser = data.user

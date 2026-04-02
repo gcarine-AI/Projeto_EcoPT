@@ -6,12 +6,14 @@ import { environment } from '../../environments/environment';
 export interface AvailableRide {
   id: number;
   driver: string;
+  driver_id?: string;
   origin: string;
   destination: string;
   date: string;
   time: string;
   seats: number;
   cost: number;
+  km?: number;
 }
 
 export interface CreateRide {
@@ -26,6 +28,7 @@ export interface CreateRide {
 export interface RideResponse {
   message: string;
   ride?: AvailableRide;
+  saved_co2?: number;
 }
 
 @Injectable({ providedIn: 'root' })

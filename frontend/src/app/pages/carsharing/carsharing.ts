@@ -17,7 +17,13 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
+registerLocaleData(localePt);
 @Component({
   selector: 'app-carsharing',
   standalone: true,
@@ -32,6 +38,12 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatInputModule,
     MatSnackBarModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-PT' },
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-PT' },
   ],
   templateUrl: './carsharing.html',
   styleUrl: './carsharing.css',
@@ -45,6 +57,7 @@ export class CarsharingComponent implements OnInit {
   public loading = false;
   public showForm = false;
   public offerForm: FormGroup;
+  public currentUserId = localStorage.getItem('id');
 
   constructor() {
     this.offerForm = this.fb.group({
@@ -52,7 +65,7 @@ export class CarsharingComponent implements OnInit {
       destination: ['', Validators.required],
       seats: [1, [Validators.required, Validators.min(1)]],
       cost: [0, [Validators.required, Validators.min(0)]],
-      date: [new Date().toISOString().split('T')[0], Validators.required],
+      date: [new Date(), Validators.required],
       time: ['12:00', Validators.required],
     });
   }
@@ -84,13 +97,16 @@ export class CarsharingComponent implements OnInit {
     });
   }
 
-  bookSeat(rideId: number): void {
+  bookSeat(rideId: number, seats: number): void {
+    if (seats <= 0) return;
     this.loading = true;
     this.rideService.bookSeat(rideId).subscribe({
-      next: () => {
+      next: (res: RideResponse) => {
         this.loading = false;
-
-        this.showMessage('Lugar reservado com sucesso! 🌱');
+        const co2Msg = res.saved_co2
+        ? `Poupaste ${res.saved_co2} kg de de CO₂! 🌱`
+        : ''
+        this.showMessage(`Lugar reservado com sucesso! ${co2Msg}`);
         this.router.navigate(['/history']);
       },
       error: (err: HttpErrorResponse) => {
@@ -104,7 +120,11 @@ export class CarsharingComponent implements OnInit {
     if (this.offerForm.valid) {
       this.loading = true;
 
-      const rideData: CreateRide = this.offerForm.value;
+      const formValue = this.offerForm.value;
+      const rideData: CreateRide = {
+      ...formValue,
+      date: new Date(formValue.date).toISOString().split('T')[0],
+    };
 
       this.rideService.createRide(rideData).subscribe({
         next: (res: RideResponse) => {
@@ -113,15 +133,16 @@ export class CarsharingComponent implements OnInit {
           this.offerForm.reset({
             seats: 1,
             cost: 0,
-            date: new Date().toISOString().split('T')[0],
+            date: new Date(),
             time: '12:00',
           });
+
           if (res.ride) this.rides = [...this.rides, res.ride];
           this.showMessage('Boleia publicada com sucesso! 🚙');
         },
         error: (err: HttpErrorResponse) => {
-          this.showMessage(err.error?.message || 'Erro ao criar oferta', true);
           this.loading = false;
+          this.showMessage(err.error?.message || 'Erro ao criar oferta', true);
         },
       });
     }
