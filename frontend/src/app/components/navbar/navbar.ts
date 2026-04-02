@@ -36,7 +36,6 @@ export class NavbarComponent {
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
   }
 
   // Helper para não mostrar a navbar no Login e Register
