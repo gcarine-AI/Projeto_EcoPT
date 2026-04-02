@@ -1,6 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RegisterComponent } from './register';
+import { provideRouter } from '@angular/router';
+
+beforeEach(async () => {
+  await TestBed.configureTestingModule({
+    imports: [RegisterComponent],
+    providers: [provideRouter([])],
+  }).compileComponents();
+});
 
 describe('Register', () => {
   let component: RegisterComponent;

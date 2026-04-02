@@ -8,25 +8,6 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { Calculation } from '../../models/calculation.model';
 import { CalculationService } from '../../services/calculation';
-
-
-/* export interface Calculation {
-  id: string;
-  user_id: string;
-  car_km: number;
-  flights: number;
-  diet: 'vegan' | 'vegetariana' | 'omnivora' | 'carnivora';
-  kwh: number;
-  total_co2: number;
-  created_at: string;
-}
-
-// Interface para a resposta da comparação (se o teu backend enviar algo específico)
-export interface ComparisonData {
-  last_calculation: Calculation;
-  average_pt: number;
-  average_eu: number;
-} */
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -66,7 +47,7 @@ export class DashboardComponent implements OnInit {
     this.calcService.list().subscribe({
       next: (data: Calculation[]) => {
         if (data && data.length > 0) {
-          this.lastCalculation = data [0];
+          this.lastCalculation = data[0];
           this.calculateImpact();
         } else {
           this.statusMessage = 'Ainda não tens cálculos realizados.';
@@ -81,26 +62,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-
-    /* const headers = new HttpHeaders();
-    headers.set('Authorization', `Bearer ${this.authService.getToken()}`);
-    this.http
-      .get<
-        Calculation[]
-      >('http://localhost:3000/calculations', { headers: { Authorization: `Bearer ${this.authService.getToken()}` } })
-      .subscribe({
-        next: (data) => {
-          if (data && data.length > 0) {
-            this.lastCalculation = data[0]; // Assume que o mais recente vem primeiro
-            this.calculateImpact();
-          } else {
-            this.statusMessage = 'Ainda não tens cálculos realizados.';
-          }
-        },
-        error: () => (this.statusMessage = 'Erro ao ligar ao servidor.'),
-      });
-  }
- */
   calculateImpact(): void {
     // Regra de três simples para a barra de progresso (máximo 10 toneladas para escala)
     if (this.lastCalculation?.total_co2) {

@@ -9,8 +9,8 @@ describe('AuthService', () => {
     TestBed.configureTestingModule({
       providers: [
         AuthService,
-        provideHttpClient() // Adicionamos isto para o teste não crashar ao ver o HttpClient
-      ]
+        provideHttpClient(), // Adicionamos isto para o teste não crashar ao ver o HttpClient
+      ],
     });
     service = TestBed.inject(AuthService);
   });

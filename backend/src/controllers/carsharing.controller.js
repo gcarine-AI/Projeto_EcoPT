@@ -51,7 +51,12 @@ export const getAvailableRides = async (req, res) => {
       .order("date", { ascending: true });
 
     if (error) throw error;
-    return res.status(200).json(data);
+    const formattedData = data.map(ride => ({
+      ...ride,
+      time: ride.time ? ride.time.substring(0, 5) : '--:--' 
+    }));
+
+    return res.status(200).json(formattedData);
   } catch (error) {
     return res
       .status(500)
@@ -60,6 +65,43 @@ export const getAvailableRides = async (req, res) => {
 };
 
 export const bookRide = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // 1. Buscar a boleia atual para saber quantos lugares tem
+    const { data: ride, error: fetchError } = await supabase
+      .from("Available_rides")
+      .select("seats")
+      .eq("id", id)
+      .single();
+
+    if (fetchError || !ride) {
+      return res.status(404).json({ message: "Boleia não encontrada" });
+    }
+
+    // 2. Verificar se ainda há lugares
+    if (ride.seats <= 0) {
+      return res.status(400).json({ error: "Sem lugares disponíveis" });
+    }
+
+    // 3. Decrementar o lugar (seats - 1)
+    const { error: updateError } = await supabase
+      .from("Available_rides")
+      .update({ seats: ride.seats - 1 }) // <--- O DECREMENTO ACONTECE AQUI
+      .eq("id", id);
+
+    if (updateError) throw updateError;
+
+    // 4. Sucesso!
+    return res.status(200).json({ message: "Lugar reservado com sucesso!" });
+
+  } catch (error) {
+    console.error("Erro na reserva:", error);
+    return res.status(500).json({ error: "Erro ao atualizar reserva no servidor" });
+  }
+};
+
+/* export const bookRide = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -86,5 +128,21 @@ export const bookRide = async (req, res) => {
     }
   } catch {
     res.status(500).json({ error: "Erro ao atualizar reserva" });
+  }
+}; */
+
+export const createRide = async (req, res) => {
+  const { origin, destination, seats, cost, date, time } = req.body;
+  const driver = req.user.name || "Utilizador Eco"; // Vem do token
+
+  try {
+    const { data, error } = await supabase
+      .from("Available_rides")
+      .insert([{ driver, origin, destination, seats, cost, date, time }]);
+
+    if (error) throw error;
+    res.status(201).json({ message: "Boleia criada com sucesso!" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

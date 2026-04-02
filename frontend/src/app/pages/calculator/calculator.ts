@@ -9,7 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { Calculation } from '../../models/calculation.model'
+import { Calculation } from '../../models/calculation.model';
 import { CalculationService } from '../../services/calculation';
 
 @Component({
@@ -24,13 +24,13 @@ import { CalculationService } from '../../services/calculation';
     MatCardModule,
     MatStepperModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   templateUrl: './calculator.html',
-  styleUrl: './calculator.css'
+  styleUrl: './calculator.css',
 })
 export class CalculatorComponent implements OnInit {
-  private calcService = inject(CalculationService)
+  private calcService = inject(CalculationService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute); // Injetar a rota ativa
@@ -39,7 +39,7 @@ export class CalculatorComponent implements OnInit {
     car_km: [0, [Validators.required, Validators.min(0)]],
     flights: [0, [Validators.required, Validators.min(0)]],
     diet: ['omnivora', Validators.required],
-    kwh: [0, [Validators.required, Validators.min(0)]]
+    kwh: [0, [Validators.required, Validators.min(0)]],
   });
 
   public editId: string | null = null;
@@ -60,11 +60,11 @@ export class CalculatorComponent implements OnInit {
         this.calcForm.patchValue(data);
         this.loading = false;
       },
-      error: (err: Error) =>{
+      error: (err: Error) => {
         console.error('Erro ao carregar dados: ', err);
         alert('Não foi possivel carregar o cálculo.');
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -79,16 +79,15 @@ export class CalculatorComponent implements OnInit {
 
       request$.subscribe({
         next: () => {
-          alert(this.editId ? 'Cálculo atualizado! ☘️' : 'Pegada calculada com sucesso!!');
+          //alert(this.editId ? 'Cálculo atualizado! ☘️' : 'Pegada calculada com sucesso!!');
           this.router.navigate(['/history']); // Redireciona para o histórico
         },
         error: (err: Error) => {
-          console.error ('Erro no servidor:', err);
+          console.error('Erro no servidor:', err);
           alert('Erro ao processar o cálculo.');
           this.loading = false;
-        }
+        },
       });
     }
   }
 }
-

@@ -9,7 +9,6 @@ import { CarsharingComponent } from './pages/carsharing/carsharing';
 import { FAQComponent } from './pages/faq/faq';
 //import { authGuard } from './guards/auth-guard';
 
-
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },

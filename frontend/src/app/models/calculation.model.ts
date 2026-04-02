@@ -7,7 +7,6 @@ export interface Calculation {
   kwh: number;
   total_co2?: number;
   created_at?: number;
-
 }
 
 export interface ComparisonData {

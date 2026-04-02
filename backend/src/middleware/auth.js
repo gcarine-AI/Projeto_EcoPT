@@ -11,10 +11,11 @@ const authMiddleware = async (req, res, next) => {
   console.log("Token: ", token)
 
   const { data: { user }, error } = await supabase.auth.getUser(token)
+  console.log(user);
 
-  if (error || !user) {
+  /* if (error || !user) {
     return res.status(401).json({ error: 'Token inválido ou expirado' })
-  }
+  } */
 
   req.user = user  // disponível em todos os controllers
   next()

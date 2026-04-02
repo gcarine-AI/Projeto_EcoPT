@@ -11,15 +11,17 @@ export const register = async (req, res) => {
 
   
   const { data, error } = await supabase.auth.signUp({ email, password })
+  console.log(error)
 
   if (error) return res.status(400).json({ error: error.message })
 
   // Criar perfil após registo
-  await supabase.from('profiles').insert({
-    user_id: data.user.id,
+  await supabase.from('Profiles').insert({
+    id: data.user.id,
     name,
     role
   })
+  
 
   res.status(201).json({ message: 'Conta criada com sucesso', user: data.user })
 }
@@ -29,34 +31,29 @@ export const login = async (req, res) => {
 
   if (!email || !password) {
     return res.status(400).json({ error: 'Email e password são obrigatórios' })
-  } else {
-    await supabase.auth.signInWithPassword(req.body)
+  } 
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+
+  if (error) {
+    return res.status(400).json({ error: 'Email ou password inválidos' })
   }
+  const { data: dataL, error: errorL } = await supabase.from('Profiles').select('*').eq('id', data.user.id)
 
-  //const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
-
-  /*res.json({
+ res.json({
     token: data.session.access_token,
     user: {
       id: data.user.id,
-      email: data.user.email
+      email: data.user.email,
+      name: dataL[0].name
     }
   }) 
-  */
-
-
-  /* console.log("resposta: ", res.json({
-    token: data.session.access_token,
-    user: {
-      id: data.user.id,
-      email: data.user.email
-    }
-  })) */
+ 
 
   
 
-  //if (error) return res.status(401).json({ error: 'Credenciais inválidas' })
+  // if (error) return res.status(401).json({ error: 'Credenciais inválidas' })
 
   
   

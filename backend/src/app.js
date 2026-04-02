@@ -9,23 +9,25 @@ import carsharingRoutes from "./routes/carsharing.routes.js";
 
 const app = express();
 
-app.use(cors({
-  origin: ['http://localhost:3000', "http://localhost:4200"],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-}))
+app.use(
+  cors({
+    origin: "http://localhost:4200",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+);
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*')
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  res.header('Access-Control-Allow-Credentials', 'true')
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200)
+  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
   }
-  next()
-})
+  next();
+});
 
 app.use(express.json());
 
@@ -44,6 +46,5 @@ app.use((err, req, res, _next) => {
   console.error(err.stack);
   res.status(500).json({ error: "Erro interno do servidor" });
 });
-
 
 export default app;
