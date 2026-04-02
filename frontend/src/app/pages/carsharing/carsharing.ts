@@ -103,9 +103,7 @@ export class CarsharingComponent implements OnInit {
     this.rideService.bookSeat(rideId).subscribe({
       next: (res: RideResponse) => {
         this.loading = false;
-        const co2Msg = res.saved_co2
-        ? `Poupaste ${res.saved_co2} kg de de CO₂! 🌱`
-        : ''
+        const co2Msg = res.saved_co2 ? `Poupaste ${res.saved_co2} kg de de CO₂! 🌱` : '';
         this.showMessage(`Lugar reservado com sucesso! ${co2Msg}`);
         this.router.navigate(['/history']);
       },
@@ -122,9 +120,9 @@ export class CarsharingComponent implements OnInit {
 
       const formValue = this.offerForm.value;
       const rideData: CreateRide = {
-      ...formValue,
-      date: new Date(formValue.date).toISOString().split('T')[0],
-    };
+        ...formValue,
+        date: new Date(formValue.date).toISOString().split('T')[0],
+      };
 
       this.rideService.createRide(rideData).subscribe({
         next: (res: RideResponse) => {

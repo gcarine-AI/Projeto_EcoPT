@@ -57,7 +57,7 @@ export class LoginComponent {
         localStorage.setItem('token', data.token);
         localStorage.setItem('email', data.user?.email || '');
         localStorage.setItem('name', data.user?.name || '');
-        localStorage.setItem('id', data.user?.id || '')
+        localStorage.setItem('id', data.user?.id || '');
         this.router.navigate(['/dashboard']);
 
         //this.logUser = data.user
