@@ -26,6 +26,7 @@ const mockChain = (overrides: Record<string, any> = {}) => {
     delete: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
     gt: vi.fn().mockReturnThis(),
+    gte: vi.fn().mockReturnThis(),
     order: vi.fn().mockReturnThis(),
     single: vi.fn().mockReturnThis(),
     ...overrides,
@@ -66,7 +67,9 @@ describe('Carsharing Controller', () => {
     ];
 
     mockChain({
-      order: vi.fn().mockResolvedValue({ data: mockRides, error: null })
+        gt: vi.fn().mockReturnThis(),
+        gte: vi.fn().mockReturnThis(),
+        order: vi.fn().mockResolvedValue({ data: mockRides, error: null })
     });
 
     const response = await request(app)
@@ -89,6 +92,7 @@ describe('Carsharing Controller', () => {
   const chainUpdate = {
     update: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
+    gt: vi.fn().mockReturnThis(),
     select: vi.fn().mockResolvedValue({ error: null }), 
     error: null
   };

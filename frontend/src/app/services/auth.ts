@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 interface AuthResponse {
   token: string;
@@ -14,23 +13,17 @@ interface AuthResponse {
     role?: string;
   };
 }
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private apiUrl = environment.apiUrl;
-  private supabase: SupabaseClient;
-  public token = '';
-  public logUser = {};
-
-  constructor() {
-    this.supabase = createClient(environment.apiUrl, environment.SUPABASE_ANON_KEY);
-  }
+  private apiUrl = `${environment.apiUrl}/auth`;
 
   register(email: string, password: string, name: string, role: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`http://localhost:3000/auth/register`, {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, {
       email,
       password,
       name,
@@ -39,50 +32,33 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`http://localhost:3000/auth/login`, {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, {
       email,
       password,
     });
-
-    /* const { data, error } = await this.supabase.auth.signInWithPassword({ email, password })
-      console.log(data);
-      if (error) throw error;
-      this.token = data.session?.access_token || '';
-      // Guardamos no localStorage para o Dashboard conseguir ler mesmo após refresh
-      localStorage.setItem('token', this.token);
-      localStorage.setItem('email', data.user?.email || '');
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    } */
   }
 
-  async logout() {
-    try {
-      const { error } = await this.supabase.auth.signOut();
-      if (error) throw error;
-      this.token = '';
-      localStorage.clear();
-      this.router.navigate(['/login']);
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
+  logout(): void {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
+
   getName(): string | null {
     return localStorage.getItem('name');
   }
+
   getRole(): string | null {
     return localStorage.getItem('role');
   }
+
   getEmail(): string | null {
     return localStorage.getItem('email');
   }
+
   getToken(): string | null {
-    return localStorage.getItem('token') || this.token;
+    return localStorage.getItem('token');
   }
+
   isLoggedIn(): boolean {
     return !!this.getToken();
   }

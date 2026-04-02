@@ -11,23 +11,19 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:4200",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: process.env.NODE_ENV === 'production'
+      ? 'https://projeto-eco-pt.vercel.app'
+      : 'http://localhost:4200',
+    methods: ['GET', "POST", 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-  }),
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  })
 );
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
+
+
 
 app.use(express.json());
 

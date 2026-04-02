@@ -25,6 +25,18 @@
             <input matInput formControlName="destination" placeholder="Ex: Porto" />
           </mat-form-field>
 
+           <mat-form-field appearance="outline">
+            <mat-label>Data da Viagem</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date" />
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Hora</mat-label>
+            <input matInput type="time" formControlName="time" />
+          </mat-form-field>
+
           <mat-form-field appearance="outline">
             <mat-label>Lugares</mat-label>
             <input matInput type="number" formControlName="seats" />
@@ -79,6 +91,16 @@
               <mat-chip-option [selected]="ride.cost === 0" [selectable]="false" color="accent">
                 {{ ride.cost === 0 ? 'Grátis' : (ride.cost | currency: 'EUR') }}
               </mat-chip-option>
+              @if (ride.km) {
+                <mat-chip color="primary">
+                  <mat-icon matChipAvatar>route</mat-icon>
+                  {{ ride.km }} km
+                </mat-chip>
+                <mat-chip color="accent">
+                <mat-icon matChipAvatar>eco</mat-icon>
+                Poupa {{ ride.km * 0.21 | number: '1.1-1' }} kg CO₂
+                </mat-chip>
+              }
             </mat-chip-set>
           </div>
         </mat-card-content>
@@ -87,10 +109,10 @@
           <button
             mat-raised-button
             color="primary"
-            [disabled]="ride.seats === 0 || loading"
-            (click)="bookSeat(ride.id)"
+            [disabled]="+ride.seats === 0 || loading || ride.driver_id === currentUserId"
+            (click)="bookSeat(ride.id, ride.seats)"
           >
-            {{ ride.seats > 0 ? 'RESERVAR LUGAR' : 'ESGOTADO' }}
+            {{ +ride.seats === 0 ? 'ESGOTADO': ride.driver_id === currentUserId ? 'A TUA BOLEIA' : 'RESERVAR LUGAR' }}
           </button>
         </mat-card-actions>
       </mat-card>

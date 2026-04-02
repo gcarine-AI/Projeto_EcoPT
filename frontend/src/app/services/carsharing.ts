@@ -1,16 +1,19 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface AvailableRide {
   id: number;
   driver: string;
+  driver_id?: string;
   origin: string;
   destination: string;
   date: string;
   time: string;
   seats: number;
   cost: number;
+  km?: number;
 }
 
 export interface CreateRide {
@@ -24,13 +27,15 @@ export interface CreateRide {
 
 export interface RideResponse {
   message: string;
+  ride?: AvailableRide;
+  saved_co2?: number;
 }
 
 @Injectable({ providedIn: 'root' })
 export class CarsharingService {
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:3000/carsharing';
+  private apiUrl = `${environment.apiUrl}/carsharing`;
 
   // GET: Vai buscar a lista ao endpoint /api/carsharing/available
   getRides(): Observable<AvailableRide[]> {
