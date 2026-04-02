@@ -1,19 +1,18 @@
-import { createClient } from '@supabase/supabase-js'
-import dotenv from 'dotenv'
+import { createClient } from "@supabase/supabase-js";
+import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
-  const url = process.env.SUPABASE_URL
-  const key = process.env.SUPABASE_SERVICE_KEY
+const url = process.env.SUPABASE_URL;
+const key = process.env.SUPABASE_SERVICE_KEY;
 
-  if (!url || !key) {
-    throw new Error('Missing Supabase env variables')
-  }
+if (!url || !key) {
+  throw new Error("Missing Supabase env variables");
+}
 
-const supabase = createClient(url, key)
+const supabase = createClient(url, key);
 
-console.log('URL:', process.env.SUPABASE_URL)
-console.log('KEY:', process.env.SUPABASE_SERVICE_KEY)
+console.log("URL:", process.env.SUPABASE_URL);
+console.log("KEY:", process.env.SUPABASE_SERVICE_KEY);
 
-
-export default supabase
+export default supabase;

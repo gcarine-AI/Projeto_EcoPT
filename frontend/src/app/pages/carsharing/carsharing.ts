@@ -57,7 +57,7 @@ export class CarsharingComponent implements OnInit {
   public loading = false;
   public showForm = false;
   public offerForm: FormGroup;
-  public currentUserId = localStorage.getItem('id');
+  public currentUserId: string | null = null;
 
   constructor() {
     this.offerForm = this.fb.group({
@@ -71,6 +71,7 @@ export class CarsharingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUserId = typeof localStorage !== 'undefined' ? localStorage.getItem('id') : null;
     this.loadRides();
   }
 

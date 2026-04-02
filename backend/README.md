@@ -2,10 +2,6 @@
 ![CI](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ci.yml/badge.svg)
 
 
-![CI](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ci.yml/badge.svg)
-
-
-
 
 API REST para a aplicação EcoPT, uma calculadora de pegada carbónica pensada para o contexto português.
 
