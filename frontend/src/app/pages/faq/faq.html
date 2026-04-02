@@ -1,1 +1,36 @@
-<p>faq works!</p>
+<div class="faq-container">
+  @if (loading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+  <mat-card class="header-card">
+    <mat-card-header>
+      <mat-card-title>Perguntas Frequentes (FAQ) ❓</mat-card-title>
+      <mat-card-subtitle
+        >Esclarece as tuas dúvidas sobre o projeto e sustentabilidade.</mat-card-subtitle
+      >
+    </mat-card-header>
+  </mat-card>
+
+  <mat-accordion multi="false">
+    @for (faq of faqs; track faq.question) {
+      <mat-expansion-panel class="faq-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon color="primary" class="faq-icon">help_outline</mat-icon>
+            <strong>{{ faq.question }}</strong>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="faq-content">
+          <p class="faq-answer">{{ faq.answer }}</p>
+
+          <mat-divider></mat-divider>
+
+          <div class="faq-footer">
+            <small>Fonte: Metodologia IPCC / EcoPT</small>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+</div>

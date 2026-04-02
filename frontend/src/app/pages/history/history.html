@@ -1,1 +1,75 @@
-<p>history works!</p>
+<div class="history-container">
+  <mat-card class="history-card">
+    @if (loading) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="primary">history</mat-icon>
+      <mat-card-title>Histórico de Emissões 📋</mat-card-title>
+      <mat-card-subtitle>Consulta e gere os teus cálculos anteriores</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (dataSource.length > 0) {
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
+          <ng-container matColumnDef="created_at">
+            <th mat-header-cell *matHeaderCellDef>Data</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.created_at | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="total_co2">
+            <th mat-header-cell *matHeaderCellDef>Total CO₂</th>
+            <td mat-cell *matCellDef="let element">
+              <strong>{{ element.total_co2 | number: '1.1-2' }}</strong> ton/ano
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="diet">
+            <th mat-header-cell *matHeaderCellDef>Dieta</th>
+            <td mat-cell *matCellDef="let element">{{ element.diet | titlecase }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                mat-icon-button
+                color="primary"
+                [routerLink]="['/calculator', element.id]"
+                title="Editar"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="deleteCalculation(element.id)"
+                title="Eliminar"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">Ainda não existem cálculos registados.</td>
+          </tr>
+        </table>
+      } @else if (!loading) {
+        <div class="empty-history">
+          <mat-icon>sentiment_dissatisfied</mat-icon>
+          <p>Ainda não tens cálculos registados.</p>
+          <button mat-raised-button color="primary" routerLink="/calculator">
+            Fazer primeiro cálculo
+          </button>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

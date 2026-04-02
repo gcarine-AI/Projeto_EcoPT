@@ -39,7 +39,7 @@ export class LoginComponent {
     });
   }
 
-  loginAs(role: string): void {
+  async loginAs() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -50,7 +50,34 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm.value;
 
-    this.authService.login(email, password, role).subscribe({
+    /*  const login = await this.authService.login(email, password);
+    console.log(login); */
+    this.authService.login(email, password).subscribe({
+      next: (data) => {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('email', data.user?.email || '');
+        localStorage.setItem('name', data.user?.name || '');
+        localStorage.setItem('id', data.user?.id || '');
+        this.router.navigate(['/dashboard']);
+
+        //this.logUser = data.user
+      },
+      error: (error) => {
+        console.log(error);
+        this.isLoading = false;
+        this.error = 'Credenciais inválidas ou utilizador não registado.';
+      },
+    });
+    /* console.log(login)
+      if (!login) throw Error;
+      this.router.navigate(['/dashboard']);
+    } catch (error) {
+      console.log(error);
+      this.isLoading = false;
+      this.error = 'Credenciais inválidas ou utilizador não registado.';
+    }
+ */
+    /* this.authService.login(email, password, role).({
       next: () => {
         this.router.navigate(['/dashboard']);
       },
@@ -58,6 +85,6 @@ export class LoginComponent {
         this.isLoading = false;
         this.error = 'Email ou password incorretos. Tenta novamente.';
       },
-    });
+    }); */
   }
 }

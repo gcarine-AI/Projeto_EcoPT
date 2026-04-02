@@ -1,0 +1,49 @@
+@if (shouldShowNavbar()) {
+  <mat-toolbar color="primary" class="main-navbar">
+    <span class="logo" routerLink="/dashboard" style="cursor: pointer">EcoPT 🌿</span>
+
+    <span class="spacer"></span>
+
+    @if (authService.isLoggedIn()) {
+      <button mat-button routerLink="/dashboard" routerLinkActive="active-link">Dashboard</button>
+      <button mat-button routerLink="/calculator" routerLinkActive="active-link">
+        Calculadora
+      </button>
+      <button mat-button routerLink="/history" routerLinkActive="active-link">Histórico</button>
+
+      <button mat-button [matMenuTriggerFor]="menu">
+        Mais <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+
+      <span class="spacer"></span>
+
+      <div class="user-section">
+        <span class="user-info">
+          Olá, <strong>{{ authService.getName() || 'Utilizador' }}</strong>
+        </span>
+
+        <button mat-icon-button (click)="authService.logout()" title="Sair">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+    } @else {
+      <button mat-button routerLink="/login" routerLinkActive="active-link">Login</button>
+      <button mat-button routerLink="/register" routerLinkActive="active-link">Registar</button>
+    }
+  </mat-toolbar>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/tips">
+      <mat-icon>lightbulb</mat-icon>
+      <span>Dicas Eco</span>
+    </button>
+    <button mat-menu-item routerLink="/carsharing">
+      <mat-icon>directions_car</mat-icon>
+      <span>Carsharing</span>
+    </button>
+    <button mat-menu-item routerLink="/faq">
+      <mat-icon>help</mat-icon>
+      <span>FAQ</span>
+    </button>
+  </mat-menu>
+}

@@ -1,27 +1,29 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 interface AuthResponse {
   token: string;
-  user?: {
+  user: {
     id: string;
     email: string;
+    name?: string;
+    role?: string;
   };
 }
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-
-  private apiUrl = environment.apiUrl;
+  private apiUrl = `${environment.apiUrl}/auth`;
 
   register(email: string, password: string, name: string, role: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, {
       email,
       password,
       name,
@@ -29,34 +31,20 @@ export class AuthService {
     });
   }
 
-  login(email: string, password: string, role: string): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.apiUrl}/auth/login`, {
-        email,
-        password,
-      })
-      .pipe(
-        tap((response) => {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('role', role);
-          localStorage.setItem('email', email);
-        }),
-      );
+  login(email: string, password: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, {
+      email,
+      password,
+    });
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    localStorage.removeItem('email');
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('token');
+  getName(): string | null {
+    return localStorage.getItem('name');
   }
 
   getRole(): string | null {
@@ -65,5 +53,13 @@ export class AuthService {
 
   getEmail(): string | null {
     return localStorage.getItem('email');
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
   }
 }

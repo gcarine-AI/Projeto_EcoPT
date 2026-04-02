@@ -1,1 +1,63 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <h1 class="welcome-title">Bem-vindo ao teu EcoDashboard 🌿</h1>
+
+  @if (loading) {
+    <mat-progress-bar mode="query"></mat-progress-bar>
+  } @else if (lastCalculation; as calc) {
+    <div class="grid-layout">
+      <mat-card class="main-card">
+        <mat-card-header>
+          <mat-card-title>A tua Pegada Atual</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="co2-value">
+            {{ calc.total_co2 | number: '1.1-2' }} <span>ton CO₂/ano</span>
+          </div>
+
+          <p>Comparação com a média nacional (5.1 ton):</p>
+          <mat-progress-bar mode="determinate" [value]="percentage" [color]="getProgressBarColor()">
+          </mat-progress-bar>
+
+          <div
+            class="status-indicator"
+            [class.bad]="calc.total_co2! > avgPortugal"
+            [class.good]="calc.total_co2! <= avgPortugal"
+          >
+            @if (calc.total_co2! > avgPortugal) {
+              <mat-icon>warning</mat-icon>
+              <span>Estás acima da média nacional. Consulta as nossas Dicas!</span>
+            } @else {
+              <mat-icon>check_circle</mat-icon>
+              <span>Parabéns! Estás abaixo da média nacional.</span>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <div class="side-cards">
+        <mat-card>
+          <mat-card-content>
+            <mat-icon color="primary">directions_car</mat-icon>
+            <strong>Transporte:</strong> {{ lastCalculation.car_km }} km/semana
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-content>
+            <mat-icon color="primary">restaurant</mat-icon>
+            <strong>Dieta:</strong> {{ lastCalculation.diet }}
+          </mat-card-content>
+        </mat-card>
+
+        <button mat-flat-button color="primary" routerLink="/calculator" class="new-calc-btn">
+          NOVO CÁLCULO
+        </button>
+      </div>
+    </div>
+  } @else {
+    <mat-card class="empty-state">
+      <p>{{ statusMessage }}</p>
+      <button mat-raised-button color="accent" routerLink="/calculator">Começar Agora</button>
+    </mat-card>
+  }
+</div>

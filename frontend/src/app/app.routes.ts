@@ -6,8 +6,8 @@ import { CalculatorComponent } from './pages/calculator/calculator';
 import { HistoryComponent } from './pages/history/history';
 import { TipsComponent } from './pages/tips/tips';
 import { CarsharingComponent } from './pages/carsharing/carsharing';
-import { FaqComponent } from './pages/faq/faq';
-import { authGuard } from './guards/auth-guard';
+import { FAQComponent } from './pages/faq/faq';
+//import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,32 +16,38 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
   {
     path: 'calculator',
     component: CalculatorComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
+  },
+  {
+    path: 'calculator/:id',
+    component: CalculatorComponent,
+    //canActivate: [authGuard],
   },
   {
     path: 'history',
     component: HistoryComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
   {
     path: 'tips',
     component: TipsComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
   {
     path: 'carsharing',
     component: CarsharingComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
   {
     path: 'faq',
-    component: FaqComponent,
-    canActivate: [authGuard],
+    component: FAQComponent,
+    //canActivate: [authGuard],
   },
+
   { path: '**', redirectTo: '/login' },
 ];
