@@ -1,45 +1,85 @@
 .main-navbar {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between;
+  width: 100%;
+  background-color: white !important; /* Fundo branco como no design */
+  color: #1a3a1a !important;
+  height: 70px;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  position: sticky; /* Upgrade: A barra fica fixa no topo ao fazer scroll */
+  padding: 0 24px;
+  border-bottom: 1px solid #edf0ed;
+  position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1100;
+  box-sizing: border-box;
 }
 
-.logo {
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 1.5rem;
-  margin-right: 20px;
-  letter-spacing: 0.5px;
-}
-
-.spacer {
-  flex: 1 1 auto;
-}
-
-.user-info {
+.logo-wrapper {
   display: flex;
   align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.logo-icon {
+  color: #2d7a32;
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.logo-text {
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: -0.5px;
+}
+
+.spacer { flex: 1; }
+
+/* RESPONSIVIDADE: Esconder links no Mobile */
+.desktop-links {
+  display: flex;
+  flex-direction: row;
   gap: 15px;
-  font-size: 0.9rem;
-  margin-left: 20px;
+  align-items: center;
 }
 
-.user-display {
-  border-right: 1px solid rgba(255, 255, 255, 0.3);
-  padding-right: 15px;
+@media (max-width: 850px) {
+  .desktop-links, .user-name {
+    display: none; /* Esconde os botões e o nome no mobile */
+  }
 }
 
+/* Estilo do link ativo para combinar com o novo design */
 .active-link {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border-bottom: 3px solid white;
-  border-radius: 4px 4px 0 0;
+  color: #2d7a32 !important;
+  font-weight: 700 !important;
+  position: relative;
 }
 
-/* Estilo para o ícone de logout */
-[mat-icon-button] mat-icon {
-  vertical-align: middle;
+.active-link::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 15%;
+  width: 70%;
+  height: 3px;
+  background: #2d7a32;
+  border-radius: 2px;
+}
+
+.user-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.register-btn {
+  background-color: #2d7a32 !important;
+  color: white !important;
+  border-radius: 8px !important;
+  margin-left: 10px;
 }

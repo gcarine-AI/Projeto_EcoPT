@@ -1,23 +1,36 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, HostListener } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar';
+import { AuthService } from './services/auth';
+import { CommonModule } from '@angular/common';import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
-  template: `
-    <app-navbar></app-navbar>
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-  `,
-  styles: [
-    `
-      main {
-        padding-top: 20px;
-      } /* Espaçamento para o conteúdo não colar na navbar */
-    `,
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    NavbarComponent,
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule
   ],
+
+  templateUrl: './app.html',
+  styleUrl: './app.css',
 })
-export class AppComponent {}
+
+  export class AppComponent {
+    authService = inject(AuthService);
+    isMobile: boolean = window.innerWidth < 850;
+
+    @HostListener('window:resize')
+    onResize() {
+      this.isMobile = window.innerWidth < 850;
+    }
+  }
+

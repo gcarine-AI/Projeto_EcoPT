@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatDivider } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FaqService, FaqItem } from '../../services/faq';
 
@@ -15,7 +14,6 @@ import { FaqService, FaqItem } from '../../services/faq';
     MatExpansionModule,
     MatIconModule,
     MatCardModule,
-    MatDivider,
     MatProgressBarModule,
   ],
   templateUrl: './faq.html',
