@@ -1,0 +1,168 @@
+<div class="market-wrapper">
+  @if (loading) {
+    <div class="loading-bar"></div>
+  }
+
+  <div class="market-header">
+    <span class="eyebrow">ECONOMIA CIRCULAR</span>
+    <h1>Mercado <em>Circular</em></h1>
+    <p>Dá uma nova vida a objetos e reduz a pegada de carbono coletiva.</p>
+  </div>
+
+  <div class="tab-row">
+    <button class="tab-btn" [class.active]="activeTab === 'browse'" (click)="setTab('browse')">
+      <mat-icon>search</mat-icon> Explorar
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 'publish'" (click)="setTab('publish')">
+      <mat-icon>add_circle</mat-icon> Publicar
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 'mine'" (click)="setTab('mine')">
+      <mat-icon>person</mat-icon> Os meus
+    </button>
+  </div>
+
+  @if (activeTab === 'browse') {
+    <div class="filter-row">
+      @for (cat of categories; track cat.value) {
+        <button class="filter-btn" [class.active]="activeCategory === cat.value" (click)="setCategory(cat.value)">
+          <mat-icon>{{ cat.icon }}</mat-icon>
+          {{ cat.label }}
+        </button>
+      }
+    </div>
+
+    <div class="type-row">
+      @for (type of types; track type.value) {
+        <button class="type-btn" [class.active]="activeType === type.value" (click)="setType(type.value)">
+          {{ type.label }}
+        </button>
+      }
+    </div>
+
+    <div class="items-grid">
+      @for (item of items; track item.id) {
+        <div class="item-card">
+          <div class="item-top">
+            <div class="item-icon" [class]="'cat-' + item.category">
+              <mat-icon>{{ getCategoryIcon(item.category) }}</mat-icon>
+            </div>
+            <span class="type-badge" [class]="'type-' + item.type">{{ getTypeLabel(item.type) }}</span>
+          </div>
+          <h3>{{ item.title }}</h3>
+          @if (item.description) {
+            <p>{{ item.description }}</p>
+          }
+          <div class="item-meta">
+            @if (item.Profiles?.name) {
+              <span class="meta-info"><mat-icon>person</mat-icon> {{ item.Profiles?.name }}</span>
+            }
+            @if (item.location) {
+              <span class="meta-info"><mat-icon>location_on</mat-icon> {{ item.location }}</span>
+            }
+            @if (item.type === 'venda' && item.price) {
+              <span class="price">{{ item.price | currency: 'EUR' }}</span>
+            }
+          </div>
+          <button
+            class="interest-btn"
+            [disabled]="item.user_id === currentUserId || item.status !== 'disponivel'"
+            (click)="showInterest(item.id)"
+          >
+            {{ item.user_id === currentUserId ? 'O teu item' : item.status !== 'disponivel' ? 'Reservado' : 'Tenho interesse' }}
+          </button>
+        </div>
+      } @empty {
+        @if (!loading) {
+          <div class="empty-state">
+            <mat-icon>store</mat-icon>
+            <p>Ainda não há itens disponíveis.</p>
+            <button class="interest-btn" (click)="setTab('publish')">Publica o primeiro item</button>
+          </div>
+        }
+      }
+    </div>
+  }
+
+  @if (activeTab === 'publish') {
+    <div class="publish-card">
+      <h2>Publicar Item</h2>
+      <p>Partilha algo que já não usas com a comunidade EcoPT.</p>
+      <form [formGroup]="itemForm" (ngSubmit)="publish()">
+        <div class="field-group">
+          <label for="title">Título</label>
+          <input id="title" formControlName="title" placeholder="Ex: Cadeira de escritório" />
+        </div>
+        <div class="field-group">
+          <label for="description">Descrição (opcional)</label>
+          <textarea id="description" formControlName="description" placeholder="Descreve o estado e características do item..." rows="3"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="field-group">
+            <label for="category">Categoria</label>
+            <select id="category" formControlName="category">
+              <option value="">Escolher...</option>
+              @for (cat of categories.slice(1); track cat.value) {
+                <option [value]="cat.value">{{ cat.label }}</option>
+              }
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="type">Tipo</label>
+            <select id="type" formControlName="type">
+              <option value="">Escolher...</option>
+              @for (type of types.slice(1); track type.value) {
+                <option [value]="type.value">{{ type.label }}</option>
+              }
+            </select>
+          </div>
+        </div>
+        @if (showPrice) {
+          <div class="field-group">
+            <label for="price">Preço (€)</label>
+            <input id="price" type="number" formControlName="price" placeholder="0.00" min="0" />
+          </div>
+        }
+        <div class="field-group">
+          <label for="location">Localização (opcional)</label>
+          <input id="location" formControlName="location" placeholder="Ex: Lisboa, Alfama" />
+        </div>
+        <button class="submit-btn" type="submit" [disabled]="itemForm.invalid || loading">
+          <mat-icon>check_circle</mat-icon>
+          Publicar Item
+        </button>
+      </form>
+    </div>
+  }
+
+  @if (activeTab === 'mine') {
+    <div class="my-items-list">
+      @for (item of myItems; track item.id) {
+        <div class="my-item-card">
+          <div class="my-item-left">
+            <div class="item-icon" [class]="'cat-' + item.category">
+              <mat-icon>{{ getCategoryIcon(item.category) }}</mat-icon>
+            </div>
+            <div>
+              <h3>{{ item.title }}</h3>
+              <div class="my-item-meta">
+                <span class="type-badge" [class]="'type-' + item.type">{{ getTypeLabel(item.type) }}</span>
+                <span class="status-badge" [class]="'status-' + item.status">{{ item.status }}</span>
+              </div>
+            </div>
+          </div>
+          <button class="delete-btn" (click)="deleteItem(item.id)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      } @empty {
+        @if (!loading) {
+          <div class="empty-state">
+            <mat-icon>inventory_2</mat-icon>
+            <p>Ainda não publicaste nenhum item.</p>
+            <button class="interest-btn" (click)="setTab('publish')">Publicar agora</button>
+          </div>
+        }
+      }
+    </div>
+  }
+</div>
