@@ -16,6 +16,9 @@ import { TipsService, Tip } from '../../services/tips';
 export class TipsComponent implements OnInit {
   private tipsService = inject(TipsService);
   public tips: Tip[] = [];
+  public filteredTips: Tip[] = [];
+  public activeCategory = 'all';
+  public totalImpact = 0;
   public loading = false;
 
   ngOnInit(): void {
@@ -23,6 +26,8 @@ export class TipsComponent implements OnInit {
     this.tipsService.getAll().subscribe({
       next: (data) => {
         this.tips = data;
+        this.filteredTips = data;
+        this.totalImpact = data.reduce((sum, t) => sum + (t.impact_kg ?? 0), 0);
         this.loading = false;
       },
       error: (err) => {
@@ -30,5 +35,12 @@ export class TipsComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+   setCategory(category: string): void {
+    this.activeCategory = category;
+    this.filteredTips = category === 'all'
+      ? this.tips
+      : this.tips.filter(t => t.category === category);
   }
 }

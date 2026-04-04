@@ -24,7 +24,12 @@ import { FaqService, FaqItem } from '../../services/faq';
 export class FAQComponent implements OnInit {
   private faqService = inject(FaqService);
   public faqs: FaqItem[] = [];
+  public openId: number | null = null;
   public loading = false;
+
+  toggle(id: number): void {
+    this.openId = this.openId === id ? null : id;
+  }
 
   ngOnInit(): void {
     this.loading = true;

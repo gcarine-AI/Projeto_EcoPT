@@ -1,33 +1,55 @@
-<div class="tips-container">
+<div class="tips-wrapper">
   @if (loading) {
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <div class="loading-bar"></div>
   }
-  <mat-card class="header-card">
-    <mat-card-header>
-      <mat-card-title>Manual de Ação Climática 🌍</mat-card-title>
-      <mat-card-subtitle
-        >8 passos essenciais para reduzir a tua pegada ecológica em Portugal.</mat-card-subtitle
-      >
-    </mat-card-header>
-  </mat-card>
 
-  <mat-accordion multi="true">
-    @for (tip of tips; track tip.title) {
-      <mat-expansion-panel class="eco-panel">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon class="tip-icon">{{ tip.icon }}</mat-icon>
-            <strong>{{ tip.title }}</strong>
-          </mat-panel-title>
-          <mat-panel-description>
-            {{ tip.category }}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <div class="panel-content">
-          <p>{{ tip.description }}</p>
-        </div>
-      </mat-expansion-panel>
+  <div class="tips-header">
+    <div class="header-left">
+      <span class="eyebrow">BIBLIOTECA DE REDUÇÃO</span>
+      <h1>Pequenos passos para um planeta <em>mais verde.</em></h1>
+      <p class="header-sub">Estratégias para reduzir a tua pegada carbónica. Cada dica é medida pelo seu impacto anual.</p>
+    </div>
+    @if (totalImpact > 0) {
+      <div class="impact-badge">
+        <span class="impact-label">POUPANÇA TOTAL POSSÍVEL</span>
+        <span class="impact-value">{{ totalImpact | number: '1.0-0' }} <em>kg CO₂/ano</em></span>
+      </div>
     }
-  </mat-accordion>
+  </div>
+
+  <div class="filter-row">
+    <button class="filter-btn" [class.active]="activeCategory === 'all'" (click)="setCategory('all')">Todas</button>
+    <button class="filter-btn" [class.active]="activeCategory === 'transporte'" (click)="setCategory('transporte')">
+      <mat-icon>directions_car</mat-icon> Transporte
+    </button>
+    <button class="filter-btn" [class.active]="activeCategory === 'dieta'" (click)="setCategory('dieta')">
+      <mat-icon>restaurant</mat-icon> Alimentação
+    </button>
+    <button class="filter-btn" [class.active]="activeCategory === 'energia'" (click)="setCategory('energia')">
+      <mat-icon>bolt</mat-icon> Energia
+    </button>
+    <button class="filter-btn" [class.active]="activeCategory === 'geral'" (click)="setCategory('geral')">
+      <mat-icon>eco</mat-icon> Estilo de vida
+    </button>
+  </div>
+
+  <div class="tips-grid">
+    @for (tip of filteredTips; track tip.id) {
+      <div class="tip-card" [class.featured]="$first">
+        <div class="tip-card-top">
+          <div class="tip-icon-wrap" [class]="'cat-' + tip.category">
+            <mat-icon>{{ tip.icon || 'eco' }}</mat-icon>
+          </div>
+          <span class="tip-category">{{ tip.category | titlecase }}</span>
+        </div>
+        <h3>{{ tip.title }}</h3>
+        <p>{{ tip.description }}</p>
+        @if (tip.impact_kg) {
+          <div class="tip-footer">
+            <span class="impact-kg">{{ tip.impact_kg | number: '1.0-0' }} kg/ano</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
 </div>

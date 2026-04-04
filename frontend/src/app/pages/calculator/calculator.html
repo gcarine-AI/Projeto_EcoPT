@@ -1,103 +1,114 @@
-<div class="calculator-container">
-  <mat-card class="calc-card">
-    @if (loading) {
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    }
+<div class="calc-wrapper">
+  @if (loading) {
+    <div class="loading-bar"></div>
+  }
 
-    <mat-card-header>
-      <mat-card-title>
-        {{ editId ? 'Editar Cálculo' : 'Calculadora de Pegada Carbónica 🌍' }}</mat-card-title
-      >
-      <mat-card-subtitle>Descobre o teu impacto ambiental em poucos passos</mat-card-subtitle>
-    </mat-card-header>
+  <div class="calc-header">
+    <div class="calc-header-icon">
+      <mat-icon>eco</mat-icon>
+    </div>
+    <div>
+      <h1>{{ editId ? 'Editar Cálculo' : 'Calcula a tua Pegada' }}</h1>
+      <p>Descobre o teu impacto ambiental em poucos passos</p>
+    </div>
+  </div>
 
-    <mat-card-content>
-      <mat-stepper linear #stepper>
-        <mat-step [stepControl]="calcForm">
-          <form [formGroup]="calcForm">
-            <ng-template matStepLabel>Transporte</ng-template>
-            <div class="step-content">
-              <p>Quantos quilómetros percorres de carro por semana?</p>
-              <mat-form-field appearance="outline">
-                <mat-label>KM por semana</mat-label>
-                <input matInput type="number" formControlName="car_km" placeholder="Ex: 150" />
-                <mat-icon matSuffix>directions_car</mat-icon>
-              </mat-form-field>
+  <form [formGroup]="calcForm" (ngSubmit)="submit()">
 
-              <p>Quantos voos (ida e volta) fizeste no último ano?</p>
-              <mat-form-field appearance="outline">
-                <mat-label>Número de voos</mat-label>
-                <input matInput type="number" formControlName="flights" placeholder="Ex: 2" />
-                <mat-icon matSuffix>flight</mat-icon>
-              </mat-form-field>
-
-              <div class="actions">
-                <button mat-raised-button color="primary" matStepperNext="button">Próximo</button>
-              </div>
-            </div>
-          </form>
-        </mat-step>
-
-        <mat-step [stepControl]="calcForm">
-          <form [formGroup]="calcForm">
-            <ng-template matStepLabel>Estilo de Vida</ng-template>
-            <div class="step-content">
-              <p>Qual é o teu tipo de dieta?</p>
-              <mat-form-field appearance="outline">
-                <mat-label>Dieta</mat-label>
-                <mat-select formControlName="diet">
-                  <mat-option value="vegan">Vegan</mat-option>
-                  <mat-option value="vegetariana">Vegetariana</mat-option>
-                  <mat-option value="omnivora">Omnívora (Pouca carne)</mat-option>
-                  <mat-option value="carnivora">Carnívora (Muita carne)</mat-option>
-                </mat-select>
-                <mat-icon matSuffix>restaurant</mat-icon>
-              </mat-form-field>
-
-              <p>Qual o consumo médio mensal de eletricidade (kWh)?</p>
-              <mat-form-field appearance="outline">
-                <mat-label>Consumo kWh</mat-label>
-                <input matInput type="number" formControlName="kwh" placeholder="Ex: 200" />
-                <mat-icon matSuffix>bolt</mat-icon>
-              </mat-form-field>
-
-              <div class="actions">
-                <button mat-button matStepperPrevious type="button">Voltar</button>
-                <button mat-raised-button color="primary" matStepperNext type="button">
-                  Revisão
-                </button>
-              </div>
-            </div>
-          </form>
-        </mat-step>
-
-        <mat-step>
-          <ng-template matStepLabel>Finalizar</ng-template>
-          <div class="final-step">
-            <h3>Tudo pronto!</h3>
-            <p>Clique no botão abaixo para calcular a sua pegada de $CO_2$.</p>
-
-            <div class="summary-box">
-              <p>
-                <strong>Resumo:</strong> {{ calcForm.value.car_km }} km/semana | Dieta
-                {{ calcForm.value.diet }}
-              </p>
-            </div>
-
-            <div class="actions">
-              <button mat-button matStepperPrevious [disabled]="loading">Voltar</button>
-              <button
-                mat-raised-button
-                color="accent"
-                (click)="submit()"
-                [disabled]="calcForm.invalid || loading"
-              >
-                {{ editId ? 'ATUALIZAR DADOS 🔄' : 'CALCULAR AGORA 🚀' }}
-              </button>
-            </div>
+    <div class="section-card">
+      <div class="section-header transport">
+        <div class="section-icon">
+          <mat-icon>directions_car</mat-icon>
+        </div>
+        <div>
+          <h2>Transporte</h2>
+          <span>Movimento e deslocações</span>
+        </div>
+      </div>
+      <div class="fields">
+        <div class="field-group">
+          <label for="car_km">KM percorridos por semana</label>
+          <div class="input-wrapper">
+            <input id="car_km" type="number" formControlName="car_km" placeholder="ex: 150" />
+            <span class="unit">km</span>
           </div>
-        </mat-step>
-      </mat-stepper>
-    </mat-card-content>
-  </mat-card>
+        </div>
+        <div class="field-group">
+          <label for="flights">Voos por ano (ida e volta)</label>
+          <div class="input-wrapper">
+            <input id="flights" type="number" formControlName="flights" placeholder="ex: 2" />
+            <span class="unit">voos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header diet">
+        <div class="section-icon">
+          <mat-icon>restaurant</mat-icon>
+        </div>
+        <div>
+          <h2>Hábitos Alimentares</h2>
+          <span>Estilo de consumo</span>
+        </div>
+      </div>
+      <div class="diet-grid">
+        <label class="diet-option" [class.selected]="calcForm.value.diet === 'carnivora'">
+          <input type="radio" formControlName="diet" value="carnivora" />
+          <mat-icon>kebab_dining</mat-icon>
+          <span>Carnívora</span>
+          <small>Rica em carne</small>
+        </label>
+        <label class="diet-option" [class.selected]="calcForm.value.diet === 'omnivora'">
+          <input type="radio" formControlName="diet" value="omnivora" />
+          <mat-icon>lunch_dining</mat-icon>
+          <span>Omnívora</span>
+          <small>Equilibrada</small>
+        </label>
+        <label class="diet-option" [class.selected]="calcForm.value.diet === 'vegetariana'">
+          <input type="radio" formControlName="diet" value="vegetariana" />
+          <mat-icon>spa</mat-icon>
+          <span>Vegetariana</span>
+          <small>Sem carne</small>
+        </label>
+        <label class="diet-option" [class.selected]="calcForm.value.diet === 'vegan'">
+          <input type="radio" formControlName="diet" value="vegan" />
+          <mat-icon>eco</mat-icon>
+          <span>Vegan</span>
+          <small>Plant-based</small>
+        </label>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header energy">
+        <div class="section-icon">
+          <mat-icon>bolt</mat-icon>
+        </div>
+        <div>
+          <h2>Energia</h2>
+          <span>Consumo doméstico</span>
+        </div>
+      </div>
+      <div class="fields">
+        <div class="field-group">
+          <label for="electricity">Consumo mensal de eletricidade</label>
+          <div class="input-wrapper">
+            <input id="electricity" type="number" formControlName="kwh" placeholder="ex: 250" />
+            <span class="unit">kWh</span>
+          </div>
+          <small class="hint">Podes consultar a tua fatura de eletricidade. A média portuguesa é 250–350 kWh/mês.</small>
+        </div>
+      </div>
+    </div>
+
+    <button class="submit-btn" type="submit" [disabled]="calcForm.invalid || loading">
+      {{ editId ? 'Atualizar dados' : 'Calcular o meu impacto' }}
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+
+    <p class="privacy-note">Os teus dados são processados de forma segura e privada.</p>
+
+  </form>
 </div>

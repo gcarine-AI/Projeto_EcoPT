@@ -1,66 +1,71 @@
-<div class="login-container">
-  <div class="login-card">
-    <div class="logo">
-      <span class="logo-icon">🌿</span>
-      <h1>EcoPT</h1>
-      <p>Calculadora de Pegada Carbónica</p>
+<div class="login-page">
+  <div class="login-brand">
+    <div class="brand-icon">
+      <mat-icon>eco</mat-icon>
     </div>
+    <span class="brand-name">EcoPT</span>
+  </div>
+
+  <div class="login-card">
+    <h2>Bem-vindo ao EcoPT</h2>
 
     <form [formGroup]="loginForm">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email" placeholder="o-teu@email.com" />
-        @if (loginForm.get('email')?.hasError('required')) {
-          <mat-error>Email é obrigatório</mat-error>
+      <div class="field-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="o-teu@email.com"
+          class="field-input"
+          [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+        />
+        @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
+          <span class="field-error">Email é obrigatório</span>
         }
-        @if (loginForm.get('email')?.hasError('email')) {
-          <mat-error>Email inválido</mat-error>
+        @if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
+          <span class="field-error">Email inválido</span>
         }
-      </mat-form-field>
+      </div>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password" placeholder="••••••" />
-        @if (loginForm.get('password')?.hasError('required')) {
-          <mat-error>Password é obrigatória</mat-error>
+      <div class="field-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="••••••••"
+          class="field-input"
+          [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        />
+        @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+          <span class="field-error">Password é obrigatória</span>
         }
-        @if (loginForm.get('password')?.hasError('minLength')) {
-          <mat-error>Minimo 6 caracteres</mat-error>
+        @if (loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched) {
+          <span class="field-error">Mínimo 6 caracteres</span>
         }
-      </mat-form-field>
+      </div>
 
       @if (error) {
-        <div class="error-message">
-          {{ error }}
-        </div>
+        <div class="error-banner">{{ error }}</div>
       }
 
-      <div class="buttons">
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="loginAs()"
-          [disabled]="isLoading"
-          class="full-width"
-        >
-          🌱 Acesso Pessoal
-        </button>
-
-        <button
-          mat-stroked-button
-          color="primary"
-          (click)="loginAs()"
-          [disabled]="isLoading"
-          class="full-width"
-        >
-          🏢 Acesso Empresarial
-        </button>
-      </div>
+      <button
+        class="btn-primary"
+        type="button"
+        (click)="loginAs()"
+        [disabled]="isLoading"
+      >
+        @if (isLoading) {
+          A entrar...
+        } @else {
+          Entrar <mat-icon>arrow_forward</mat-icon>
+        }
+      </button>
     </form>
 
     <div class="register-link">
-      Não tens conta?
-      <a routerLink="/register">Regista-te aqui</a>
+      Não tens conta? <a routerLink="/register">Regista-te aqui</a>
     </div>
   </div>
 </div>

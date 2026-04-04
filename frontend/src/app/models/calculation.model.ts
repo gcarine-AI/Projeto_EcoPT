@@ -1,11 +1,11 @@
 export interface Calculation {
-  id?: string;
+  id: string;
   user_id?: string;
   car_km: number;
   flights: number;
   diet: 'vegan' | 'vegetariana' | 'omnivora';
   kwh: number;
-  total_co2?: number;
+  total_co2: number;
   created_at?: number;
 }
 

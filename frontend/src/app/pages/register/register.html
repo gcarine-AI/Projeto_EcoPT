@@ -1,53 +1,62 @@
-<div class="auth-container">
-  <mat-card class="register-card">
-    <mat-card-header>
-      <mat-card-title>Criar Conta EcoPT 🌍</mat-card-title>
-      <mat-card-subtitle>Junta-te à mudança sustentável</mat-card-subtitle>
-    </mat-card-header>
+<div class="auth-page">
+  <div class="logo-container">
+    <mat-icon>leaf</mat-icon> <span>EcoPT</span>
+  </div>
 
-    <mat-card-content>
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nome Completo</mat-label>
-          <input matInput formControlName="name" placeholder="Ex: João Silva" />
-          @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
-            <mat-error>O nome deve ter pelo menos 3 letras</mat-error>
-          }
-        </mat-form-field>
+  <div class="auth-container">
+    <div class="register-header">
+      <h1>Criar Conta</h1>
+      <p>Junta-te à mudança sustentável.</p>
+    </div>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" placeholder="email@exemplo.pt" />
-          @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-            <mat-error>Introduz um email válido</mat-error>
-          }
-        </mat-form-field>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" formControlName="password" />
-          <mat-hint>Mínimo 7 caracteres</mat-hint>
-          @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-            <mat-error>Password demasiado curta</mat-error>
-          }
-        </mat-form-field>
+      <label class="input-label" for="name-input">NOME COMPLETO</label>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-icon matPrefix>person_outline</mat-icon>
+        <input matInput id="name-input" formControlName="name" placeholder="John Doe" />
+      </mat-form-field>
 
-        @if (error) {
-          <div class="error-msg">{{ error }}</div>
-        }
+      <label class="input-label" for="email-input">EMAIL</label>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-icon matPrefix>mail_outline</mat-icon>
+        <input matInput id="email-input" type="email" formControlName="email" placeholder="hello@ecopt.com" />
+      </mat-form-field>
 
-        <div class="actions">
-          <button
-            mat-raised-button
-            color="primary"
-            type="submit"
-            [disabled]="registerForm.invalid || isLoading"
-          >
-            {{ isLoading ? 'A processar...' : 'REGISTAR' }}
-          </button>
-          <a mat-button routerLink="/login">Já tenho conta</a>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+      <label class="input-label" for="pass-input">PASSWORD</label>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-icon matPrefix>lock_outline</mat-icon>
+        <input matInput id="pass-input" type="password" formControlName="password" placeholder="........" />
+        <mat-icon matSuffix>visibility_outline</mat-icon>
+      </mat-form-field>
+
+      <div class="terms-container">
+        <mat-checkbox color="primary">
+          Concordo com os <span class="link">Terms of Service</span> e <span class="link">Privacy Policy</span>.
+        </mat-checkbox>
+      </div>
+
+      <button mat-flat-button class="submit-btn" type="submit" [disabled]="registerForm.invalid || isLoading">
+        {{ isLoading ? 'A processar...' : 'Criar Conta' }}
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+
+      <div class="divider">
+        <span>OU CONTINUA COM</span>
+      </div>
+
+      <div class="social-auth">
+        <button type="button" class="social-btn">
+          <img src="assets/google-icon.png" alt="Google"> Google
+        </button>
+        <button type="button" class="social-btn">
+          <img src="assets/apple-icon.png" alt="Apple"> Apple
+        </button>
+      </div>
+
+      <p class="footer-text">
+        Já tens conta? <a routerLink="/login" class="link bold">Log in <mat-icon>login</mat-icon></a>
+      </p>
+    </form>
+  </div>
 </div>
