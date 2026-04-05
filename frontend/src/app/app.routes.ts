@@ -7,6 +7,7 @@ import { HistoryComponent } from './pages/history/history';
 import { TipsComponent } from './pages/tips/tips';
 import { CarsharingComponent } from './pages/carsharing/carsharing';
 import { FAQComponent } from './pages/faq/faq';
+import { MarketplaceComponent } from './pages/marketplace/marketplace';
 //import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
@@ -47,6 +48,10 @@ export const routes: Routes = [
     path: 'faq',
     component: FAQComponent,
     //canActivate: [authGuard],
+  },
+  {
+    path: 'marketplace',
+    component: MarketplaceComponent,
   },
 
   { path: '**', redirectTo: '/login' },

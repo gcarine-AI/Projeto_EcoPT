@@ -1,49 +1,49 @@
 @if (shouldShowNavbar()) {
-  <mat-toolbar color="primary" class="main-navbar">
-    <span class="logo" routerLink="/dashboard" style="cursor: pointer">EcoPT 🌿</span>
+  <mat-toolbar class="main-navbar">
+    <div class="logo-wrapper" routerLink="/dashboard">
+      <mat-icon class="logo-icon">leaf</mat-icon>
+      <span class="logo-text">EcoPT</span>
+    </div>
 
     <span class="spacer"></span>
 
     @if (authService.isLoggedIn()) {
-      <button mat-button routerLink="/dashboard" routerLinkActive="active-link">Dashboard</button>
-      <button mat-button routerLink="/calculator" routerLinkActive="active-link">
-        Calculadora
-      </button>
-      <button mat-button routerLink="/history" routerLinkActive="active-link">Histórico</button>
-
-      <button mat-button [matMenuTriggerFor]="menu">
-        Mais <mat-icon>arrow_drop_down</mat-icon>
-      </button>
-
-      <span class="spacer"></span>
+      <div class="desktop-links">
+        <button mat-button routerLink="/dashboard" routerLinkActive="active-link">Dashboard</button>
+        <button mat-button routerLink="/calculator" routerLinkActive="active-link">
+          Calculadora
+        </button>
+        <button mat-button routerLink="/history" routerLinkActive="active-link">Histórico</button>
+        <button mat-button [matMenuTriggerFor]="menu">
+          Mais <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+      </div>
 
       <div class="user-section">
         <span class="user-info">
-          Olá, <strong>{{ authService.getName() || 'Utilizador' }}</strong>
+          <strong class="user-name">{{ authService.getName() || 'User' }}</strong>
         </span>
 
-        <button mat-icon-button (click)="authService.logout()" title="Sair">
-          <mat-icon>logout</mat-icon>
+        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+          <mat-icon>account_circle</mat-icon>
         </button>
       </div>
     } @else {
-      <button mat-button routerLink="/login" routerLinkActive="active-link">Login</button>
-      <button mat-button routerLink="/register" routerLinkActive="active-link">Registar</button>
+      <button mat-button routerLink="/login">Login</button>
+      <button mat-button class="register-btn" routerLink="/register">Registar</button>
     }
   </mat-toolbar>
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/tips">
-      <mat-icon>lightbulb</mat-icon>
-      <span>Dicas Eco</span>
-    </button>
+    <button mat-menu-item routerLink="/tips"><mat-icon>lightbulb</mat-icon>Dicas Eco</button>
     <button mat-menu-item routerLink="/carsharing">
-      <mat-icon>directions_car</mat-icon>
-      <span>Carsharing</span>
+      <mat-icon>directions_car</mat-icon>Carsharing
     </button>
-    <button mat-menu-item routerLink="/faq">
-      <mat-icon>help</mat-icon>
-      <span>FAQ</span>
-    </button>
+    <button mat-menu-item routerLink="/faq"><mat-icon>help</mat-icon>FAQ</button>
+    <button mat-menu-item routerLink="/marketplace"><mat-icon>cached</mat-icon>MarketPlace</button>
+  </mat-menu>
+
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon> Sair</button>
   </mat-menu>
 }

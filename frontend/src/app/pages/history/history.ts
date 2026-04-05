@@ -33,6 +33,9 @@ export class HistoryComponent implements OnInit {
   // Colunas que queremos mostrar na tabela
   public displayedColumns: string[] = ['created_at', 'total_co2', 'diet', 'actions'];
   public loading = false;
+  public totalCO2 = 0;
+  public avgCO2 = 0;
+  public Math = Math;
 
   ngOnInit(): void {
     this.loadHistory();
@@ -43,11 +46,12 @@ export class HistoryComponent implements OnInit {
     this.calcService.list().subscribe({
       next: (data: Calculation[]) => {
         this.dataSource = data;
+        this.totalCO2 = data.reduce((sum, c) => sum + (c.total_co2 ?? 0), 0);
+        this.avgCO2 = data.length > 0 ? this.totalCO2 / data.length : 0;
         this.loading = false;
       },
       error: (err: Error) => {
         console.error(err);
-        alert('Erro ao carregar o histórico.');
         this.loading = false;
       },
     });
@@ -59,11 +63,12 @@ export class HistoryComponent implements OnInit {
       this.calcService.delete(id).subscribe({
         next: () => {
           this.dataSource = this.dataSource.filter((item) => item.id !== id);
+          this.totalCO2 = this.dataSource.reduce((sum, c) => sum + (c.total_co2 ?? 0), 0);
+          this.avgCO2 = this.dataSource.length > 0 ? this.totalCO2 / this.dataSource.length : 0;
           this.loading = false;
         },
         error: (err: Error) => {
           console.error(err);
-          alert('Erro ao eliminar o registo.');
           this.loading = false;
         },
       });

@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
   public percentage = 0;
   public statusMessage = 'A carregar dados...';
   public loading = true;
+  public Math = Math;
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
