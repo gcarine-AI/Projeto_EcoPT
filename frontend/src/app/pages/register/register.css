@@ -29,8 +29,16 @@
 
 .register-header {
   margin-bottom: 32px;
-  h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; color: #111; }
-  p { color: #666; font-size: 1rem; }
+  h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: #111;
+  }
+  p {
+    color: #666;
+    font-size: 1rem;
+  }
 }
 
 .input-label {
@@ -61,21 +69,23 @@
       --mdc-checkbox-selected-icon-color: #2d7a32;
       --mdc-checkbox-selected-pressed-icon-color: #2d7a32;
     }
-    
+
     .terms-container {
-    text-align: left;
-    margin: 10px 0;
-    font-size: 0.85rem;
-    color: #666;
+      text-align: left;
+      margin: 10px 0;
+      font-size: 0.85rem;
+      color: #666;
     }
 
     .mat-mdc-text-field-wrapper {
       background-color: white !important;
     }
 
-    mat-icon { color: #999; margin-right: 8px; }
+    mat-icon {
+      color: #999;
+      margin-right: 8px;
+    }
   }
-
 }
 
 .submit-btn {
@@ -88,7 +98,10 @@
   font-weight: 600;
   margin: 20px 0;
 
-  mat-icon { margin-left: 8px; font-size: 20px; }
+  mat-icon {
+    margin-left: 8px;
+    font-size: 20px;
+  }
 }
 
 .divider {
@@ -101,12 +114,15 @@
   font-weight: 600;
   letter-spacing: 1px;
 
-  &::before, &::after {
+  &::before,
+  &::after {
     content: '';
     flex: 1;
     border-bottom: 1px solid #eee;
   }
-  span { padding: 0 15px; }
+  span {
+    padding: 0 15px;
+  }
 }
 
 .social-auth {
@@ -126,7 +142,9 @@
     gap: 10px;
     font-weight: 600;
     cursor: pointer;
-    img { width: 20px; }
+    img {
+      width: 20px;
+    }
   }
 }
 
@@ -134,6 +152,11 @@
   color: #2d7a32;
   text-decoration: none;
   cursor: pointer;
-  &.bold { font-weight: 700; }
-  mat-icon { font-size: 16px; vertical-align: middle; }
+  &.bold {
+    font-weight: 700;
+  }
+  mat-icon {
+    font-size: 16px;
+    vertical-align: middle;
+  }
 }

@@ -66,7 +66,9 @@ export class MarketplaceComponent implements OnInit {
         this.items = data;
         this.loading = false;
       },
-      error: () => { this.loading = false; },
+      error: () => {
+        this.loading = false;
+      },
     });
   }
 
@@ -77,7 +79,9 @@ export class MarketplaceComponent implements OnInit {
         this.myItems = data;
         this.loading = false;
       },
-      error: () => { this.loading = false; },
+      error: () => {
+        this.loading = false;
+      },
     });
   }
 
@@ -116,11 +120,15 @@ export class MarketplaceComponent implements OnInit {
   showInterest(id: number): void {
     this.marketplaceService.interest(id).subscribe({
       next: () => {
-        this.snackBar.open('Interesse registado! O dono será contactado. 🤝', 'Fechar', { duration: 4000 });
+        this.snackBar.open('Interesse registado! O dono será contactado. 🤝', 'Fechar', {
+          duration: 4000,
+        });
         this.loadItems();
       },
       error: (err: HttpErrorResponse) => {
-        this.snackBar.open(err.error?.error || 'Erro ao registar interesse', 'Fechar', { duration: 4000 });
+        this.snackBar.open(err.error?.error || 'Erro ao registar interesse', 'Fechar', {
+          duration: 4000,
+        });
       },
     });
   }
@@ -129,18 +137,18 @@ export class MarketplaceComponent implements OnInit {
     if (!confirm('Tens a certeza que queres eliminar este item?')) return;
     this.marketplaceService.delete(id).subscribe({
       next: () => {
-        this.myItems = this.myItems.filter(i => i.id !== id);
+        this.myItems = this.myItems.filter((i) => i.id !== id);
         this.snackBar.open('Item eliminado.', 'Fechar', { duration: 3000 });
       },
     });
   }
 
   getTypeLabel(type: string): string {
-    return this.types.find(t => t.value === type)?.label || type;
+    return this.types.find((t) => t.value === type)?.label || type;
   }
 
   getCategoryIcon(category: string): string {
-    return this.categories.find(c => c.value === category)?.icon || 'category';
+    return this.categories.find((c) => c.value === category)?.icon || 'category';
   }
 
   get showPrice(): boolean {

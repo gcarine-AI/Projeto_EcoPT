@@ -1,5 +1,4 @@
 <div class="carsharing-wrapper">
-
   <div class="carsharing-header">
     <span class="eyebrow">MOBILIDADE SUSTENTÁVEL</span>
     <h1>Boleias Partilhadas</h1>
@@ -136,7 +135,13 @@
             [disabled]="+ride.seats === 0 || loading || ride.driver_id === currentUserId"
             (click)="bookSeat(ride.id, ride.seats)"
           >
-            {{ +ride.seats === 0 ? 'Esgotado' : ride.driver_id === currentUserId ? 'A tua boleia' : 'Reservar' }}
+            {{
+              +ride.seats === 0
+                ? 'Esgotado'
+                : ride.driver_id === currentUserId
+                  ? 'A tua boleia'
+                  : 'Reservar'
+            }}
           </button>
         </div>
       </div>

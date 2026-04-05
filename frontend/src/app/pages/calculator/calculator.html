@@ -14,7 +14,6 @@
   </div>
 
   <form [formGroup]="calcForm" (ngSubmit)="submit()">
-
     <div class="section-card">
       <div class="section-header transport">
         <div class="section-icon">
@@ -98,7 +97,10 @@
             <input id="electricity" type="number" formControlName="kwh" placeholder="ex: 250" />
             <span class="unit">kWh</span>
           </div>
-          <small class="hint">Podes consultar a tua fatura de eletricidade. A média portuguesa é 250–350 kWh/mês.</small>
+          <small class="hint"
+            >Podes consultar a tua fatura de eletricidade. A média portuguesa é 250–350
+            kWh/mês.</small
+          >
         </div>
       </div>
     </div>
@@ -109,6 +111,5 @@
     </button>
 
     <p class="privacy-note">Os teus dados são processados de forma segura e privada.</p>
-
   </form>
 </div>

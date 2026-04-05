@@ -7,7 +7,9 @@
     <div class="header-left">
       <span class="eyebrow">BIBLIOTECA DE REDUÇÃO</span>
       <h1>Pequenos passos para um planeta <em>mais verde.</em></h1>
-      <p class="header-sub">Estratégias para reduzir a tua pegada carbónica. Cada dica é medida pelo seu impacto anual.</p>
+      <p class="header-sub">
+        Estratégias para reduzir a tua pegada carbónica. Cada dica é medida pelo seu impacto anual.
+      </p>
     </div>
     @if (totalImpact > 0) {
       <div class="impact-badge">
@@ -18,17 +20,39 @@
   </div>
 
   <div class="filter-row">
-    <button class="filter-btn" [class.active]="activeCategory === 'all'" (click)="setCategory('all')">Todas</button>
-    <button class="filter-btn" [class.active]="activeCategory === 'transporte'" (click)="setCategory('transporte')">
+    <button
+      class="filter-btn"
+      [class.active]="activeCategory === 'all'"
+      (click)="setCategory('all')"
+    >
+      Todas
+    </button>
+    <button
+      class="filter-btn"
+      [class.active]="activeCategory === 'transporte'"
+      (click)="setCategory('transporte')"
+    >
       <mat-icon>directions_car</mat-icon> Transporte
     </button>
-    <button class="filter-btn" [class.active]="activeCategory === 'dieta'" (click)="setCategory('dieta')">
+    <button
+      class="filter-btn"
+      [class.active]="activeCategory === 'dieta'"
+      (click)="setCategory('dieta')"
+    >
       <mat-icon>restaurant</mat-icon> Alimentação
     </button>
-    <button class="filter-btn" [class.active]="activeCategory === 'energia'" (click)="setCategory('energia')">
+    <button
+      class="filter-btn"
+      [class.active]="activeCategory === 'energia'"
+      (click)="setCategory('energia')"
+    >
       <mat-icon>bolt</mat-icon> Energia
     </button>
-    <button class="filter-btn" [class.active]="activeCategory === 'geral'" (click)="setCategory('geral')">
+    <button
+      class="filter-btn"
+      [class.active]="activeCategory === 'geral'"
+      (click)="setCategory('geral')"
+    >
       <mat-icon>eco</mat-icon> Estilo de vida
     </button>
   </div>

@@ -50,9 +50,9 @@ export const routes: Routes = [
     //canActivate: [authGuard],
   },
   {
-  path: 'marketplace',
-  component: MarketplaceComponent,
-},
+    path: 'marketplace',
+    component: MarketplaceComponent,
+  },
 
   { path: '**', redirectTo: '/login' },
 ];

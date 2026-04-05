@@ -13,8 +13,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .tips-header {
@@ -142,12 +147,14 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .tip-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .tip-card.featured {
@@ -162,11 +169,11 @@
 }
 
 .tip-card.featured .tip-category {
-  color: rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .tip-card.featured .impact-kg {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
 
@@ -192,10 +199,22 @@
   height: 18px;
 }
 
-.cat-transporte { background: #e3f2fd; color: #1565c0; }
-.cat-dieta { background: #fff3e0; color: #e65100; }
-.cat-energia { background: #fffde7; color: #f57f17; }
-.cat-geral { background: #e8f5e9; color: #2e7d32; }
+.cat-transporte {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+.cat-dieta {
+  background: #fff3e0;
+  color: #e65100;
+}
+.cat-energia {
+  background: #fffde7;
+  color: #f57f17;
+}
+.cat-geral {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
 
 .tip-category {
   font-size: 11px;

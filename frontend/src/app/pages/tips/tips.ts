@@ -37,10 +37,9 @@ export class TipsComponent implements OnInit {
     });
   }
 
-   setCategory(category: string): void {
+  setCategory(category: string): void {
     this.activeCategory = category;
-    this.filteredTips = category === 'all'
-      ? this.tips
-      : this.tips.filter(t => t.category === category);
+    this.filteredTips =
+      category === 'all' ? this.tips : this.tips.filter((t) => t.category === category);
   }
 }

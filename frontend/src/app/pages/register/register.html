@@ -1,7 +1,5 @@
 <div class="auth-page">
-  <div class="logo-container">
-    <mat-icon>leaf</mat-icon> <span>EcoPT</span>
-  </div>
+  <div class="logo-container"><mat-icon>leaf</mat-icon> <span>EcoPT</span></div>
 
   <div class="auth-container">
     <div class="register-header">
@@ -10,7 +8,6 @@
     </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
-
       <label class="input-label" for="name-input">NOME COMPLETO</label>
       <mat-form-field appearance="outline" class="full-width">
         <mat-icon matPrefix>person_outline</mat-icon>
@@ -20,23 +17,41 @@
       <label class="input-label" for="email-input">EMAIL</label>
       <mat-form-field appearance="outline" class="full-width">
         <mat-icon matPrefix>mail_outline</mat-icon>
-        <input matInput id="email-input" type="email" formControlName="email" placeholder="hello@ecopt.com" />
+        <input
+          matInput
+          id="email-input"
+          type="email"
+          formControlName="email"
+          placeholder="hello@ecopt.com"
+        />
       </mat-form-field>
 
       <label class="input-label" for="pass-input">PASSWORD</label>
       <mat-form-field appearance="outline" class="full-width">
         <mat-icon matPrefix>lock_outline</mat-icon>
-        <input matInput id="pass-input" type="password" formControlName="password" placeholder="........" />
+        <input
+          matInput
+          id="pass-input"
+          type="password"
+          formControlName="password"
+          placeholder="........"
+        />
         <mat-icon matSuffix>visibility_outline</mat-icon>
       </mat-form-field>
 
       <div class="terms-container">
         <mat-checkbox color="primary">
-          Concordo com os <span class="link">Terms of Service</span> e <span class="link">Privacy Policy</span>.
+          Concordo com os <span class="link">Terms of Service</span> e
+          <span class="link">Privacy Policy</span>.
         </mat-checkbox>
       </div>
 
-      <button mat-flat-button class="submit-btn" type="submit" [disabled]="registerForm.invalid || isLoading">
+      <button
+        mat-flat-button
+        class="submit-btn"
+        type="submit"
+        [disabled]="registerForm.invalid || isLoading"
+      >
         {{ isLoading ? 'A processar...' : 'Criar Conta' }}
         <mat-icon>arrow_forward</mat-icon>
       </button>
@@ -47,15 +62,16 @@
 
       <div class="social-auth">
         <button type="button" class="social-btn">
-          <img src="assets/google-icon.png" alt="Google"> Google
+          <img src="assets/google-icon.png" alt="Google" /> Google
         </button>
         <button type="button" class="social-btn">
-          <img src="assets/apple-icon.png" alt="Apple"> Apple
+          <img src="assets/apple-icon.png" alt="Apple" /> Apple
         </button>
       </div>
 
       <p class="footer-text">
-        Já tens conta? <a routerLink="/login" class="link bold">Log in <mat-icon>login</mat-icon></a>
+        Já tens conta?
+        <a routerLink="/login" class="link bold">Log in <mat-icon>login</mat-icon></a>
       </p>
     </form>
   </div>

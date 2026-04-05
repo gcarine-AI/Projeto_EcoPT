@@ -10,7 +10,8 @@
         <h1>{{ lastCalculation.total_co2 | number: '1.1-1' }} <span>ton/ano</span></h1>
         <p class="header-sub">
           @if (lastCalculation.total_co2 > avgPortugal) {
-            Estás {{ ((lastCalculation.total_co2 / avgPortugal - 1) * 100) | number: '1.0-0' }}% acima da média nacional. Continua a melhorar!
+            Estás {{ (lastCalculation.total_co2 / avgPortugal - 1) * 100 | number: '1.0-0' }}% acima
+            da média nacional. Continua a melhorar!
           } @else {
             Estás abaixo da média nacional. Excelente trabalho!
           }
@@ -30,7 +31,10 @@
       <div class="bar-row">
         <span class="bar-label">A minha pegada</span>
         <div class="bar-track">
-          <div class="bar-fill mine" [style.width.%]="Math.min((lastCalculation.total_co2 / 12) * 100, 100)"></div>
+          <div
+            class="bar-fill mine"
+            [style.width.%]="Math.min((lastCalculation.total_co2 / 12) * 100, 100)"
+          ></div>
         </div>
         <span class="bar-value">{{ lastCalculation.total_co2 | number: '1.1-1' }}</span>
       </div>
@@ -61,7 +65,9 @@
     <a class="calc-cta" routerLink="/calculator">
       <div>
         <p class="cta-title">Iniciar novo cálculo</p>
-        <p class="cta-sub">Atualiza a tua pegada com os dados mais recentes de viagens, dieta e energia.</p>
+        <p class="cta-sub">
+          Atualiza a tua pegada com os dados mais recentes de viagens, dieta e energia.
+        </p>
       </div>
       <mat-icon>arrow_forward</mat-icon>
     </a>
@@ -80,7 +86,9 @@
           <span class="activity-name">Transporte</span>
           <span class="activity-detail">{{ lastCalculation.car_km }} km/semana</span>
         </div>
-        <span class="activity-value">{{ (lastCalculation.car_km * 52 * 0.21 / 1000) | number: '1.1-1' }}t</span>
+        <span class="activity-value"
+          >{{ (lastCalculation.car_km * 52 * 0.21) / 1000 | number: '1.1-1' }}t</span
+        >
       </div>
 
       <div class="activity-item">
@@ -101,7 +109,9 @@
           <span class="activity-name">Energia</span>
           <span class="activity-detail">{{ lastCalculation.kwh }} kWh/mês</span>
         </div>
-        <span class="activity-value">{{ (lastCalculation.kwh * 12 * 0.25 / 1000) | number: '1.1-1' }}t</span>
+        <span class="activity-value"
+          >{{ (lastCalculation.kwh * 12 * 0.25) / 1000 | number: '1.1-1' }}t</span
+        >
       </div>
 
       <div class="activity-item">
@@ -112,10 +122,9 @@
           <span class="activity-name">Voos</span>
           <span class="activity-detail">{{ lastCalculation.flights }} voos/ano</span>
         </div>
-        <span class="activity-value">{{ (lastCalculation.flights * 0.255) | number: '1.1-1' }}t</span>
+        <span class="activity-value">{{ lastCalculation.flights * 0.255 | number: '1.1-1' }}t</span>
       </div>
     </div>
-
   } @else if (!loading) {
     <div class="empty-state">
       <mat-icon>eco</mat-icon>

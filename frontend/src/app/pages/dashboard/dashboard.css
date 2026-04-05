@@ -13,8 +13,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .dashboard-header {
@@ -99,9 +104,15 @@
   transition: width 0.8s ease;
 }
 
-.bar-fill.mine { background: #2e7d32; }
-.bar-fill.pt { background: #81c784; }
-.bar-fill.eu { background: #c8e6c9; }
+.bar-fill.mine {
+  background: #2e7d32;
+}
+.bar-fill.pt {
+  background: #81c784;
+}
+.bar-fill.eu {
+  background: #c8e6c9;
+}
 
 .bar-value {
   font-size: 12px;
@@ -133,9 +144,15 @@
   display: inline-block;
 }
 
-.dot.mine { background: #2e7d32; }
-.dot.pt { background: #81c784; }
-.dot.eu { background: #c8e6c9; }
+.dot.mine {
+  background: #2e7d32;
+}
+.dot.pt {
+  background: #81c784;
+}
+.dot.eu {
+  background: #c8e6c9;
+}
 
 .calc-cta {
   display: flex;
@@ -163,7 +180,7 @@
 
 .cta-sub {
   font-size: 12px;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
   line-height: 1.4;
 }
@@ -213,10 +230,22 @@
   flex-shrink: 0;
 }
 
-.activity-icon.transport { background: #e3f2fd; color: #1565c0; }
-.activity-icon.diet { background: #fff3e0; color: #e65100; }
-.activity-icon.energy { background: #fffde7; color: #f57f17; }
-.activity-icon.flight { background: #f3e5f5; color: #6a1b9a; }
+.activity-icon.transport {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+.activity-icon.diet {
+  background: #fff3e0;
+  color: #e65100;
+}
+.activity-icon.energy {
+  background: #fffde7;
+  color: #f57f17;
+}
+.activity-icon.flight {
+  background: #f3e5f5;
+  color: #6a1b9a;
+}
 
 .activity-info {
   flex: 1;

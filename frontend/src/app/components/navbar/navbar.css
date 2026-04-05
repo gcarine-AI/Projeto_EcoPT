@@ -36,7 +36,9 @@
   letter-spacing: -0.5px;
 }
 
-.spacer { flex: 1; }
+.spacer {
+  flex: 1;
+}
 
 /* RESPONSIVIDADE: Esconder links no Mobile */
 .desktop-links {
@@ -47,7 +49,8 @@
 }
 
 @media (max-width: 850px) {
-  .desktop-links, .user-name {
+  .desktop-links,
+  .user-name {
     display: none; /* Esconde os botões e o nome no mobile */
   }
 }

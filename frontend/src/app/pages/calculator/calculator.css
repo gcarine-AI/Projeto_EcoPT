@@ -14,8 +14,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .calc-header {
@@ -89,9 +94,18 @@
   flex-shrink: 0;
 }
 
-.transport .section-icon { background: #e3f2fd; color: #1565c0; }
-.diet .section-icon { background: #fff3e0; color: #e65100; }
-.energy .section-icon { background: #fffde7; color: #f57f17; }
+.transport .section-icon {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+.diet .section-icon {
+  background: #fff3e0;
+  color: #e65100;
+}
+.energy .section-icon {
+  background: #fffde7;
+  color: #f57f17;
+}
 
 .fields {
   padding: 20px;
@@ -166,7 +180,7 @@
   text-align: center;
 }
 
-.diet-option input[type="radio"] {
+.diet-option input[type='radio'] {
   display: none;
 }
 

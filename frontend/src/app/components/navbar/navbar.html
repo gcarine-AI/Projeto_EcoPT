@@ -2,7 +2,7 @@
   <mat-toolbar class="main-navbar">
     <div class="logo-wrapper" routerLink="/dashboard">
       <mat-icon class="logo-icon">leaf</mat-icon>
-      <span class="logo-text">EcoTrace</span>
+      <span class="logo-text">EcoPT</span>
     </div>
 
     <span class="spacer"></span>
@@ -10,7 +10,9 @@
     @if (authService.isLoggedIn()) {
       <div class="desktop-links">
         <button mat-button routerLink="/dashboard" routerLinkActive="active-link">Dashboard</button>
-        <button mat-button routerLink="/calculator" routerLinkActive="active-link">Calculadora</button>
+        <button mat-button routerLink="/calculator" routerLinkActive="active-link">
+          Calculadora
+        </button>
         <button mat-button routerLink="/history" routerLinkActive="active-link">Histórico</button>
         <button mat-button [matMenuTriggerFor]="menu">
           Mais <mat-icon>arrow_drop_down</mat-icon>
@@ -19,7 +21,7 @@
 
       <div class="user-section">
         <span class="user-info">
-           <strong class="user-name">{{ authService.getName() || 'User' }}</strong>
+          <strong class="user-name">{{ authService.getName() || 'User' }}</strong>
         </span>
 
         <button mat-icon-button [matMenuTriggerFor]="userMenu">
@@ -34,15 +36,14 @@
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="/tips"><mat-icon>lightbulb</mat-icon>Dicas Eco</button>
-    <button mat-menu-item routerLink="/carsharing"><mat-icon>directions_car</mat-icon>Carsharing</button>
+    <button mat-menu-item routerLink="/carsharing">
+      <mat-icon>directions_car</mat-icon>Carsharing
+    </button>
     <button mat-menu-item routerLink="/faq"><mat-icon>help</mat-icon>FAQ</button>
     <button mat-menu-item routerLink="/marketplace"><mat-icon>cached</mat-icon>MarketPlace</button>
-
   </mat-menu>
 
   <mat-menu #userMenu="matMenu">
-    <button mat-menu-item (click)="logout()">
-      <mat-icon>logout</mat-icon> Sair
-    </button>
+    <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon> Sair</button>
   </mat-menu>
 }

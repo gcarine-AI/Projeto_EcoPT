@@ -19,7 +19,9 @@
       <div class="progress-bar-wrapper">
         <div class="progress-bar" [style.width.%]="Math.min((avgCO2 / 9) * 100, 100)"></div>
       </div>
-      <p class="progress-label">{{ Math.round((avgCO2 / 5.1) * 100) }}% da média portuguesa usada</p>
+      <p class="progress-label">
+        {{ Math.round((avgCO2 / 5.1) * 100) }}% da média portuguesa usada
+      </p>
     </div>
 
     <div class="entries-header">
@@ -39,8 +41,13 @@
           <div class="entry-value">
             <span class="co2-value">{{ entry.total_co2 | number: '1.1-1' }}</span>
             <span class="co2-unit">Ton</span>
-            <span class="co2-delta" [class.up]="entry.total_co2 > avgCO2" [class.down]="entry.total_co2 <= avgCO2">
-              {{ entry.total_co2 > avgCO2 ? '↑' : '↓' }} {{ (entry.total_co2 - avgCO2) | number: '1.1-1' }}
+            <span
+              class="co2-delta"
+              [class.up]="entry.total_co2 > avgCO2"
+              [class.down]="entry.total_co2 <= avgCO2"
+            >
+              {{ entry.total_co2 > avgCO2 ? '↑' : '↓' }}
+              {{ entry.total_co2 - avgCO2 | number: '1.1-1' }}
             </span>
           </div>
           <div class="entry-actions">

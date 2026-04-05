@@ -9,13 +9,7 @@ import { FaqService, FaqItem } from '../../services/faq';
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatCardModule,
-    MatProgressBarModule,
-  ],
+  imports: [CommonModule, MatExpansionModule, MatIconModule, MatCardModule, MatProgressBarModule],
   templateUrl: './faq.html',
   styleUrl: './faq.css',
 })

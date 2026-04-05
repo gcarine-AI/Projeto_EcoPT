@@ -13,8 +13,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .faq-header {
@@ -60,7 +65,7 @@
 }
 
 .faq-question {
-   display: flex;
+  display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;

@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatSnackBarModule,
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -27,6 +29,7 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private snackBar = inject(MatSnackBar);
 
   loginForm: FormGroup;
   error = '';
@@ -39,7 +42,7 @@ export class LoginComponent {
     });
   }
 
-  async loginAs() {
+  loginAs(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -50,41 +53,30 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm.value;
 
-    /*  const login = await this.authService.login(email, password);
-    console.log(login); */
     this.authService.login(email, password).subscribe({
       next: (data) => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('email', data.user?.email || '');
         localStorage.setItem('name', data.user?.name || '');
         localStorage.setItem('id', data.user?.id || '');
-        this.router.navigate(['/dashboard']);
 
-        //this.logUser = data.user
+        const name = data.user?.name || data.user?.email || 'utilizador';
+
+        this.snackBar.open(`Bem-vindo de volta, ${name}! 🌿`, 'Fechar', {
+          duration: 4000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        });
+
+        setTimeout(() => {
+          this.router.navigate(['/dashboard']);
+        }, 500);
       },
-      error: (error) => {
-        console.log(error);
+      error: (err) => {
+        console.error(err);
         this.isLoading = false;
         this.error = 'Credenciais inválidas ou utilizador não registado.';
       },
     });
-    /* console.log(login)
-      if (!login) throw Error;
-      this.router.navigate(['/dashboard']);
-    } catch (error) {
-      console.log(error);
-      this.isLoading = false;
-      this.error = 'Credenciais inválidas ou utilizador não registado.';
-    }
- */
-    /* this.authService.login(email, password, role).({
-      next: () => {
-        this.router.navigate(['/dashboard']);
-      },
-      error: () => {
-        this.isLoading = false;
-        this.error = 'Email ou password incorretos. Tenta novamente.';
-      },
-    }); */
   }
 }

@@ -24,7 +24,11 @@
   @if (activeTab === 'browse') {
     <div class="filter-row">
       @for (cat of categories; track cat.value) {
-        <button class="filter-btn" [class.active]="activeCategory === cat.value" (click)="setCategory(cat.value)">
+        <button
+          class="filter-btn"
+          [class.active]="activeCategory === cat.value"
+          (click)="setCategory(cat.value)"
+        >
           <mat-icon>{{ cat.icon }}</mat-icon>
           {{ cat.label }}
         </button>
@@ -33,7 +37,11 @@
 
     <div class="type-row">
       @for (type of types; track type.value) {
-        <button class="type-btn" [class.active]="activeType === type.value" (click)="setType(type.value)">
+        <button
+          class="type-btn"
+          [class.active]="activeType === type.value"
+          (click)="setType(type.value)"
+        >
           {{ type.label }}
         </button>
       }
@@ -46,7 +54,9 @@
             <div class="item-icon" [class]="'cat-' + item.category">
               <mat-icon>{{ getCategoryIcon(item.category) }}</mat-icon>
             </div>
-            <span class="type-badge" [class]="'type-' + item.type">{{ getTypeLabel(item.type) }}</span>
+            <span class="type-badge" [class]="'type-' + item.type">{{
+              getTypeLabel(item.type)
+            }}</span>
           </div>
           <h3>{{ item.title }}</h3>
           @if (item.description) {
@@ -68,7 +78,13 @@
             [disabled]="item.user_id === currentUserId || item.status !== 'disponivel'"
             (click)="showInterest(item.id)"
           >
-            {{ item.user_id === currentUserId ? 'O teu item' : item.status !== 'disponivel' ? 'Reservado' : 'Tenho interesse' }}
+            {{
+              item.user_id === currentUserId
+                ? 'O teu item'
+                : item.status !== 'disponivel'
+                  ? 'Reservado'
+                  : 'Tenho interesse'
+            }}
           </button>
         </div>
       } @empty {
@@ -76,7 +92,9 @@
           <div class="empty-state">
             <mat-icon>store</mat-icon>
             <p>Ainda não há itens disponíveis.</p>
-            <button class="interest-btn" (click)="setTab('publish')">Publica o primeiro item</button>
+            <button class="interest-btn" (click)="setTab('publish')">
+              Publica o primeiro item
+            </button>
           </div>
         }
       }
@@ -94,7 +112,12 @@
         </div>
         <div class="field-group">
           <label for="description">Descrição (opcional)</label>
-          <textarea id="description" formControlName="description" placeholder="Descreve o estado e características do item..." rows="3"></textarea>
+          <textarea
+            id="description"
+            formControlName="description"
+            placeholder="Descreve o estado e características do item..."
+            rows="3"
+          ></textarea>
         </div>
         <div class="form-row">
           <div class="field-group">
@@ -145,8 +168,12 @@
             <div>
               <h3>{{ item.title }}</h3>
               <div class="my-item-meta">
-                <span class="type-badge" [class]="'type-' + item.type">{{ getTypeLabel(item.type) }}</span>
-                <span class="status-badge" [class]="'status-' + item.status">{{ item.status }}</span>
+                <span class="type-badge" [class]="'type-' + item.type">{{
+                  getTypeLabel(item.type)
+                }}</span>
+                <span class="status-badge" [class]="'status-' + item.status">{{
+                  item.status
+                }}</span>
               </div>
             </div>
           </div>
