@@ -23,9 +23,10 @@
         <span class="user-info">
           <strong class="user-name">{{ authService.getName() || 'User' }}</strong>
         </span>
-
         <button mat-icon-button [matMenuTriggerFor]="userMenu">
-          <mat-icon>account_circle</mat-icon>
+          <div class="avatar-circle">
+            {{ (authService.getName() || 'U')[0].toUpperCase() }}
+          </div>
         </button>
       </div>
     } @else {
@@ -35,15 +36,16 @@
   </mat-toolbar>
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/tips"><mat-icon>lightbulb</mat-icon>Dicas Eco</button>
+    <button mat-menu-item routerLink="/tips"><mat-icon>lightbulb</mat-icon> Dicas Eco</button>
     <button mat-menu-item routerLink="/carsharing">
-      <mat-icon>directions_car</mat-icon>Carsharing
+      <mat-icon>directions_car</mat-icon> Carsharing
     </button>
-    <button mat-menu-item routerLink="/faq"><mat-icon>help</mat-icon>FAQ</button>
-    <button mat-menu-item routerLink="/marketplace"><mat-icon>cached</mat-icon>MarketPlace</button>
+    <button mat-menu-item routerLink="/faq"><mat-icon>help</mat-icon> FAQ</button>
+    <button mat-menu-item routerLink="/marketplace"><mat-icon>cached</mat-icon> Marketplace</button>
   </mat-menu>
 
   <mat-menu #userMenu="matMenu">
+    <button mat-menu-item routerLink="/profile"><mat-icon>person</mat-icon> O meu perfil</button>
     <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon> Sair</button>
   </mat-menu>
 }

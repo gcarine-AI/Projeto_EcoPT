@@ -55,6 +55,34 @@ export const login = async (req, res) => {
       role: dataL[0]?.role,
     },
   });
+};
 
-  // if (error) return res.status(401).json({ error: 'Credenciais inválidas' })
+export const getProfile = async (req, res) => {
+  const { data, error } = await supabase
+    .from("Profiles")
+    .select("id, name, email, role, created_at")
+    .eq("id", req.user.id)
+    .single();
+
+  if (error || !data)
+    return res.status(404).json({ error: "Perfil não encontrado" });
+  res.json(data);
+};
+
+export const updateProfile = async (req, res) => {
+  const { name } = req.body;
+
+  if (!name) return res.status(400).json({ error: "Nome é obrigatório" });
+
+  const { data, error } = await supabase
+    .from("Profiles")
+    .update({ name })
+    .eq("id", req.user.id)
+    .select()
+    .single();
+
+  if (error || !data)
+    return res.status(500).json({ error: "Erro ao atualizar perfil" });
+
+  res.json({ message: "Perfil atualizado com sucesso!", profile: data });
 };

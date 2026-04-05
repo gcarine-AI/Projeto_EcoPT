@@ -53,6 +53,10 @@ export const routes: Routes = [
     path: 'marketplace',
     component: MarketplaceComponent,
   },
+  {
+    path: 'profile',
+    loadComponent: () => import('./pages/profile/profile').then((m) => m.ProfileComponent),
+  },
 
   { path: '**', redirectTo: '/login' },
 ];
