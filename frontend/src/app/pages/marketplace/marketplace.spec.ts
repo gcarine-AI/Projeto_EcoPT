@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Marketplace } from './marketplace';
+import { MarketplaceComponent } from './marketplace';
 
 describe('Marketplace', () => {
-  let component: Marketplace;
-  let fixture: ComponentFixture<Marketplace>;
+  let component: MarketplaceComponent;
+  let fixture: ComponentFixture<MarketplaceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Marketplace],
+      imports: [MarketplaceComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Marketplace);
+    fixture = TestBed.createComponent(MarketplaceComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
