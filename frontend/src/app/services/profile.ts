@@ -8,6 +8,8 @@ export interface Profile {
   name: string;
   email: string;
   role: string;
+  location?: string;
+  avatar_url?: string;
   created_at: string;
 }
 

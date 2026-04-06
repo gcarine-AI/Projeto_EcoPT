@@ -11,11 +11,18 @@
   @if (profile) {
     <div class="avatar-card">
       <div class="avatar">
-        <mat-icon>account_circle</mat-icon>
+        @if (profile.avatar_url) {
+          <img [src]="profile.avatar_url" alt="foto de perfil" class="avatar-img" />
+        } @else {
+          <mat-icon>account_circle</mat-icon>
+        }
       </div>
       <div class="avatar-info">
         <h2>{{ profile.name }}</h2>
         <span class="email">{{ profile.email }}</span>
+        @if (profile.location) {
+          <span class="location"><mat-icon>location_on</mat-icon>{{ profile.location }}</span>
+        }
         <span class="role-badge">{{ getRoleLabel(profile.role) }}</span>
       </div>
     </div>
@@ -40,6 +47,36 @@
               <span class="field-error">Nome é obrigatório</span>
             }
           </div>
+          <div class="field-group">
+            <label for="location">Localidade</label>
+            <select id="location" formControlName="location">
+              <option value="">Seleciona o distrito...</option>
+              <option value="Aveiro">Aveiro</option>
+              <option value="Beja">Beja</option>
+              <option value="Braga">Braga</option>
+              <option value="Bragança">Bragança</option>
+              <option value="Castelo Branco">Castelo Branco</option>
+              <option value="Coimbra">Coimbra</option>
+              <option value="Évora">Évora</option>
+              <option value="Faro">Faro</option>
+              <option value="Guarda">Guarda</option>
+              <option value="Leiria">Leiria</option>
+              <option value="Lisboa">Lisboa</option>
+              <option value="Portalegre">Portalegre</option>
+              <option value="Porto">Porto</option>
+              <option value="Santarém">Santarém</option>
+              <option value="Setúbal">Setúbal</option>
+              <option value="Viana do Castelo">Viana do Castelo</option>
+              <option value="Vila Real">Vila Real</option>
+              <option value="Viseu">Viseu</option>
+              <option value="Açores">Açores</option>
+              <option value="Madeira">Madeira</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="avatar_url">URL da foto de perfil</label>
+            <input id="avatar_url" formControlName="avatar_url" placeholder="https://..." />
+          </div>
           <button class="save-btn" type="submit" [disabled]="profileForm.invalid || loading">
             <mat-icon>check</mat-icon> Guardar alterações
           </button>
@@ -53,6 +90,12 @@
           <span class="info-label">Email</span>
           <span class="info-value">{{ profile.email }}</span>
         </div>
+        @if (profile.location) {
+          <div class="info-row">
+            <span class="info-label">Localidade</span>
+            <span class="info-value">{{ profile.location }}</span>
+          </div>
+        }
         <div class="info-row">
           <span class="info-label">Tipo de conta</span>
           <span class="info-value">{{ getRoleLabel(profile.role) }}</span>

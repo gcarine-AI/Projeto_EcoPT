@@ -93,7 +93,9 @@
             </div>
             <div>
               <span class="driver-name">{{ ride.driver }}</span>
-              <span class="ride-date">{{ ride.date | date: 'dd MMM' }} · {{ ride.time }}</span>
+              <span class="ride-date"
+                >{{ ride.date | date: 'dd MMM' }} · {{ ride.time | slice: 0 : 5 }}
+              </span>
             </div>
           </div>
           <div class="co2-badge">

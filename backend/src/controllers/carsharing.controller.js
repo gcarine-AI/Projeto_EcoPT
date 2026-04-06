@@ -92,12 +92,10 @@ export const bookRide = async (req, res) => {
       return res.status(404).json({ message: "Boleia não encontrada" });
     }
 
-    // 2. Verificar se ainda há lugares
     if (ride.seats <= 0) {
       return res.status(400).json({ error: "Sem lugares disponíveis" });
     }
 
-    // 3. Decrementar o lugar
     const { error: updateError } = await supabase
       .from("Available_rides")
       .update({ seats: ride.seats - 1 })

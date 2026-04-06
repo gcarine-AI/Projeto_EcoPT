@@ -36,6 +36,8 @@ export class ProfileComponent implements OnInit {
 
   public profileForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
+    location: [''],
+    avatar_url: [''],
   });
 
   ngOnInit(): void {
@@ -47,7 +49,11 @@ export class ProfileComponent implements OnInit {
     this.profileService.getProfile().subscribe({
       next: (data) => {
         this.profile = data;
-        this.profileForm.patchValue({ name: data.name });
+        this.profileForm.patchValue({
+          name: data.name,
+          location: data.location || '',
+          avatar_url: data.avatar_url || '',
+        });
         this.loading = false;
       },
       error: () => {
