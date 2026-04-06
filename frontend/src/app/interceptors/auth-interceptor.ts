@@ -5,7 +5,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   console.log('Interceptor a examinar URL:', req.url);
 
-  const isApiUrl = req.url.includes('localhost:3000');
+  const isApiUrl = req.url.includes('localhost:3000') || req.url.includes('onrender.com');
 
   if (token && isApiUrl) {
     console.log('Token anexado com sucesso para:', req.url);
