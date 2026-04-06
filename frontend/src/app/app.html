@@ -22,9 +22,9 @@
         <span>Boleias</span>
       </a>
 
-      <a routerLink="/history" routerLinkActive="active">
-        <mat-icon>history</mat-icon>
-        <span>Histórico</span>
+      <a routerLink="/marketplace" routerLinkActive="active">
+        <mat-icon>storefront</mat-icon>
+        <span>Loja</span>
       </a>
 
       <button mat-icon-button [matMenuTriggerFor]="moreMenu" class="more-btn">
@@ -41,6 +41,10 @@
       <button mat-menu-item routerLink="/faq">
         <mat-icon>help_outline</mat-icon>
         <span>FAQ</span>
+      </button>
+      <button mat-menu-item routerLink="/history">
+        <mat-icon>book_5</mat-icon>
+        <span>History</span>
       </button>
     </mat-menu>
   }
