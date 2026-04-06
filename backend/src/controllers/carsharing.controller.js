@@ -25,11 +25,9 @@ export const calculate = async (req, res) => {
 
   const factor = emissionFactors[car_type] ?? 0.21;
   if (!emissionFactors[car_type]) {
-    return res
-      .status(400)
-      .json({
-        error: "car_type inválido. Use: gasolina, diesel, hibrido ou eletrico",
-      });
+    return res.status(400).json({
+      error: "car_type inválido. Use: gasolina, diesel, hibrido ou eletrico",
+    });
   }
   const co2_alone = Math.round(km * factor * 100) / 100;
   const co2_shared = Math.round(((km * factor) / passengers) * 100) / 100;

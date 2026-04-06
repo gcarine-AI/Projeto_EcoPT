@@ -1,4 +1,47 @@
-<app-navbar></app-navbar>
-<main>
-  <router-outlet></router-outlet>
-</main>
+<div class="app-shell">
+  <app-navbar></app-navbar>
+
+  <main class="content-container">
+    <router-outlet></router-outlet>
+  </main>
+
+  @if (authService.isLoggedIn() && isMobile) {
+    <nav class="mobile-nav">
+      <a routerLink="/dashboard" routerLinkActive="active">
+        <mat-icon>dashboard</mat-icon>
+        <span>Painel</span>
+      </a>
+
+      <a routerLink="/calculator" routerLinkActive="active">
+        <mat-icon>calculate</mat-icon>
+        <span>Calcular</span>
+      </a>
+
+      <a routerLink="/carsharing" routerLinkActive="active">
+        <mat-icon>directions_car</mat-icon>
+        <span>Boleias</span>
+      </a>
+
+      <a routerLink="/history" routerLinkActive="active">
+        <mat-icon>history</mat-icon>
+        <span>Histórico</span>
+      </a>
+
+      <button mat-icon-button [matMenuTriggerFor]="moreMenu" class="more-btn">
+        <mat-icon>more_horiz</mat-icon>
+        <span>Mais</span>
+      </button>
+    </nav>
+
+    <mat-menu #moreMenu="matMenu">
+      <button mat-menu-item routerLink="/tips">
+        <mat-icon>lightbulb</mat-icon>
+        <span>Dicas Eco</span>
+      </button>
+      <button mat-menu-item routerLink="/faq">
+        <mat-icon>help_outline</mat-icon>
+        <span>FAQ</span>
+      </button>
+    </mat-menu>
+  }
+</div>

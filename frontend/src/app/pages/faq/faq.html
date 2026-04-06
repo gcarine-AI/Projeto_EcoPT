@@ -1,36 +1,58 @@
-<div class="faq-container">
+<div class="faq-wrapper">
   @if (loading) {
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <div class="loading-bar"></div>
   }
-  <mat-card class="header-card">
-    <mat-card-header>
-      <mat-card-title>Perguntas Frequentes (FAQ) ❓</mat-card-title>
-      <mat-card-subtitle
-        >Esclarece as tuas dúvidas sobre o projeto e sustentabilidade.</mat-card-subtitle
-      >
-    </mat-card-header>
-  </mat-card>
 
-  <mat-accordion multi="false">
+  <div class="faq-header">
+    <h1>Perguntas Frequentes</h1>
+    <p class="header-sub">
+      Encontra respostas sobre a calculadora, sustentabilidade e os teus dados.
+    </p>
+  </div>
+
+  <div class="faq-list">
     @for (faq of faqs; track faq.question) {
-      <mat-expansion-panel class="faq-panel">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon color="primary" class="faq-icon">help_outline</mat-icon>
-            <strong>{{ faq.question }}</strong>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <div class="faq-content">
-          <p class="faq-answer">{{ faq.answer }}</p>
-
-          <mat-divider></mat-divider>
-
-          <div class="faq-footer">
-            <small>Fonte: Metodologia IPCC / EcoPT</small>
+      <div class="faq-item" [class.open]="openId === faq.id">
+        <button class="faq-question" (click)="toggle(faq.id)">
+          <span>{{ faq.question }}</span>
+          <mat-icon>{{ openId === faq.id ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+        @if (openId === faq.id) {
+          <div class="faq-answer">
+            <p>{{ faq.answer }}</p>
+            @if (faq.source) {
+              <span class="faq-source">Fonte: {{ faq.source }}</span>
+            }
           </div>
-        </div>
-      </mat-expansion-panel>
+        }
+      </div>
     }
-  </mat-accordion>
+  </div>
+
+  <div class="support-grid">
+    <div class="support-card">
+      <mat-icon>store</mat-icon>
+      <h3>Mercado Circular</h3>
+      <p>Partilha objetos, roupa e alimentos com a comunidade EcoPT.</p>
+      <a routerLink="/carsharing" class="support-link"
+        >Ver comunidade <mat-icon>arrow_forward</mat-icon></a
+      >
+    </div>
+    <div class="support-card">
+      <mat-icon>eco</mat-icon>
+      <p>Descobre como encriptamos e protegemos os teus dados de atividade.</p>
+      <h3>Privacidade</h3>
+      <a routerLink="/dashboard" class="support-link"
+        >Ver dashboard <mat-icon>arrow_forward</mat-icon></a
+      >
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <h3>Ainda tens dúvidas?</h3>
+    <p>Os nossos especialistas em sustentabilidade estão disponíveis para te ajudar.</p>
+    <div class="contact-buttons">
+      <a href="mailto:suporte@ecopt.pt" class="btn-primary">Contactar suporte</a>
+    </div>
+  </div>
 </div>

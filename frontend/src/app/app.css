@@ -1,0 +1,81 @@
+/* Layout Geral */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-container {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Barra Inferior (Mobile) */
+.mobile-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #eee;
+  z-index: 1000;
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+
+/* Links e Botões na Barra */
+.mobile-nav a,
+.mobile-nav .more-btn {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #888;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.mobile-nav a span,
+.mobile-nav .more-btn span {
+  font-size: 0.65rem;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: center;
+}
+
+.mobile-nav mat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+/* Estado Ativo */
+.mobile-nav a.active {
+  color: #2d7a32;
+  font-weight: 600;
+}
+
+/* Ajuste de padding para o conteúdo não ficar escondido atrás da barra */
+@media (max-width: 850px) {
+  .content-container {
+    padding-bottom: 90px;
+  }
+}
+app-navbar {
+  width: 100%;
+  display: block; /* Importante para que o componente ocupe a largura toda */
+}

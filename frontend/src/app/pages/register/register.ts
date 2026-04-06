@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -21,6 +23,8 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatCardModule,
     MatSelectModule,
+    MatIconModule,
+    MatCheckboxModule,
   ],
   templateUrl: './register.html',
   styleUrl: './register.css',

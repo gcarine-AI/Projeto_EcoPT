@@ -1,132 +1,156 @@
-<div class="carsharing-container">
-  <header class="page-header">
-    <h1>Comunidade de Carsharing EcoPT 🚗💨</h1>
-    <p>Partilha viagens, reduz custos e protege o planeta.</p>
-  </header>
+<div class="carsharing-wrapper">
+  <div class="carsharing-header">
+    <span class="eyebrow">MOBILIDADE SUSTENTÁVEL</span>
+    <h1>Boleias Partilhadas</h1>
+    <p>Reduz a tua pegada carbónica enquanto poupas na tua deslocação diária.</p>
+  </div>
 
-  <div class="actions-header">
-    <button mat-raised-button color="accent" (click)="showForm = !showForm">
-      <mat-icon>{{ showForm ? 'close' : 'add' }}</mat-icon>
-      {{ showForm ? 'CANCELAR' : 'OFERECER BOLEIA' }}
+  <div class="tab-row">
+    <button class="tab-btn" [class.active]="!showForm" (click)="showForm = false">
+      <mat-icon>search</mat-icon> Procurar Boleia
+    </button>
+    <button class="tab-btn" [class.active]="showForm" (click)="showForm = true">
+      <mat-icon>add_circle</mat-icon> Oferecer Boleia
     </button>
   </div>
 
   @if (showForm) {
-    <mat-card class="offer-form-card">
+    <div class="offer-card">
+      <div class="offer-card-header">
+        <h2>Publicar Boleia</h2>
+        <p>Tens lugares livres no carro? Partilha a tua viagem e ajuda o planeta.</p>
+      </div>
       <form [formGroup]="offerForm" (ngSubmit)="createOffer()">
         <div class="form-grid">
-          <mat-form-field appearance="outline">
-            <mat-label>Origem</mat-label>
-            <input matInput formControlName="origin" placeholder="Ex: Lisboa" />
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Destino</mat-label>
-            <input matInput formControlName="destination" placeholder="Ex: Porto" />
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Data da Viagem</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="date" />
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Hora</mat-label>
-            <input matInput type="time" formControlName="time" />
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Lugares</mat-label>
-            <input matInput type="number" formControlName="seats" />
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Custo (€)</mat-label>
-            <input matInput type="number" formControlName="cost" />
-          </mat-form-field>
+          <div class="field-group">
+            <label for="origin">Origem</label>
+            <div class="input-wrap">
+              <mat-icon>location_on</mat-icon>
+              <input id="origin" formControlName="origin" placeholder="Ex: Lisboa" />
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="destination">Destino</label>
+            <div class="input-wrap">
+              <mat-icon>place</mat-icon>
+              <input id="destination" formControlName="destination" placeholder="Ex: Porto" />
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="date">Data da Viagem</label>
+            <div class="input-wrap">
+              <mat-icon>event</mat-icon>
+              <input id="date" [matDatepicker]="picker" formControlName="date" />
+              <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="time">Hora</label>
+            <div class="input-wrap">
+              <mat-icon>schedule</mat-icon>
+              <input id="time" type="time" formControlName="time" />
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="seats">Lugares disponíveis</label>
+            <div class="input-wrap">
+              <mat-icon>event_seat</mat-icon>
+              <input id="seats" type="number" formControlName="seats" min="1" />
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="cost">Custo (€)</label>
+            <div class="input-wrap">
+              <mat-icon>euro</mat-icon>
+              <input id="cost" type="number" formControlName="cost" min="0" />
+            </div>
+          </div>
         </div>
-        <button mat-flat-button color="primary" [disabled]="offerForm.invalid">PUBLICAR</button>
+        <button class="submit-btn" type="submit" [disabled]="offerForm.invalid || loading">
+          <mat-icon>check_circle</mat-icon>
+          Publicar Agora
+        </button>
       </form>
-    </mat-card>
+    </div>
   }
 
   @if (loading) {
-    <mat-progress-bar mode="query" class="loader"></mat-progress-bar>
+    <div class="loading-bar"></div>
   }
 
-  <div class="rides-grid">
+  <div class="section-title-row">
+    <h2>Boleias Disponíveis</h2>
+  </div>
+
+  <div class="rides-list">
     @for (ride of rides; track ride.id) {
-      <mat-card class="ride-card">
-        <mat-card-header>
-          <div mat-card-avatar class="driver-icon">
-            <mat-icon>account_circle</mat-icon>
-          </div>
-          <mat-card-title>{{ ride.driver }}</mat-card-title>
-          <mat-card-subtitle>
-            {{ ride.date | date: 'dd/MM/yyyy' }} às {{ ride.time }}
-          </mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-card-content>
-          <div class="route">
-            <div class="location">
-              <mat-icon color="primary">location_on</mat-icon>
-              <span>{{ ride.origin }}</span>
+      <div class="ride-card">
+        <div class="ride-top">
+          <div class="driver-info">
+            <div class="driver-avatar">
+              <mat-icon>account_circle</mat-icon>
             </div>
-            <mat-icon class="arrow">trending_flat</mat-icon>
-            <div class="location">
-              <mat-icon color="warn">place</mat-icon>
-              <span>{{ ride.destination }}</span>
+            <div>
+              <span class="driver-name">{{ ride.driver }}</span>
+              <span class="ride-date">{{ ride.date | date: 'dd MMM' }} · {{ ride.time }}</span>
             </div>
           </div>
-
-          <div class="details">
-            <mat-chip-set>
-              <mat-chip>
-                <mat-icon matChipAvatar>event_seat</mat-icon>
-                {{ ride.seats }} lugares livres
-              </mat-chip>
-              <mat-chip-option [selected]="ride.cost === 0" [selectable]="false" color="accent">
-                {{ ride.cost === 0 ? 'Grátis' : (ride.cost | currency: 'EUR') }}
-              </mat-chip-option>
-              @if (ride.km) {
-                <mat-chip color="primary">
-                  <mat-icon matChipAvatar>route</mat-icon>
-                  {{ ride.km }} km
-                </mat-chip>
-                <mat-chip color="accent">
-                  <mat-icon matChipAvatar>eco</mat-icon>
-                  Poupa {{ ride.km * 0.21 | number: '1.1-1' }} kg CO₂
-                </mat-chip>
-              }
-            </mat-chip-set>
+          <div class="co2-badge">
+            <mat-icon>eco</mat-icon>
+            @if (ride.km) {
+              {{ ride.km * 0.21 | number: '1.1-1' }} kg CO₂
+            } @else {
+              Eco
+            }
           </div>
-        </mat-card-content>
+        </div>
 
-        <mat-card-actions align="end">
+        <div class="ride-route">
+          <div class="route-point">
+            <div class="route-dot origin"></div>
+            <span>{{ ride.origin }}</span>
+          </div>
+          <div class="route-line"></div>
+          <div class="route-point">
+            <div class="route-dot dest"></div>
+            <span>{{ ride.destination }}</span>
+          </div>
+        </div>
+
+        <div class="ride-bottom">
+          <div class="ride-meta">
+            <span class="seats-badge">
+              <mat-icon>event_seat</mat-icon>
+              {{ ride.seats }} lugares livres
+            </span>
+            <span class="cost-badge" [class.free]="ride.cost === 0">
+              {{ ride.cost === 0 ? 'Grátis' : (ride.cost | currency: 'EUR') }}
+            </span>
+          </div>
           <button
-            mat-raised-button
-            color="primary"
+            class="book-btn"
+            [class.own]="ride.driver_id === currentUserId"
+            [class.full]="+ride.seats === 0"
             [disabled]="+ride.seats === 0 || loading || ride.driver_id === currentUserId"
             (click)="bookSeat(ride.id, ride.seats)"
           >
             {{
               +ride.seats === 0
-                ? 'ESGOTADO'
+                ? 'Esgotado'
                 : ride.driver_id === currentUserId
-                  ? 'A TUA BOLEIA'
-                  : 'RESERVAR LUGAR'
+                  ? 'A tua boleia'
+                  : 'Reservar'
             }}
           </button>
-        </mat-card-actions>
-      </mat-card>
+        </div>
+      </div>
     } @empty {
       @if (!loading) {
         <div class="empty-state">
-          <mat-icon>search_off</mat-icon>
-          <p>Ainda não há boleias disponíveis. Volta mais tarde! 🌱</p>
+          <mat-icon>directions_car</mat-icon>
+          <p>Ainda não há boleias disponíveis.</p>
+          <button class="submit-btn" (click)="showForm = true">Oferece a primeira boleia</button>
         </div>
       }
     }

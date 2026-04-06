@@ -1,11 +1,12 @@
 import express from "express";
 import cors from "cors";
-import "dotenv/config";
 import authRoutes from "./routes/auth.routes.js";
 import calculationsRoutes from "./routes/calculations.routes.js";
 import tipsRoutes from "./routes/tips.routes.js";
 import faqRoutes from "./routes/faq.routes.js";
 import carsharingRoutes from "./routes/carsharing.routes.js";
+import marketplaceRoutes from "./routes/marketplace.routes.js";
+import notificationsRoutes from "./routes/notifications.routes.js" 
 
 const app = express();
 
@@ -34,6 +35,8 @@ app.use("/calculations", calculationsRoutes);
 app.use("/tips", tipsRoutes);
 app.use("/faq", faqRoutes);
 app.use("/carsharing", carsharingRoutes);
+app.use("/marketplace", marketplaceRoutes);
+app.use("/notifications", notificationsRoutes);
 
 // Handler de erros global
 app.use((err, req, res, _next) => {
