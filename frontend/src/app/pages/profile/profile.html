@@ -1,0 +1,85 @@
+<div class="profile-wrapper">
+  @if (loading) {
+    <div class="loading-bar"></div>
+  }
+
+  <div class="profile-header">
+    <span class="eyebrow">A TUA CONTA</span>
+    <h1>Perfil</h1>
+  </div>
+
+  @if (profile) {
+    <div class="avatar-card">
+      <div class="avatar">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <div class="avatar-info">
+        <h2>{{ profile.name }}</h2>
+        <span class="email">{{ profile.email }}</span>
+        <span class="role-badge">{{ getRoleLabel(profile.role) }}</span>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-header">
+        <h3>Informação Pessoal</h3>
+        <button class="edit-btn" (click)="editing = !editing">
+          <mat-icon>{{ editing ? 'close' : 'edit' }}</mat-icon>
+          {{ editing ? 'Cancelar' : 'Editar' }}
+        </button>
+      </div>
+
+      @if (editing) {
+        <form [formGroup]="profileForm" (ngSubmit)="save()">
+          <div class="field-group">
+            <label for="name">Nome</label>
+            <input id="name" formControlName="name" placeholder="O teu nome" />
+            @if (
+              profileForm.get('name')?.hasError('required') && profileForm.get('name')?.touched
+            ) {
+              <span class="field-error">Nome é obrigatório</span>
+            }
+          </div>
+          <button class="save-btn" type="submit" [disabled]="profileForm.invalid || loading">
+            <mat-icon>check</mat-icon> Guardar alterações
+          </button>
+        </form>
+      } @else {
+        <div class="info-row">
+          <span class="info-label">Nome</span>
+          <span class="info-value">{{ profile.name }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Email</span>
+          <span class="info-value">{{ profile.email }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Tipo de conta</span>
+          <span class="info-value">{{ getRoleLabel(profile.role) }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Membro desde</span>
+          <span class="info-value">{{ profile.created_at | date: 'dd/MM/yyyy' }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="actions-card">
+      <a routerLink="/history" class="action-item">
+        <mat-icon>history</mat-icon>
+        <span>Ver histórico de cálculos</span>
+        <mat-icon class="chevron">chevron_right</mat-icon>
+      </a>
+      <a routerLink="/marketplace" class="action-item">
+        <mat-icon>store</mat-icon>
+        <span>Os meus itens no mercado</span>
+        <mat-icon class="chevron">chevron_right</mat-icon>
+      </a>
+    </div>
+
+    <button class="logout-btn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Terminar sessão
+    </button>
+  }
+</div>

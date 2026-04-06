@@ -24,7 +24,7 @@ export class MarketplaceComponent implements OnInit {
   public activeTab: 'browse' | 'publish' | 'mine' = 'browse';
   public activeCategory = 'all';
   public activeType = 'all';
-  public currentUserId = localStorage.getItem('id');
+  public currentUserId: string | null = null;
 
   public itemForm: FormGroup = this.fb.group({
     title: ['', Validators.required],
@@ -54,6 +54,7 @@ export class MarketplaceComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.currentUserId = typeof localStorage !== 'undefined' ? localStorage.getItem('id') : null;
     this.loadItems();
   }
 
