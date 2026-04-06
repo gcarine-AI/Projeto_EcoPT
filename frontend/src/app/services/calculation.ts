@@ -4,18 +4,16 @@ import { Observable } from 'rxjs';
 import { Calculation, ComparisonData } from '../models/calculation.model';
 import { environment } from '../../environments/environment';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class CalculationService {
   private http = inject(HttpClient);
-  private readonly API_URL = `${environment.apiUrl}/calculations`
+  private readonly API_URL = `${environment.apiUrl}/calculations`;
 
   create(data: Calculation): Observable<Calculation> {
     return this.http.post<Calculation>(this.API_URL, data);
   }
-
 
   list(): Observable<Calculation[]> {
     return this.http.get<Calculation[]>(this.API_URL);
