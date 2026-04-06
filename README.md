@@ -1,6 +1,6 @@
 # 🌿 EcoPT — Calculadora de Pegada Carbónica
 
-![CI Frontend](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ciFrontend.yml/badge.svg)
+[![CI/CD — EcoPT Frontend](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ciFrontend.yml/badge.svg)]
 ![CI Backend](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ciBackend.yml/badge.svg)
 ![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)
 [![Vercel](https://img.shields.io/badge/Vercel-deployed-000000?logo=vercel&logoColor=white)](https://projeto-eco-pt.vercel.app)
