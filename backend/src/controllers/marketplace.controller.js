@@ -6,7 +6,7 @@ export const list = async (req, res) => {
 
     let query = supabase
       .from("marketplace_items")
-      .select("*, Profiles(name)")
+      .select("*")
       .eq("status", "disponivel")
       .order("created_at", { ascending: false });
 
@@ -98,7 +98,7 @@ export const interest = async (req, res) => {
   try {
     const { data: item, error: fetchError } = await supabase
       .from("marketplace_items")
-      .select("status, user_id")
+      .select("status, user_id, title")
       .eq("id", id)
       .single();
 
@@ -111,12 +111,26 @@ export const interest = async (req, res) => {
     if (item.status !== "disponivel")
       return res.status(400).json({ error: "Item já não está disponível" });
 
-    const { error } = await supabase
+    const { error: updateError } = await supabase
       .from("marketplace_items")
       .update({ status: "reservado" })
       .eq("id", id);
 
-    if (error) throw error;
+    if (updateError) throw updateError;
+
+        const { data: profile } = await supabase
+      .from('Profiles')
+      .select('name')
+      .eq('id', req.user.id)
+      .single();
+
+    const interestedName = profile?.name || 'Alguém';
+
+      await supabase.from('notifications').insert({
+      user_id: item.user_id,
+      message: `${interestedName} mostrou interesse no teu item "${item.title}"!`,
+    });
+
     res.json({ message: "Interesse registado com sucesso!" });
   } catch (error) {
     res.status(500).json({ error: error.message });

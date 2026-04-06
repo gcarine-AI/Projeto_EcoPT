@@ -1,10 +1,10 @@
 {
   "name": "ecopt-backend",
   "version": "1.0.0",
-  "description": "API backend para EcoPT, Calculadora de Pegada Carbónica Portuguesa ",
+  "description": "API backend para EcoPT, Calculadora de Pegada de Carbono Portuguesa ",
   "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon --exec node -r dotenv/config src/server.js",
+    "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "test": "vitest run --printConsoleTrace=true --silent=true src/",
     "lint": "eslint src/"
@@ -37,4 +37,5 @@
     "typescript": "^5.9.3",
     "vitest": "^4.1.2"
   }
+  
 }
