@@ -9,10 +9,6 @@ import marketplaceRoutes from "./routes/marketplace.routes.js";
 import notificationsRoutes from "./routes/notifications.routes.js" 
 
 const app = express();
-console.log("--- TESTE DE AMBIENTE ---");
-console.log("URL do Supabase:", process.env.SUPABASE_URL ? "✅ Configurada" : "❌ Vazia");
-console.log("Porto definido:", process.env.PORT);
-console.log("-------------------------");
 
 app.use(
   cors({
