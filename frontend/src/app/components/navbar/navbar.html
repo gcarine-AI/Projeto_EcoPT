@@ -10,14 +10,19 @@
     @if (authService.isLoggedIn()) {
       <div class="desktop-links">
         <button mat-button routerLink="/dashboard" routerLinkActive="active-link">Dashboard</button>
-        <button mat-button routerLink="/calculator" routerLinkActive="active-link">
-          Calculadora
-        </button>
+        <button mat-button routerLink="/calculator" routerLinkActive="active-link">Calculadora</button>
         <button mat-button routerLink="/history" routerLinkActive="active-link">Histórico</button>
         <button mat-button [matMenuTriggerFor]="menu">
           Mais <mat-icon>arrow_drop_down</mat-icon>
         </button>
       </div>
+
+      <div class="mobile-menu">
+        <button mat-icon-button [matMenuTriggerFor]="mobileMenu">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+
 
       <div class="user-section">
         <button mat-icon-button [matMenuTriggerFor]="notifMenu" (click)="markAllRead()">
@@ -74,5 +79,14 @@
   <mat-menu #userMenu="matMenu">
     <button mat-menu-item routerLink="/profile"><mat-icon>person</mat-icon> O meu perfil</button>
     <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon> Sair</button>
+  </mat-menu>
+
+  <mat-menu #mobileMenu="matMenu">
+    <button mat-menu-item routerLink="/dashboard">Dashboard</button>
+    <button mat-menu-item routerLink="/calculator">Calculadora</button>
+    <button mat-menu-item routerLink="/history">Histórico</button>
+    <button mat-menu-item routerLink="/marketplace"><mat-icon>cached</mat-icon> Marketplace</button>
+    <button mat-menu-item routerLink="/tips"><mat-icon>lightbulb</mat-icon> Dicas Eco</button>
+    <button mat-menu-item routerLink="/faq"><mat-icon>help</mat-icon> FAQ</button>
   </mat-menu>
 }
