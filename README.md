@@ -15,7 +15,7 @@ A primeira calculadora de pegada carbónica pensada especificamente para Portuga
 
 ## 🎯 ODS 13 — Ação Climática
 
-Este projeto contribui para o **ODS 13 das Nações Unidas** ao consciencializar os cidadãos portugueses sobre o impacto das suas escolhas diárias no clima, e ao sugerir ações concretas de redução.
+Este projeto contribui para o **ODS 13 das Nações Unidas** ao consciencializar os cidadãos portugueses sobre o impacto das suas escolhas diárias no clima, e ao sugerir ações concretas de redução. Visa melhorar a educação, aumentar a consciencialização e a capacidade humana e institucional sobre medidas de adaptação, redução de impacto e alerta precoce no que respeita às alterações climáticas.
 
 ---
 
@@ -35,6 +35,7 @@ A maioria das pessoas não sabe quanto CO₂ gera no dia a dia. O EcoPT calcula 
 - ⚡ Consumo de energia em casa (kWh)
 
 E compara com a média portuguesa (5.1t) e europeia (9.0t).
+A metodologia mais amplamente utilizada para calcular a pegada de carbono é a do Protocolo de Gases de Efeito Estufa (GHG Protocol).
 
 ---
 
