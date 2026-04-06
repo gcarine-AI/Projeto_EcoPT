@@ -140,4 +140,6 @@ A maioria das calculadoras de CO₂ usa fatores genéricos europeus. O EcoPT usa
 - **Transporte:** 0.21 kgCO₂/km — média do parque automóvel português
 - **Comparador:** média PT de 5.1 tonCO₂/hab (DGEG, Energia em Números 2025) vs média EU de 9.0 tonCO₂/hab (Eurostat 2023)
 
-Esta escolha torna os resultados mais precisos e relevantes para utilizadores portugueses, diferenciando o EcoPT de outras calculadoras genéricas disponíveis online.
+Esta decisão leva a resultados mais precisos e relevantes para utilizadores portugueses, diferenciando o EcoPT de outras calculadoras genéricas disponíveis online.
+
+Escolhi utilizar o Angular Material para a interface por garantir componentes acessíveis e consistentes. Uma decisão técnica importante foi a implementação de uma Mobile Nav independente para garantir que utilizadores em dispositivos móveis tivessem acesso rápido ao Marketplace e Calculadora, otimizando a UX em ecrãs pequenos.
