@@ -3,7 +3,7 @@
   flex-direction: row !important;
   justify-content: space-between;
   width: 100%;
-  background-color: white !important; /* Fundo branco como no design */
+  background-color: white !important;
   color: #1a3a1a !important;
   height: 70px;
   display: flex;
@@ -40,7 +40,6 @@
   flex: 1;
 }
 
-/* RESPONSIVIDADE: Esconder links no Mobile */
 .desktop-links {
   display: flex;
   flex-direction: row;
@@ -48,14 +47,6 @@
   align-items: center;
 }
 
-@media (max-width: 850px) {
-  .desktop-links,
-  .user-name {
-    display: none; /* Esconde os botões e o nome no mobile */
-  }
-}
-
-/* Estilo do link ativo para combinar com o novo design */
 .active-link {
   color: #2d7a32 !important;
   font-weight: 700 !important;
@@ -145,4 +136,22 @@
 .notif-content span {
   font-size: 11px;
   color: #aaa;
+}
+
+@media (max-width: 850px) {
+  .desktop-links,
+  .user-name {
+    display: none !important;
+  }
+
+  .mobile-menu {
+    display: block !important;
+    margin-right: 10px;
+  }
+}
+
+@media (min-width: 851px) {
+  .mobile-menu {
+    display: none !important;
+  }
 }
