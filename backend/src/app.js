@@ -6,7 +6,7 @@ import tipsRoutes from "./routes/tips.routes.js";
 import faqRoutes from "./routes/faq.routes.js";
 import carsharingRoutes from "./routes/carsharing.routes.js";
 import marketplaceRoutes from "./routes/marketplace.routes.js";
-import notificationsRoutes from "./routes/notifications.routes.js" 
+import notificationsRoutes from "./routes/notifications.routes.js";
 
 const app = express();
 

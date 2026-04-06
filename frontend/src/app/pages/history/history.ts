@@ -27,10 +27,8 @@ import { CalculationService } from '../../services/calculation';
 export class HistoryComponent implements OnInit {
   private calcService = inject(CalculationService);
 
-  // Tipagem rigorosa: Array de Calculation
   public dataSource: Calculation[] = [];
 
-  // Colunas que queremos mostrar na tabela
   public displayedColumns: string[] = ['created_at', 'total_co2', 'diet', 'actions'];
   public loading = false;
   public totalCO2 = 0;
