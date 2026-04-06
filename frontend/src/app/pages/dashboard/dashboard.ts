@@ -64,9 +64,7 @@ export class DashboardComponent implements OnInit {
   }
 
   calculateImpact(): void {
-    // Regra de três simples para a barra de progresso (máximo 10 toneladas para escala)
     if (this.lastCalculation?.total_co2) {
-      // Limitar a 100% para a barra não transbordar visualmente
       const rawPercentage = (this.lastCalculation.total_co2 / 10) * 100;
       this.percentage = Math.min(rawPercentage, 100);
     }

@@ -37,12 +37,9 @@ export class CarsharingService {
 
   private apiUrl = `${environment.apiUrl}/carsharing`;
 
-  // GET: Vai buscar a lista ao endpoint /api/carsharing/available
   getRides(): Observable<AvailableRide[]> {
     return this.http.get<AvailableRide[]>(`${this.apiUrl}/available`);
   }
-
-  // PATCH: Faz o update no endpoint /api/carsharing/book/:id
 
   bookSeat(id: number): Observable<{ message: string }> {
     return this.http.patch<{ message: string }>(`${this.apiUrl}/book/${id}`, {});

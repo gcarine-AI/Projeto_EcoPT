@@ -8,7 +8,6 @@ import { TipsComponent } from './pages/tips/tips';
 import { CarsharingComponent } from './pages/carsharing/carsharing';
 import { FAQComponent } from './pages/faq/faq';
 import { MarketplaceComponent } from './pages/marketplace/marketplace';
-//import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -17,37 +16,30 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    //canActivate: [authGuard],
   },
   {
     path: 'calculator',
     component: CalculatorComponent,
-    //canActivate: [authGuard],
   },
   {
     path: 'calculator/:id',
     component: CalculatorComponent,
-    //canActivate: [authGuard],
   },
   {
     path: 'history',
     component: HistoryComponent,
-    //canActivate: [authGuard],
   },
   {
     path: 'tips',
     component: TipsComponent,
-    //canActivate: [authGuard],
   },
   {
     path: 'carsharing',
     component: CarsharingComponent,
-    //canActivate: [authGuard],
   },
   {
     path: 'faq',
     component: FAQComponent,
-    //canActivate: [authGuard],
   },
   {
     path: 'marketplace',

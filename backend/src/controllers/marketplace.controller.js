@@ -118,15 +118,15 @@ export const interest = async (req, res) => {
 
     if (updateError) throw updateError;
 
-        const { data: profile } = await supabase
-      .from('Profiles')
-      .select('name')
-      .eq('id', req.user.id)
+    const { data: profile } = await supabase
+      .from("Profiles")
+      .select("name")
+      .eq("id", req.user.id)
       .single();
 
-    const interestedName = profile?.name || 'Alguém';
+    const interestedName = profile?.name || "Alguém";
 
-      await supabase.from('notifications').insert({
+    await supabase.from("notifications").insert({
       user_id: item.user_id,
       message: `${interestedName} mostrou interesse no teu item "${item.title}"!`,
     });
