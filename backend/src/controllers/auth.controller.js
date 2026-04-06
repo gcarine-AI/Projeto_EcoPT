@@ -12,7 +12,6 @@ export const register = async (req, res) => {
 
   if (error) return res.status(400).json({ error: error.message });
 
-  // Criar perfil após registo
   const { error: profileError } = await supabase.from("Profiles").insert({
     id: data.user.id,
     name,
@@ -70,13 +69,13 @@ export const getProfile = async (req, res) => {
 };
 
 export const updateProfile = async (req, res) => {
-  const { name } = req.body;
+  const { name, location, avatar_url } = req.body;
 
   if (!name) return res.status(400).json({ error: "Nome é obrigatório" });
 
   const { data, error } = await supabase
     .from("Profiles")
-    .update({ name })
+    .update({ name, location, avatar_url })
     .eq("id", req.user.id)
     .select()
     .single();
