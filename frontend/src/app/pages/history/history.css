@@ -211,3 +211,26 @@
 .empty-state p {
   margin-bottom: 20px;
 }
+.chart-card-wrapper {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.chart-container {
+  position: relative;
+  height: 220px;
+  width: 100%;
+}
+
+.chart-title {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
