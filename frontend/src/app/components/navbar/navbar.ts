@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 
-
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -21,12 +20,12 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    MatBadgeModule
+    MatBadgeModule,
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
   public authService = inject(AuthService);
   private router = inject(Router);
   private notificationsService = inject(NotificationsService);
@@ -34,22 +33,22 @@ export class NavbarComponent implements OnInit{
   public unreadCount = 0;
 
   ngOnInit(): void {
-   if (this.authService.isLoggedIn()) {
-    this.loadNotifications();
-    // Verificar novas notificações a cada 30 segundos
-    setInterval(() => {
-      if (this.authService.isLoggedIn()) {
-        this.loadNotifications();
-      }
-    }, 30000);
+    if (this.authService.isLoggedIn()) {
+      this.loadNotifications();
+      // Verificar novas notificações a cada 30 segundos
+      setInterval(() => {
+        if (this.authService.isLoggedIn()) {
+          this.loadNotifications();
+        }
+      }, 30000);
+    }
   }
-}
 
   loadNotifications(): void {
     this.notificationsService.getAll().subscribe({
       next: (data) => {
         this.notifications = data;
-        this.unreadCount = data.filter(n => !n.read).length;
+        this.unreadCount = data.filter((n) => !n.read).length;
       },
       error: () => console.error('Erro ao carregar notificações'),
     });
@@ -58,7 +57,7 @@ export class NavbarComponent implements OnInit{
   markAllRead(): void {
     this.notificationsService.markAllRead().subscribe({
       next: () => {
-        this.notifications = this.notifications.map(n => ({ ...n, read: true }));
+        this.notifications = this.notifications.map((n) => ({ ...n, read: true }));
         this.unreadCount = 0;
       },
     });
