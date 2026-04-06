@@ -38,7 +38,7 @@ export class RegisterComponent {
     name: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(7)]],
-    role: ['user', Validators.required], // 'user' por defeito
+    role: ['user', Validators.required],
   });
 
   error = '';

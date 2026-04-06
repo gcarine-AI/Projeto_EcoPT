@@ -35,7 +35,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
       this.loadNotifications();
-      // Verificar novas notificações a cada 30 segundos
+
       setInterval(() => {
         if (this.authService.isLoggedIn()) {
           this.loadNotifications();
