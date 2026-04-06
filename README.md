@@ -2,7 +2,7 @@
 
 ![CI Backend](https://github.com/gcarine-AI/Projeto_EcoPT/actions/workflows/ciBackend.yml/badge.svg)
 ![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)
-[![Vercel](https://img.shields.io/badge/Vercel-deployed-000000?logo=vercel&logoColor=white)](https://projeto-eco-pt.vercel.app)
+![Vercel Deploy](https://img.shields.io/badge/Vercel-Success-brightgreen?logo=vercel)
 ![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-24-339933?logo=nodedotjs&logoColor=white)
 ![Supabase](https://img.shields.io/badge/Supabase-database-3ECF8E?logo=supabase&logoColor=white)
